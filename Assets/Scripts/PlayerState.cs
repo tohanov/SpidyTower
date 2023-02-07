@@ -1,115 +1,117 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.LowLevel;
-using UnityEngine.InputSystem.Controls;
 
 public class PlayerState : MonoBehaviour
 {
 
-	#region definitions
+	//#region definitions
 	enum Tower { Left, Middle, Right }
-	enum JumpDirection { Left, Right };
-	enum GameState { Ongoing, Over }
-	enum OperationResult { Success, Failure }
-	enum MeasureState { Empty, Full, InBetween }
+	//enum JumpDirection { Left, Right };
+	//enum GameState { Ongoing, Over }
+	//enum OperationResult { Success, Failure }
+	//enum MeasureState { Empty, Full, InBetween }
 
-	class Measure
-	{
-		protected int currentValue;
-		protected int capacity;
-		protected MeasureState measureState;
+	//class Measure
+	//{
+	//	protected int currentValue;
+	//	protected int capacity;
+	//	protected MeasureState measureState;
 
-		private Func<dynamic> callbackOnFull;
-		private Func<dynamic> callbackOnEmpty;
+	//	private Func<dynamic> callbackOnFull;
+	//	private Func<dynamic> callbackOnEmpty;
 
-		public Measure(int startValue, int capacity, Func<dynamic> callbackOnFull, Func<dynamic> callbackOnEmpty)
-		{
-			this.currentValue = startValue;
-			this.capacity = capacity;
+	//	public Measure(int startValue, int capacity, Func<dynamic> callbackOnFull, Func<dynamic> callbackOnEmpty)
+	//	{
+	//		this.currentValue = startValue;
+	//		this.capacity = capacity;
 
-			this.callbackOnFull = callbackOnFull;
-			this.callbackOnEmpty = callbackOnEmpty;
+	//		this.callbackOnFull = callbackOnFull;
+	//		this.callbackOnEmpty = callbackOnEmpty;
 
-			updateMeasureState();
-		}
+	//		updateMeasureState();
+	//	}
 
-		private void updateMeasureState()
-		{
-			measureState =
-				(currentValue == capacity) ? MeasureState.Full :
-				(currentValue == 0) ? MeasureState.Empty :
-				MeasureState.InBetween;
+	//	private void updateMeasureState()
+	//	{
+	//		measureState =
+	//			(currentValue == capacity) ? MeasureState.Full :
+	//			(currentValue == 0) ? MeasureState.Empty :
+	//			MeasureState.InBetween;
 
-			useCallbacks();
-		}
+	//		useCallbacks();
+	//	}
 
-		private void useCallbacks()
-		{
-			if (measureState == MeasureState.Full && callbackOnFull != null)
-			{
-				callbackOnFull();
-			}
-			else if (measureState == MeasureState.Empty && callbackOnEmpty != null)
-			{
-				callbackOnEmpty();
-			}
-		}
+	//	private void useCallbacks()
+	//	{
+	//		if (measureState == MeasureState.Full && callbackOnFull != null)
+	//		{
+	//			callbackOnFull();
+	//		}
+	//		else if (measureState == MeasureState.Empty && callbackOnEmpty != null)
+	//		{
+	//			callbackOnEmpty();
+	//		}
+	//	}
 
-		public void setToFull()
-		{
-			currentValue = capacity;
-		}
+	//	public void setToFull()
+	//	{
+	//		currentValue = capacity;
+	//	}
 
-		public void setToEmpty()
-		{
-			currentValue = 0;
-		}
+	//	public void setToEmpty()
+	//	{
+	//		currentValue = 0;
+	//	}
 
-		public OperationResult increment()
-		{
-			if (measureState == MeasureState.Full)
-			{
-				return OperationResult.Failure;
-			}
+	//	public OperationResult increment()
+	//	{
+	//		if (measureState == MeasureState.Full)
+	//		{
+	//			return OperationResult.Failure;
+	//		}
 
-			currentValue += 1;
-			updateMeasureState();
+	//		currentValue += 1;
+	//		updateMeasureState();
 
-			return OperationResult.Success;
-		}
+	//		return OperationResult.Success;
+	//	}
 
-		public OperationResult decrement()
-		{
-			if (measureState == MeasureState.Empty)
-			{
-				return OperationResult.Failure;
-			}
+	//	public OperationResult decrement()
+	//	{
+	//		if (measureState == MeasureState.Empty)
+	//		{
+	//			return OperationResult.Failure;
+	//		}
 
-			currentValue += 1;
-			updateMeasureState();
+	//		currentValue += 1;
+	//		updateMeasureState();
 
-			return OperationResult.Success;
-		}
+	//		return OperationResult.Success;
+	//	}
 
-		public void updateCapacity(int newCapacity)
-		{
-			capacity = newCapacity;
-		}
-	}
-	#endregion
+	//	public void updateCapacity(int newCapacity)
+	//	{
+	//		capacity = newCapacity;
+	//	}
+	//}
+	//#endregion
 
 	private UserInputActions userInputs;
 	private Camera mainCamera;
+	[SerializeField] private AnimationCurve xAnimationCurve;
+	[SerializeField] private AnimationCurve yAnimationCurve;
 
-	private static int LIVES = 3;
-	Measure halflives = new Measure(LIVES * 2, LIVES * 2, null, null);
-	Measure webUnits = new Measure(5, 5, null, null);
-	Measure consecutivePeopleMisses = new Measure(0, 5, null, null);
+	//private static int LIVES = 3;
+	//Measure halflives = new Measure(LIVES * 2, LIVES * 2, null, null);
+	//Measure webUnits = new Measure(5, 5, null, null);
+	//Measure consecutivePeopleMisses = new Measure(0, 5, null, null);
 
 	private Tower horizontalPosition;
-	private double verticalPosition;
-	private double currentSpeed;
+	[SerializeField] private float verticalPosition = 1.69f;
+	[SerializeField] private float currentSpeed = 1;
 	private bool isMidAir;
 
 	Action doNothing = () => { Debug.Log("Not supposed to do anything :)"); };
@@ -129,12 +131,13 @@ public class PlayerState : MonoBehaviour
 
 	public void Awake()
 	{
-
 #if UNITY_EDITOR
 		Debug.unityLogger.logEnabled = true;
 #else
-		Debug.unityLogger.logEnabled = false;
+			Debug.unityLogger.logEnabled = false;
 #endif
+
+		Debug.unityLogger.logEnabled = false;
 
 		Debug.Log("awake()");
 
@@ -143,24 +146,38 @@ public class PlayerState : MonoBehaviour
 
 		horizontalPosition = Tower.Middle;
 
+		Vector3[] climbingPositions = new Vector3[] {
+			new Vector3(0, verticalPosition - 1, 0),
+			new Vector3(0, verticalPosition - 1, 0),
+			new Vector3(0, verticalPosition, 0),
+			new Vector3(0, verticalPosition + 1, 0),
+			new Vector3(0, verticalPosition + 1, 0),
+		};
+
 		jumpActions = new Action[] {
 			doNothing,
 			() => {
 				// switch tower state to left
-				Animate(Tower.Left);
+				
+				StartCoroutine(ShortJump(Tower.Left));
+				//Animate(Tower.Left);
 				horizontalPosition = Tower.Left;
 			},
 			() => {
 				// switch tower state to middle
-				Animate(Tower.Middle);
+				
+				StartCoroutine("ShortJump", Tower.Middle);
+				//Animate(Tower.Middle);
 				horizontalPosition = Tower.Middle;
 			},
 			() => {
 				// switch tower state to right
-				Animate(Tower.Right);
-				Debug.Log("inside right function");
+				
+				StartCoroutine("ShortJump", Tower.Right);
+				//Animate(Tower.Right);
+				//Debug.Log("inside right function");
 				horizontalPosition = Tower.Right;
-				Debug.Log(horizontalPosition);
+				//Debug.Log(horizontalPosition);
 			},
 			doNothing,
 		};
@@ -168,18 +185,49 @@ public class PlayerState : MonoBehaviour
 
 	private void Start()
 	{
+			
+
 		userInputs.PlayerActions.PrimaryTouchContact.started += OnDetectedTouchContact;
 		userInputs.PlayerActions.PrimaryTouchValue.performed += OnTouchValuesUpdated;
 	}
 
-	private void Animate(Tower destination)
+
+	IEnumerator ShortJump(Tower destination)
 	{
 		isMidAir = true;
 
-		transform.position += new Vector3(1, 0, 0) * (destination - horizontalPosition);
+		Vector3 originPosition = transform.position;
+		Vector3 goal = new Vector3(1, 0, 0) * (destination - horizontalPosition) + transform.position;
+		float time = 0;
+		Vector3 o = transform.position;
+
+		while (time < 1)
+		{
+			time += Time.deltaTime * currentSpeed;
+			Debug.Log(time);
+
+			transform.position = Vector3.Slerp(originPosition, goal, xAnimationCurve.Evaluate(time));
+			//transform.position = Mathf.Lerp(originPosition.x, goal.x, xAnimationCurve.Evaluate(time));
+			Debug.DrawLine(o, transform.position, color: Color.green, duration: 1);
+			o = transform.position;
+			yield return null;
+		}
+
+		Debug.Log("End of jump coroutine");
+		//yield return null;
 
 		isMidAir = false;
 	}
+
+
+	//private void Animate(Tower destination)
+	//{
+	//	isMidAir = true;
+
+	//	transform.position += new Vector3(1, 0, 0) * (destination - horizontalPosition);
+
+	//	isMidAir = false;
+	//}
 
 	private void ShortJump(TouchState wholeTouch)
 	{
@@ -194,7 +242,7 @@ public class PlayerState : MonoBehaviour
 		int direction = Math.Sign(deltaX);
 
 		Debug.Log(
-			$"direction: {direction} ::: " + 
+			$"direction: {direction} ::: " +
 			$"new tower: {(Tower)((int)horizontalPosition + direction)} ::: " +
 			$"function: {((int)horizontalPosition + direction)}"
 		);
@@ -245,7 +293,10 @@ public class PlayerState : MonoBehaviour
 				duration: 1
 			);
 
-			ShortJump(touchInfo);
+			if ( ! isMidAir)
+			{
+				ShortJump(touchInfo);
+			}
 		}
 	}
 
