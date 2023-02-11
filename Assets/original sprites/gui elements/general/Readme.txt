@@ -1,0 +1,1 @@
+Textures extracted from the PC version of the game by Shadowth117 with Extractor. No credit needed.
