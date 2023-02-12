@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 19101, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: PanelSettings
   m_EditorClassIdentifier: 
-  themeUss: {fileID: -4733365628477956816, guid: 09f546c897ca1ba499fccf3225c05f57, type: 3}
+  themeUss: {fileID: -4733365628477956816, guid: 06fc15f9c5396184aa79e2c79e6540fc, type: 3}
   m_TargetTexture: {fileID: 0}
   m_ScaleMode: 1
   m_Scale: 1

@@ -8,11 +8,11 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Walls
+  - 
   - Water
   - UI
-  - Background
-  - Foreground
+  - 
+  - 
   - 
   - 
   - 
@@ -38,18 +38,18 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: Background
-    uniqueID: 1826645883
-    locked: 0
-  - name: Walls
-    uniqueID: 930250301
-    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Foreground
-    uniqueID: 440073105
+  - name: Background
+    uniqueID: 2277374791
     locked: 0
-  - name: UI
-    uniqueID: 1821336533
+  - name: Buildings
+    uniqueID: 1985986307
+    locked: 0
+  - name: Spidy
+    uniqueID: 4089154657
+    locked: 0
+  - name: Obstacles/Collectables
+    uniqueID: 1030624905
     locked: 0
