@@ -50,6 +50,9 @@ TagManager:
   - name: Spidy
     uniqueID: 4089154657
     locked: 0
-  - name: Obstacles/Collectables
+  - name: Collectables
+    uniqueID: 2263248605
+    locked: 0
+  - name: Obstacles
     uniqueID: 1030624905
     locked: 0

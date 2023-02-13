@@ -149,7 +149,7 @@ TextureImporter:
         width: 336
         height: 312
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -170,7 +170,7 @@ TextureImporter:
         width: 336
         height: 312
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -191,7 +191,7 @@ TextureImporter:
         width: 336
         height: 312
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -212,7 +212,7 @@ TextureImporter:
         width: 336
         height: 312
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -220,6 +220,27 @@ TextureImporter:
       bones: []
       spriteID: f2cb1a1913113a940a64e16ae908cbc8
       internalID: -1001639430
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: red empty
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 624
+        width: 336
+        height: 312
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 65545b523d265a040814ef34b711021e
+      internalID: 1561211886
       vertices: []
       indices: 
       edges: []
@@ -241,10 +262,10 @@ TextureImporter:
       logo2 transparent copy with halh version and black version_2: 815332161
       black full: -1001639430
       black half: -352276433
-      logo2 transparent copy with halh version and black version_0: 241208159
       logo2 transparent copy with halh version and black version_3: 1160498773
       logo2 transparent copy with halh version and black version_6: -1601640644
       red full: 1418345857
+      red empty: 241208159
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
