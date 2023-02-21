@@ -1,0 +1,6 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement style="height: 15%; width: 100%;">
+        <ui:Label text="AbCd" display-tooltip-when-elided="true" enable-rich-text="false" style="left: 40%; top: 0; right: 40%; bottom: 0; position: absolute; -unity-text-align: middle-center; -unity-font: url(&apos;project://database/Assets/pixelart%20fonts/ARCADECLASSIC.TTF?fileID=12800000&amp;guid=95d5330ff50782e4b973830bf9477745&amp;type=3#ARCADECLASSIC&apos;); -unity-text-outline-color: rgb(231, 157, 0); -unity-text-outline-width: 0; text-shadow: 0 0 0 rgb(0, 0, 0); font-size: 20px;" />
+    </ui:VisualElement>
+    <ui:GroupBox text="jknnk" style="-unity-font: none; font-size: 20px; -unity-text-outline-width: 0;" />
+</ui:UXML>

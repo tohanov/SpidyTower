@@ -33,8 +33,8 @@ public class PlayerState : MonoBehaviour
 			6,
 			0,
 			6,
-			redrawRedHearts(),
-			deathAndGameOver(),
+			redrawRedHearts,
+			deathAndGameOver,
 			null
 		);
 
@@ -42,8 +42,8 @@ public class PlayerState : MonoBehaviour
 			0,
 			0,
 			float.PositiveInfinity,
-			redrawBlackHearts() and updatePlayerStats(),
-			updateGameSpeed(),
+			() => {redrawBlackHearts(); updatePlayerStats();},
+			updateGameSpeed,
 			null
 		);
 
@@ -51,8 +51,8 @@ public class PlayerState : MonoBehaviour
 			5,
 			0,
 			5,
-			redrawWebsCounter() and enableUnloadingOfCivilianIfHasWebs(),
-			disableUnloadingOfCivilian(),
+			() => {redrawWebsCounter(); enableUnloadingOfCivilianIfHasWebs();},
+			disableUnloadingOfCivilian,
 			null
 		);
 
@@ -60,12 +60,62 @@ public class PlayerState : MonoBehaviour
 			0,
 			0,
 			5,
-			redrawMissedCiviliansCounter(),
+			redrawMissedCiviliansCounter,
 			null,
-			failAndEndGame()
+			failAndEndGame
 		);
 
 		// GetComponent<GameState>();
+	}
+
+	private void failAndEndGame()
+	{
+		throw new NotImplementedException();
+	}
+
+	private void redrawMissedCiviliansCounter()
+	{
+		throw new NotImplementedException();
+	}
+
+	private void redrawRedHearts()
+	{
+		throw new NotImplementedException();
+	}
+
+	private void deathAndGameOver()
+	{
+		throw new NotImplementedException();
+	}
+
+	private void updateGameSpeed()
+	{
+		throw new NotImplementedException();
+	}
+
+	private void updatePlayerStats()
+	{
+		throw new NotImplementedException();
+	}
+
+	private void redrawBlackHearts()
+	{
+		throw new NotImplementedException();
+	}
+
+	private void enableUnloadingOfCivilianIfHasWebs()
+	{
+		throw new NotImplementedException();
+	}
+
+	private void redrawWebsCounter()
+	{
+		throw new NotImplementedException();
+	}
+
+	private void disableUnloadingOfCivilian()
+	{
+		throw new NotImplementedException();
 	}
 
 	public void takeDamage(DamageSource damageSource)

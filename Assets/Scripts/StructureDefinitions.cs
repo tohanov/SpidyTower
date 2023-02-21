@@ -25,7 +25,7 @@ public class Stat
 	readonly float max;
 	readonly float min;
 
-	Stat(float start, float max, float min, Action onUpdatedAction, Action onFullAction, Action onEmptyAction)
+	public Stat(float start, float max, float min, Action onUpdatedAction, Action onFullAction, Action onEmptyAction)
 	{
 		this.onUpdatedAction = onUpdatedAction;
 		this.onFullAction = onFullAction;
