@@ -1,12 +1,19 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GameState : MonoBehaviour
 {
 	// [SerializeField] AnimationCurve gameSpeedCurve;
 	// float rawGameSpeed;
 	public Stat gameSpeed;
+
+	internal void PauseGame(InputAction.CallbackContext context)
+	{
+		throw new NotImplementedException();
+	}
 
 	void Start() {
 		GameObject buildingsHolder1 = new GameObject();

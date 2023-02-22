@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class PlayerState : MonoBehaviour
 {
@@ -16,8 +17,11 @@ public class PlayerState : MonoBehaviour
 	Dictionary<DamageSource, float> healthDamage;
 	Dictionary<DamageSource, float> speedDamage;
 
+	Animator animator;
+
 	void Awake()
 	{
+		animator = gameObject.GetComponent<Animator>();
 
 		healthDamage = new Dictionary<DamageSource, float>() {
 			{DamageSource.Grenade, 1f},
@@ -134,5 +138,19 @@ public class PlayerState : MonoBehaviour
 	public void collectItem(ItemType itemType)
 	{
 		throw new NotImplementedException();
+	}
+	
+	public void Fire(InputAction.CallbackContext context) {
+		// Debug.Log("Fired " + (context.ReadValue<float>() < 0 ? "left" : "right"));
+		animator.Play((context.ReadValue<float>() < 0 ? "Spidy_shoot_left" : "Spidy_shoot_right"));
+	}
+
+	internal void Move(InputAction.CallbackContext context)
+	{
+		Vector2 instruction = context.ReadValue<Vector2>();
+		// if () {
+		// 	animator.Play(("Spidy_shoot_left" : "Spidy_shoot_right"));
+		// }
+		Debug.Log(instruction);
 	}
 }

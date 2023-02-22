@@ -1,0 +1,263 @@
+{
+    "name": "InputDetector",
+    "maps": [
+        {
+            "name": "SpidyActionMap",
+            "id": "891f6ace-caf2-4b7e-8a5e-d79d41c18ed2",
+            "actions": [
+                {
+                    "name": "Movement",
+                    "type": "Value",
+                    "id": "286ad8a4-f5f8-43ea-9f1a-3af1ae10ede6",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Firing",
+                    "type": "Button",
+                    "id": "3a13ec13-a758-4671-b4a7-c309edebdf57",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "WASD",
+                    "id": "b0511355-d17f-47aa-a6d1-333e896f40fe",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Movement",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "6a6410d5-1124-4f95-9ecc-5bbf9a9dcccc",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "GeneralScheme",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "c8225f47-2cee-449f-933d-864087fc96f8",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "GeneralScheme",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "3729e109-5ba2-492d-8ea8-7e5d504969d7",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "GeneralScheme",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "fe205a42-cfa0-41d7-95b6-f868d922dc3a",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "GeneralScheme",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "ArrowKeys",
+                    "id": "63a7f5d7-4fa9-4a23-a0a8-02bde371c209",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Movement",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "31d11f72-e991-4fbe-9d9d-6a22cbc3b807",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "GeneralScheme",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "4d85b0a5-abfc-4cf5-ab30-8f5fa692940f",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "GeneralScheme",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "7a8fe00a-2d48-4b43-b9aa-7e1c33507f76",
+                    "path": "<Keyboard>/leftArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "GeneralScheme",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "2dac9e2a-171f-4f58-afc7-d825e007a726",
+                    "path": "<Keyboard>/rightArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "GeneralScheme",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "B/M Keys",
+                    "id": "5db0725f-b393-415f-b62a-d0694bfb32e1",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Firing",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "fc942c80-9e6f-45ee-9374-c6497ba387c8",
+                    "path": "<Keyboard>/b",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "GeneralScheme",
+                    "action": "Firing",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "406be63e-188b-491f-9559-3dff3fbdcb50",
+                    "path": "<Keyboard>/m",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "GeneralScheme",
+                    "action": "Firing",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                }
+            ]
+        },
+        {
+            "name": "InGameActionMap",
+            "id": "93a54f61-af9a-47b6-bd19-549c7a936637",
+            "actions": [
+                {
+                    "name": "GamePause",
+                    "type": "Button",
+                    "id": "51d8f7af-f81f-41c3-8e73-0d70801622a5",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "ce1e5a89-c944-4cbf-8f45-7b2ede7753f2",
+                    "path": "<Keyboard>/p",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "GeneralScheme",
+                    "action": "GamePause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "InstructionsScreenActionMap",
+            "id": "94c3a300-025b-4c0b-9bfc-a0c30f582664",
+            "actions": [
+                {
+                    "name": "Skip",
+                    "type": "Button",
+                    "id": "eb9e8dd4-4f9b-486d-aedc-6003331869a7",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "d1c8b1e7-7c32-4c61-b0b5-a7e79889d141",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "f1dea670-9d42-4348-8f3f-0abeaebfcb47",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "GeneralScheme",
+                    "action": "Skip",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e8484f43-15dc-4831-8281-3bb48a0edbe8",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "GeneralScheme",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": [
+        {
+            "name": "GeneralScheme",
+            "bindingGroup": "GeneralScheme",
+            "devices": [
+                {
+                    "devicePath": "<Keyboard>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        }
+    ]
+}

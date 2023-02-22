@@ -8,6 +8,7 @@ public class TestResetBombPosition : MonoBehaviour
 	// Start is called before the first frame update
 	GenerateBuildings generateBuildings;
 	Animator animator;
+
 	void Start()
 	{
 		animator = gameObject.GetComponent<Animator>();
