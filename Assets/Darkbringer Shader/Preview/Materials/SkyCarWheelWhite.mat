@@ -10,6 +10,7 @@ Material:
   m_Name: SkyCarWheelWhite
   m_Shader: {fileID: 45, guid: 0000000000000000f000000000000000, type: 0}
   m_ValidKeywords:
+  - _EMISSION
   - _NORMALMAP
   m_InvalidKeywords:
   - _LIGHTMAPPING_STATIC_LIGHTMAPS
@@ -75,12 +76,16 @@ Material:
     - _DstBlend: 0
     - _EmissionScale: 1
     - _EmissionScaleUI: 0
+    - _GlossMapScale: 1
     - _Glossiness: 0.15
+    - _GlossyReflections: 1
     - _Lightmapping: 0
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _Shininess: 0.5001344
+    - _SmoothnessTextureChannel: 0
+    - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVPrim: 0
     - _UVSec: 0
