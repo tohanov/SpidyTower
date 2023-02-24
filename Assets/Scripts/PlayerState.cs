@@ -5,6 +5,7 @@ using System;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 
+
 public class PlayerState : MonoBehaviour
 {
 	Stat redHalfHearts;
@@ -21,19 +22,17 @@ public class PlayerState : MonoBehaviour
 	// float[] spidyVerticalPositions;
 	// float[] spidyHorizontalPositions;
 	Animator animator;
-	int[] playerCurrentPosition;
+
+	[SerializeField] AnimationCurve yJumpCurve;
+	[SerializeField] AnimationCurve jumpTimeCurve;
+	[SerializeField] float jumpDuration = 1f;
+	[SerializeField] float yJumpMax;
 	Vector3[,] spidyPositions;
+	int[] spidyCurrentPosition;
+	bool midJump = false;
 
-	void Start()
+	void Awake()
 	{
-		// TODO make the game manager spawn the player (at the correct position) and move all the Start() to an Awake() function
-		generateBuildingsScript = GameObject.FindGameObjectWithTag("GameController").GetComponent<GenerateBuildings>();
-		animator = gameObject.GetComponent<Animator>();
-		
-		playerCurrentPosition = new int[] {1, 0};
-		populatePositions();
-		transform.position = spidyPositions[1, 0];
-
 		healthDamage = new Dictionary<DamageSource, float>() {
 			{DamageSource.Grenade, 1f},
 			{DamageSource.Rubble, 0.5f}
@@ -83,10 +82,14 @@ public class PlayerState : MonoBehaviour
 		// GetComponent<GameState>();
 	}
 
-	// void Start() {
-	// 	playerCurrentPosition = new int[] {1, 0};
-	// 	transform.position = spidyPositions[1, 0];
-	// }
+	void Start() {
+		generateBuildingsScript = GameObject.FindGameObjectWithTag("GameController").GetComponent<GenerateBuildings>();
+		animator = gameObject.GetComponent<Animator>();
+		
+		spidyCurrentPosition = new int[] {1, 0};
+		populatePositions();
+		transform.position = spidyPositions[1, 0];
+	}
 
 	private void populatePositions()
 	{
@@ -126,6 +129,101 @@ public class PlayerState : MonoBehaviour
 				Debug.Log(spidyPositions[i,j]);
 			}
 		}
+	}
+
+	public void takeDamage(DamageSource damageSource)
+	{
+		Stat relevantHealthbar = redHalfHearts;
+
+		if (!blackHalfHearts.isEmpty())
+		{
+			relevantHealthbar = blackHalfHearts;
+		}
+
+		relevantHealthbar.updateCurrent(relevantHealthbar.current - healthDamage[damageSource]);
+		gameState.gameSpeed.updateCurrent(gameState.gameSpeed.current - speedDamage[damageSource]); // TODO : might want to make immune to speed loss when have black hearts
+	}
+
+	public void collectItem(ItemType itemType)
+	{
+		throw new NotImplementedException();
+	}
+	
+	public void Fire(InputAction.CallbackContext context) {
+		// Debug.Log("Fired " + (context.ReadValue<float>() < 0 ? "left" : "right"));
+		animator.Play((context.ReadValue<float>() < 0 ? "Spidy_shoot_left" : "Spidy_shoot_right"));
+	}
+
+	// internal void Move(InputAction.CallbackContext context)
+	// {
+	// 	Vector2 instruction = context.ReadValue<Vector2>();
+	// 	// if () {
+	// 	// 	animator.Play(("Spidy_shoot_left" : "Spidy_shoot_right"));
+	// 	// }
+	// 	Debug.Log(instruction);
+	// }
+
+	internal void ShortJump(int x)
+	{
+		if (midJump) return;
+
+		int newPositionX = Mathf.Clamp(spidyCurrentPosition[0] + x, 0, 2);
+
+		if (newPositionX == spidyCurrentPosition[0]) return;
+
+		animator.Play(x < 0 ? "Spidy_jump_left" : "Spidy_jump_right");
+
+		spidyCurrentPosition[0] = newPositionX;
+		StartCoroutine(ShortJumpCoroutine(
+			transform.position, 
+			spidyPositions[spidyCurrentPosition[0], spidyCurrentPosition[1]]
+		));
+
+		// transform.position = spidyPositions[newPositionX, playerCurrentPosition[1]];
+		// transform.localPosition = Vector3.zero;//spidyPositions[newPosition, playerCurrentPosition[1]];
+		// transform.TransformPoint(Vector2.one);
+
+		Debug.Log("updated position: " + string.Join(", ", spidyCurrentPosition));
+	}
+
+	private IEnumerator ShortJumpCoroutine(Vector3 start, Vector3 end) 
+	{
+		midJump = true;
+		
+		float normalizedElapsedTime = 0;
+
+		while (normalizedElapsedTime < jumpDuration) {
+			normalizedElapsedTime += Time.deltaTime;
+
+			float modifiedTime = jumpTimeCurve.Evaluate(normalizedElapsedTime / jumpDuration);
+
+			transform.position = new Vector3(
+				Mathf.Lerp(start.x, end.x, modifiedTime),
+				start.y + yJumpMax * yJumpCurve.Evaluate(modifiedTime)
+			);
+
+			yield return null;
+		}
+
+		midJump = false;
+	}
+
+	internal void MoveVertically(int y)
+	{
+		if (midJump) return;
+		
+		int newPositionY = Mathf.Clamp(spidyCurrentPosition[1] + y, 0, 2);
+		
+		if (newPositionY != spidyCurrentPosition[1]) {
+			// animator.Play(y < 0 ? "Spidy_jump_left" : "Spidy_jump_right");
+			
+			transform.position = spidyPositions[spidyCurrentPosition[0], newPositionY];
+			// transform.localPosition = Vector3.zero;//spidyPositions[newPosition, playerCurrentPosition[1]];
+			// transform.TransformPoint(Vector2.one);
+			spidyCurrentPosition[1] = newPositionY;
+		}
+
+		Debug.Log("updated position: " + string.Join(", ", spidyCurrentPosition));
 	}
 
 	private void failAndEndGame()
@@ -176,69 +274,5 @@ public class PlayerState : MonoBehaviour
 	private void disableUnloadingOfCivilian()
 	{
 		throw new NotImplementedException();
-	}
-
-	public void takeDamage(DamageSource damageSource)
-	{
-		Stat relevantHealthbar = redHalfHearts;
-
-		if (!blackHalfHearts.isEmpty())
-		{
-			relevantHealthbar = blackHalfHearts;
-		}
-
-		relevantHealthbar.updateCurrent(relevantHealthbar.current - healthDamage[damageSource]);
-		gameState.gameSpeed.updateCurrent(gameState.gameSpeed.current - speedDamage[damageSource]); // TODO : might want to make immune to speed loss when have black hearts
-	}
-
-	public void collectItem(ItemType itemType)
-	{
-		throw new NotImplementedException();
-	}
-	
-	public void Fire(InputAction.CallbackContext context) {
-		// Debug.Log("Fired " + (context.ReadValue<float>() < 0 ? "left" : "right"));
-		animator.Play((context.ReadValue<float>() < 0 ? "Spidy_shoot_left" : "Spidy_shoot_right"));
-	}
-
-	// internal void Move(InputAction.CallbackContext context)
-	// {
-	// 	Vector2 instruction = context.ReadValue<Vector2>();
-	// 	// if () {
-	// 	// 	animator.Play(("Spidy_shoot_left" : "Spidy_shoot_right"));
-	// 	// }
-	// 	Debug.Log(instruction);
-	// }
-
-	internal void ShortJump(int x)
-	{
-		int newPositionX = Mathf.Clamp(playerCurrentPosition[0] + x, 0, 2);
-
-		if (newPositionX != playerCurrentPosition[0]) {
-			animator.Play(x < 0 ? "Spidy_jump_left" : "Spidy_jump_right");
-			
-			transform.position = spidyPositions[newPositionX, playerCurrentPosition[1]];
-			// transform.localPosition = Vector3.zero;//spidyPositions[newPosition, playerCurrentPosition[1]];
-			// transform.TransformPoint(Vector2.one);
-			playerCurrentPosition[0] = newPositionX;
-		}
-
-		Debug.Log("updated position: " + string.Join(", ", playerCurrentPosition));
-	}
-
-	internal void MoveVertically(int y)
-	{
-		int newPositionY = Mathf.Clamp(playerCurrentPosition[1] + y, 0, 2);
-		
-		if (newPositionY != playerCurrentPosition[1]) {
-			// animator.Play(y < 0 ? "Spidy_jump_left" : "Spidy_jump_right");
-			
-			transform.position = spidyPositions[playerCurrentPosition[0], newPositionY];
-			// transform.localPosition = Vector3.zero;//spidyPositions[newPosition, playerCurrentPosition[1]];
-			// transform.TransformPoint(Vector2.one);
-			playerCurrentPosition[1] = newPositionY;
-		}
-
-		Debug.Log("updated position: " + string.Join(", ", playerCurrentPosition));
 	}
 }
