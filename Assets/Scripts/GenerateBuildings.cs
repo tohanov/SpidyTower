@@ -21,7 +21,7 @@ public class GenerateBuildings : MonoBehaviour
 
 	public Vector2 wrapperResetPosition;
 
-	void Start()
+	void Awake()
 	{	
 		boundsHigh = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
 		boundsLow = Camera.main.ScreenToWorldPoint(new Vector2(0, 0));

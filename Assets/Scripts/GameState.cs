@@ -9,15 +9,20 @@ public class GameState : MonoBehaviour
 	// [SerializeField] AnimationCurve gameSpeedCurve;
 	// float rawGameSpeed;
 	public Stat gameSpeed;
+	private bool gamePaused;
+	// internal Vector2 boundsHigh;
+	// internal Vector2 boundsLow;
 
-	internal void PauseGame(InputAction.CallbackContext context)
+	internal void TogglePauseGame(InputAction.CallbackContext context)
 	{
 		throw new NotImplementedException();
 	}
 
 	void Start() {
-		GameObject buildingsHolder1 = new GameObject();
+		// boundsLow = Camera.main.ScreenToWorldPoint(new Vector2(0, 0));
+		// boundsHigh = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
 
+		GameObject buildingsHolder1 = new GameObject();
 	}
 
 	// public float colThickness = 4f;

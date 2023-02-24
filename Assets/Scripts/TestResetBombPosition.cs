@@ -57,7 +57,7 @@ public class TestResetBombPosition : MonoBehaviour
 	void ReturnToPool() {
 		// TODO
 		Debug.Log("ReturnToPool");
-		Destroy(gameObject);
+		// Destroy(gameObject);
 	}
 
 	private void OnTriggerEnter2D(Collider2D collision)

@@ -54,13 +54,20 @@ public class InputDelegator : MonoBehaviour
 
 	void HandlePlayerMovement(InputAction.CallbackContext context)
     {
-		Debug.Log("movement delegation");
-        playerStateScript.Move(context);
+		Vector2 movement = context.ReadValue<Vector2>();
+		Debug.Log("movement delegation" + movement);
+
+		if (movement.y != 0) {
+			playerStateScript.MoveVertically((int)movement.y);
+		}
+		else if (movement.x != 0) {
+        	playerStateScript.ShortJump((int)movement.x);
+		}
     }
 
 	void HandleGamePause(InputAction.CallbackContext context)
     {
-        gameState.PauseGame(context);
+        gameState.TogglePauseGame(context);
     }
 
 	private void HandleInstructionsPause(InputAction.CallbackContext obj)
