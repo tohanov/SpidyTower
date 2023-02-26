@@ -59,9 +59,10 @@ TrailRenderer bombTrail;
 
 	void OnFinishedExploding() {
 		ReturnToPool();
+		Destroy(gameObject);
 		transform.position = Vector3.up * generateBuildings.boundsHigh.y;
 		animator.Play("Bomb_idle");
-		
+
 		bombTrail.emitting = true;
 		bombTrail.Clear();
 
@@ -78,6 +79,6 @@ TrailRenderer bombTrail;
 	{
 		// Debug.Log("OnTriggerEnter2D");
 		if (collision.CompareTag("Spidy")) explode();
-		if (collision.CompareTag("Screen Border Bottom")) transform.position = Vector3.up * generateBuildings.boundsHigh.y;
+		if (collision.CompareTag("Screen Border Bottom")) Destroy(gameObject);//transform.position = Vector3.up * generateBuildings.boundsHigh.y;
 	}
 }

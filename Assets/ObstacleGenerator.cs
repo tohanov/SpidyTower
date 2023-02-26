@@ -15,6 +15,9 @@ public class ObstacleGenerator : MonoBehaviour
 
 	// TODO
 	float[] rubbleSpawnPositions;
+	Vector2 boundsHigh;
+	Vector2 boundsLow;
+
 	// Vector3 bombSpawnerBounds;
 	// Vector3[,] civilianSpawnerBounds;
 	[SerializeField] GameObject bombPrefab;
@@ -31,11 +34,14 @@ public class ObstacleGenerator : MonoBehaviour
 		// initializeSpawnerPositions();
 
 
-		spawnDelay = new WaitForSeconds(4);
+		spawnDelay = new WaitForSeconds(3);
 	}
 
 	void Start() {
-		transform.position = new Vector3(0, gameStateScript.boundsHigh.y * 1.05f);
+		boundsHigh = gameStateScript.boundsHigh;
+		boundsLow = gameStateScript.boundsLow;
+
+		transform.position = new Vector3(0, boundsHigh.y * 1.05f);
 
 		// get suitable positions to spawn obstacles
 		rubbleSpawnPositions = generateBuildingsScript.buildingPositions;
@@ -61,6 +67,8 @@ public class ObstacleGenerator : MonoBehaviour
 		Debug.Log("In spawner coroutine");
 
 		while (true) {
+			yield return spawnDelay;
+
 			Debug.Log("In spawner loop");
 			// random type of obstacle
 			int type = Random.Range(0, 3);
@@ -77,10 +85,18 @@ public class ObstacleGenerator : MonoBehaviour
 				rubbleObject.GetComponent<Rigidbody2D>().velocity = Vector3.down * 2;
 			}
 			else {
+				float sourceRandomX = Random.Range(boundsLow.x, boundsHigh.x);
 
+				float targetRandomX = Random.Range(rubbleSpawnPositions[0], rubbleSpawnPositions[1]);
+				float targetRandomY = Random.Range(
+					boundsLow.y,
+					(boundsHigh.y - boundsLow.y) * 0.75f + boundsLow.y
+				);
+
+				var bombObject = Instantiate(bombPrefab, transform);
+				bombObject.transform.localPosition = Vector3.right * sourceRandomX;
+				bombObject.GetComponent<Rigidbody2D>().velocity = Vector3.Normalize(new Vector3(targetRandomX, targetRandomY) - bombObject.transform.position) * 4;
 			}
-
-			yield return spawnDelay;
 		}
 	}
 

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7098920292791432870}
   - component: {fileID: 9083626097231102849}
   - component: {fileID: 5953339870743178483}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Bomb Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 6454610239597450516}
   - component: {fileID: 1904318978}
   - component: {fileID: 4037477037757971082}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Pumpkin Bomb
   m_TagString: Untagged
   m_Icon: {fileID: 0}

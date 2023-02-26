@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8370579332976639379}
   - component: {fileID: 5806656536519482452}
   - component: {fileID: 6769464420740655033}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: bricksPallete_0
   m_TagString: Rubble
   m_Icon: {fileID: 0}
@@ -145,7 +145,7 @@ GameObject:
   - component: {fileID: 1848189057135238553}
   - component: {fileID: 4389225949472364693}
   - component: {fileID: -3008895491678074979}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Rubble Large Bricks
   m_TagString: Obstacle Outer Edge
   m_Icon: {fileID: 0}
@@ -235,7 +235,7 @@ GameObject:
   - component: {fileID: 528415761773449255}
   - component: {fileID: 6598851460905375981}
   - component: {fileID: 691907948748260767}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: bricksPallete_1
   m_TagString: Rubble
   m_Icon: {fileID: 0}

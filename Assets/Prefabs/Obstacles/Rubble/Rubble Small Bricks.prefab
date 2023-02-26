@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1483115246030894613}
   - component: {fileID: 3291631511615664715}
   - component: {fileID: -1928068177230288178}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Rubble Small Bricks
   m_TagString: Obstacle Outer Edge
   m_Icon: {fileID: 0}
@@ -104,7 +104,7 @@ GameObject:
   - component: {fileID: 3341053573230522756}
   - component: {fileID: 6248967668939992833}
   - component: {fileID: 6103345201014476189}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: bricksPallete_10
   m_TagString: Rubble
   m_Icon: {fileID: 0}
@@ -237,7 +237,7 @@ GameObject:
   - component: {fileID: 3261119676259294457}
   - component: {fileID: 1188144017094517160}
   - component: {fileID: 1547684195607256747}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: bricksPallete_13
   m_TagString: Rubble
   m_Icon: {fileID: 0}
@@ -370,7 +370,7 @@ GameObject:
   - component: {fileID: 6505216706720300324}
   - component: {fileID: 1544724970438204290}
   - component: {fileID: 2725240035239007474}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: bricksPallete_11
   m_TagString: Rubble
   m_Icon: {fileID: 0}
@@ -503,7 +503,7 @@ GameObject:
   - component: {fileID: 2583258213993364317}
   - component: {fileID: 8151924200362033166}
   - component: {fileID: 7476512897984063909}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: bricksPallete_12
   m_TagString: Rubble
   m_Icon: {fileID: 0}
