@@ -30,9 +30,17 @@ public class PlayerState : MonoBehaviour
 	Vector3[,] spidyPositions;
 	int[] spidyCurrentPosition;
 	bool midJump = false;
+	TrailRenderer spidyTrail;
 
 	void Awake()
-	{
+	{	
+		animator = gameObject.GetComponent<Animator>();
+		spidyTrail = GetComponent<TrailRenderer>();
+		// spidyTrail.emitting = false;
+		spidyTrail.enabled = false;
+		spidyTrail.Clear();
+
+		
 		healthDamage = new Dictionary<DamageSource, float>() {
 			{DamageSource.Grenade, 1f},
 			{DamageSource.Rubble, 0.5f}
@@ -80,15 +88,18 @@ public class PlayerState : MonoBehaviour
 		);
 
 		// GetComponent<GameState>();
+		
 	}
 
 	void Start() {
 		generateBuildingsScript = GameObject.FindGameObjectWithTag("GameController").GetComponent<GenerateBuildings>();
-		animator = gameObject.GetComponent<Animator>();
 		
 		spidyCurrentPosition = new int[] {1, 0};
 		populatePositions();
 		transform.position = spidyPositions[1, 0];
+
+		spidyTrail.enabled = true;
+		spidyTrail.Clear();
 	}
 
 	private void populatePositions()
@@ -126,7 +137,7 @@ public class PlayerState : MonoBehaviour
 				// 	boundsLow.y + intervalY + playerSize.y * 0.5f,
 				// 	0
 				// 	);
-				Debug.Log(spidyPositions[i,j]);
+				// Debug.Log(spidyPositions[i,j]);
 			}
 		}
 	}
@@ -149,9 +160,20 @@ public class PlayerState : MonoBehaviour
 		throw new NotImplementedException();
 	}
 	
-	public void Fire(InputAction.CallbackContext context) {
+	public void Fire(int x) {
 		// Debug.Log("Fired " + (context.ReadValue<float>() < 0 ? "left" : "right"));
-		animator.Play((context.ReadValue<float>() < 0 ? "Spidy_shoot_left" : "Spidy_shoot_right"));
+
+		if (spidyCurrentPosition[0] == 0 && x < 0 || spidyCurrentPosition[0] == 2 && x > 0) return;
+		
+		rotatePlayerInDirection(x);
+		
+		animator.Play("Spidy_shoot");
+	}
+
+	public void EndFire(int x) {
+		// Debug.Log("Fired " + (context.ReadValue<float>() < 0 ? "left" : "right"));
+
+		animator.Play("Spidy_climb");
 	}
 
 	// internal void Move(InputAction.CallbackContext context)
@@ -163,6 +185,10 @@ public class PlayerState : MonoBehaviour
 	// 	Debug.Log(instruction);
 	// }
 
+	void rotatePlayerInDirection(int x) {
+		transform.rotation = (x < 0) ? Quaternion.Euler(0, 180, 0) : Quaternion.Euler(0,0,0);
+	}
+
 	internal void ShortJump(int x)
 	{
 		if (midJump) return;
@@ -171,7 +197,7 @@ public class PlayerState : MonoBehaviour
 
 		if (newPositionX == spidyCurrentPosition[0]) return;
 
-		animator.Play(x < 0 ? "Spidy_jump_left" : "Spidy_jump_right");
+		rotatePlayerInDirection(x);
 
 		spidyCurrentPosition[0] = newPositionX;
 		StartCoroutine(ShortJumpCoroutine(
@@ -183,19 +209,22 @@ public class PlayerState : MonoBehaviour
 		// transform.localPosition = Vector3.zero;//spidyPositions[newPosition, playerCurrentPosition[1]];
 		// transform.TransformPoint(Vector2.one);
 
-		Debug.Log("updated position: " + string.Join(", ", spidyCurrentPosition));
+		// Debug.Log("updated position: " + string.Join(", ", spidyCurrentPosition));
 	}
 
 	private IEnumerator ShortJumpCoroutine(Vector3 start, Vector3 end) 
 	{
 		midJump = true;
+		animator.Play("Spidy_jump_up");
 		
 		float normalizedElapsedTime = 0;
 
 		while (normalizedElapsedTime < jumpDuration) {
 			normalizedElapsedTime += Time.deltaTime;
+			float temp = normalizedElapsedTime / jumpDuration;
+			if (normalizedElapsedTime / jumpDuration >= 0.7f) animator.Play("Spidy_jump_down");
 
-			float modifiedTime = jumpTimeCurve.Evaluate(normalizedElapsedTime / jumpDuration);
+			float modifiedTime = jumpTimeCurve.Evaluate(temp);
 
 			transform.position = new Vector3(
 				Mathf.Lerp(start.x, end.x, modifiedTime),
@@ -205,6 +234,7 @@ public class PlayerState : MonoBehaviour
 			yield return null;
 		}
 
+		animator.Play("Spidy_climb");
 		midJump = false;
 	}
 
@@ -223,7 +253,21 @@ public class PlayerState : MonoBehaviour
 			spidyCurrentPosition[1] = newPositionY;
 		}
 
-		Debug.Log("updated position: " + string.Join(", ", spidyCurrentPosition));
+		// Debug.Log("updated position: " + string.Join(", ", spidyCurrentPosition));
+	}
+
+	private void OnTriggerEnter2D(Collider2D collision) {
+
+		// TODO react accordingly
+		collision.CompareTag("Symbiote");
+		collision.CompareTag("Web Cartridge");
+		collision.CompareTag("Civilian");
+		collision.CompareTag("Symbiote");
+	}
+
+	internal void dropCivilian()
+	{
+		throw new NotImplementedException();
 	}
 
 	private void failAndEndGame()

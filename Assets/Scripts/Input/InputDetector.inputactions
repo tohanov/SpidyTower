@@ -22,6 +22,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "DropCivilian",
+                    "type": "Button",
+                    "id": "7b4305f7-30c2-4a98-9576-1e523893a2f8",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -167,6 +176,28 @@
                     "action": "Firing",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "00f3960b-6fdd-4d20-8a0b-251702609c15",
+                    "path": "<Keyboard>/h",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "GeneralScheme",
+                    "action": "DropCivilian",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8922d9ff-52c0-44a5-bf2f-eb6e0144c86b",
+                    "path": "<Keyboard>/j",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "GeneralScheme",
+                    "action": "DropCivilian",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },

@@ -6,7 +6,6 @@ using UnityEngine.InputSystem;
 
 public class InputDelegator : MonoBehaviour
 {
-
 	InputDetector inputDetectorObject;
 
 	InputDetector.InGameActionMapActions inGameActions;
@@ -36,6 +35,8 @@ public class InputDelegator : MonoBehaviour
 
 		spidyActions.Firing.performed += HandlePlayerFire;
 		spidyActions.Movement.performed += HandlePlayerMovement;
+		spidyActions.DropCivilian.performed += HandleDropCivilian;
+
 
 		instructionsScreenActions.Skip.performed += HandleSkip;
 		instructionsScreenActions.Pause.performed += HandleInstructionsPause;
@@ -43,19 +44,19 @@ public class InputDelegator : MonoBehaviour
 
 	void OnDisable() {
 		inGameActions.Disable();
-		instructionsScreenActions.Disable();
+		// instructionsScreenActions.Disable();
 		spidyActions.Disable();
 	} 
 
     void HandlePlayerFire(InputAction.CallbackContext context)
     {
-        playerStateScript.Fire(context);
+        playerStateScript.Fire((int)context.ReadValue<float>());
     }
 
 	void HandlePlayerMovement(InputAction.CallbackContext context)
     {
 		Vector2 movement = context.ReadValue<Vector2>();
-		Debug.Log("movement delegation" + movement);
+		// Debug.Log("movement delegation" + movement);
 
 		if (movement.y != 0) {
 			playerStateScript.MoveVertically((int)movement.y);
@@ -64,6 +65,10 @@ public class InputDelegator : MonoBehaviour
         	playerStateScript.ShortJump((int)movement.x);
 		}
     }
+
+	void HandleDropCivilian(InputAction.CallbackContext context) {
+		playerStateScript.dropCivilian();
+	}
 
 	void HandleGamePause(InputAction.CallbackContext context)
     {

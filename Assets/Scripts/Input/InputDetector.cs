@@ -44,6 +44,15 @@ public partial class @InputDetector : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""DropCivilian"",
+                    ""type"": ""Button"",
+                    ""id"": ""7b4305f7-30c2-4a98-9576-1e523893a2f8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -189,6 +198,28 @@ public partial class @InputDetector : IInputActionCollection2, IDisposable
                     ""action"": ""Firing"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""00f3960b-6fdd-4d20-8a0b-251702609c15"",
+                    ""path"": ""<Keyboard>/h"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""GeneralScheme"",
+                    ""action"": ""DropCivilian"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8922d9ff-52c0-44a5-bf2f-eb6e0144c86b"",
+                    ""path"": ""<Keyboard>/j"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""GeneralScheme"",
+                    ""action"": ""DropCivilian"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -287,6 +318,7 @@ public partial class @InputDetector : IInputActionCollection2, IDisposable
         m_SpidyActionMap = asset.FindActionMap("SpidyActionMap", throwIfNotFound: true);
         m_SpidyActionMap_Movement = m_SpidyActionMap.FindAction("Movement", throwIfNotFound: true);
         m_SpidyActionMap_Firing = m_SpidyActionMap.FindAction("Firing", throwIfNotFound: true);
+        m_SpidyActionMap_DropCivilian = m_SpidyActionMap.FindAction("DropCivilian", throwIfNotFound: true);
         // InGameActionMap
         m_InGameActionMap = asset.FindActionMap("InGameActionMap", throwIfNotFound: true);
         m_InGameActionMap_GamePause = m_InGameActionMap.FindAction("GamePause", throwIfNotFound: true);
@@ -355,12 +387,14 @@ public partial class @InputDetector : IInputActionCollection2, IDisposable
     private ISpidyActionMapActions m_SpidyActionMapActionsCallbackInterface;
     private readonly InputAction m_SpidyActionMap_Movement;
     private readonly InputAction m_SpidyActionMap_Firing;
+    private readonly InputAction m_SpidyActionMap_DropCivilian;
     public struct SpidyActionMapActions
     {
         private @InputDetector m_Wrapper;
         public SpidyActionMapActions(@InputDetector wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_SpidyActionMap_Movement;
         public InputAction @Firing => m_Wrapper.m_SpidyActionMap_Firing;
+        public InputAction @DropCivilian => m_Wrapper.m_SpidyActionMap_DropCivilian;
         public InputActionMap Get() { return m_Wrapper.m_SpidyActionMap; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -376,6 +410,9 @@ public partial class @InputDetector : IInputActionCollection2, IDisposable
                 @Firing.started -= m_Wrapper.m_SpidyActionMapActionsCallbackInterface.OnFiring;
                 @Firing.performed -= m_Wrapper.m_SpidyActionMapActionsCallbackInterface.OnFiring;
                 @Firing.canceled -= m_Wrapper.m_SpidyActionMapActionsCallbackInterface.OnFiring;
+                @DropCivilian.started -= m_Wrapper.m_SpidyActionMapActionsCallbackInterface.OnDropCivilian;
+                @DropCivilian.performed -= m_Wrapper.m_SpidyActionMapActionsCallbackInterface.OnDropCivilian;
+                @DropCivilian.canceled -= m_Wrapper.m_SpidyActionMapActionsCallbackInterface.OnDropCivilian;
             }
             m_Wrapper.m_SpidyActionMapActionsCallbackInterface = instance;
             if (instance != null)
@@ -386,6 +423,9 @@ public partial class @InputDetector : IInputActionCollection2, IDisposable
                 @Firing.started += instance.OnFiring;
                 @Firing.performed += instance.OnFiring;
                 @Firing.canceled += instance.OnFiring;
+                @DropCivilian.started += instance.OnDropCivilian;
+                @DropCivilian.performed += instance.OnDropCivilian;
+                @DropCivilian.canceled += instance.OnDropCivilian;
             }
         }
     }
@@ -477,6 +517,7 @@ public partial class @InputDetector : IInputActionCollection2, IDisposable
     {
         void OnMovement(InputAction.CallbackContext context);
         void OnFiring(InputAction.CallbackContext context);
+        void OnDropCivilian(InputAction.CallbackContext context);
     }
     public interface IInGameActionMapActions
     {

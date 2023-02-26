@@ -20,12 +20,28 @@ public class GenerateBuildings : MonoBehaviour
 	GameObject[] buildingWrappers;
 
 	public Vector2 wrapperResetPosition;
+	float gameSpeed;
+	GameState gameState;
+
+	internal float[] buildingPositions;
 
 	void Awake()
 	{	
-		boundsHigh = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
-		boundsLow = Camera.main.ScreenToWorldPoint(new Vector2(0, 0));
+		// TODO put the 
+		gameState = GetComponent<GameState>();
+		boundsHigh = gameState.boundsHigh;
+		boundsLow = gameState.boundsLow;
+
 		blockSize = buildingBlock1Large.GetComponent<SpriteRenderer>().bounds.size;
+
+		buildingPositions = new float[] {
+			// left
+			boundsLow.x + blockSize.x/2,
+			// middle
+			(boundsHigh.x - boundsLow.x)/2 + boundsLow.x,
+			// right
+			boundsHigh.x - blockSize.x/2
+		};
 
 		numberOfBlocksToFillScreen = Mathf.CeilToInt((boundsHigh.y - boundsLow.y)/blockSize.y);
 
@@ -47,7 +63,6 @@ public class GenerateBuildings : MonoBehaviour
 
 		foreach (GameObject wrapper in buildingWrappers)
 		{
-			
 			// Rigidbody2D temp2 = wrapper.AddComponent<Rigidbody2D>();
 			// temp2.isKinematic = true;
 
@@ -67,7 +82,7 @@ public class GenerateBuildings : MonoBehaviour
 			wrapper.AddComponent<BuildingsWrapperScript>();
 		}
 
-		EdgeCollider2D wrapperSwitchTrigger = new GameObject().AddComponent<EdgeCollider2D>();
+		EdgeCollider2D wrapperSwitchTrigger = new GameObject("Screen Bottom Trigger").AddComponent<EdgeCollider2D>();
 		wrapperSwitchTrigger.isTrigger = true;
 		wrapperSwitchTrigger.SetPoints(new List<Vector2>{
 			new Vector2(boundsHigh.x, boundsLow.y),
@@ -92,26 +107,31 @@ public class GenerateBuildings : MonoBehaviour
 
 		foreach (GameObject wrapper in buildingWrappers)
 		{
-			wrapper.transform.position += Vector3.down * Time.fixedDeltaTime;
+			// Debug.Log("gamespeed: " + gameState.getGameSpeed());
+			wrapper.transform.position += Vector3.down * Time.fixedDeltaTime * gameState.getGameSpeed();
 		}
 	}
+
 
 	void generateBlocks(GameObject buildingsWrapper)
 	{
 		float previousHeight = 0;
 
 		for (int i = 0; i < numberOfBlocksToFillScreen; ++i) {
-			// Destroy(buildingBlockRight);
-			buildingBlockRight = Instantiate(buildingBlock1Large, buildingsWrapper.transform); // Instantiate(buildingBlock1Large);
-			buildingBlockRight.transform.position = new Vector2(boundsHigh.x - blockSize.x / 2, previousHeight + boundsLow.y + blockSize.y / 2);
-
 			// Destroy(buildingBlockLeft);
 			buildingBlockRight = Instantiate(buildingBlock1Large, buildingsWrapper.transform);
-			buildingBlockRight.transform.position = new Vector2(boundsLow.x + blockSize.x / 2, previousHeight + boundsLow.y + blockSize.y / 2);
+			buildingBlockRight.transform.position = new Vector2(buildingPositions[0], previousHeight + boundsLow.y + blockSize.y / 2);
+			buildingBlockRight.transform.rotation = Quaternion.Euler(0,180,0);
 
 			// Destroy(buildingBlockMiddle);
 			buildingBlockRight = Instantiate(buildingBlock1Large, buildingsWrapper.transform);
-			buildingBlockRight.transform.position = new Vector2((boundsHigh.x - boundsLow.x)/2 + boundsLow.x, previousHeight + boundsLow.y + blockSize.y / 2);
+			buildingBlockRight.transform.position = new Vector2(buildingPositions[1], previousHeight + boundsLow.y + blockSize.y / 2);
+
+			// Destroy(buildingBlockRight);
+			buildingBlockRight = Instantiate(buildingBlock1Large, buildingsWrapper.transform); // Instantiate(buildingBlock1Large);
+			buildingBlockRight.transform.position = new Vector2(buildingPositions[2], previousHeight + boundsLow.y + blockSize.y / 2);
+			// buildingBlockRight.transform.localScale = Vector3.Cross(buildingBlockRight.transform.localScale, Vector3.left);
+			// buildingBlockRight.transform.rotation = Quaternion.Euler(180,0,0);
 
 			previousHeight += blockSize.y;
 		}

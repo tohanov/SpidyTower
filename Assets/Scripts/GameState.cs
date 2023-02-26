@@ -8,21 +8,45 @@ public class GameState : MonoBehaviour
 {
 	// [SerializeField] AnimationCurve gameSpeedCurve;
 	// float rawGameSpeed;
-	public Stat gameSpeed;
-	private bool gamePaused;
+	[SerializeField] GameObject spidyPrefab;
+	[SerializeField] GameObject spawnersWrapperPrefab;
+	[SerializeField] GameObject buildingsGenerator;
+	internal Stat gameSpeed;
+	// private int gamePaused = 0;
+	[SerializeField] LayerMask regularCullingMask;
+	[SerializeField] LayerMask gamePauseCullingMask;
+
+	public Vector2 boundsHigh;
+	public Vector2 boundsLow;
+
 	// internal Vector2 boundsHigh;
 	// internal Vector2 boundsLow;
+	void Awake() {
+		gameSpeed = new Stat(1, 4, 1, null, null, null);
+
+		boundsHigh = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
+		boundsLow = Camera.main.ScreenToWorldPoint(new Vector2(0, 0));
+		
+		setupScene();
+	}
+
+	void setupScene() {
+		Instantiate(spidyPrefab, transform);
+		Instantiate(spawnersWrapperPrefab, transform);
+		// Instantiate(buildingsGenerator); // TODO
+	}
 
 	internal void TogglePauseGame(InputAction.CallbackContext context)
 	{
-		throw new NotImplementedException();
+		// gamePaused = 1 - gamePaused; // FIXME : remove reference to this from everywhere
+		Time.timeScale = 1 - Time.timeScale;
+
+		// TODO : hide obstacles, civilians and collectables
+		Camera.main.cullingMask = Time.timeScale != 0 ? regularCullingMask : gamePauseCullingMask;
 	}
 
-	void Start() {
-		// boundsLow = Camera.main.ScreenToWorldPoint(new Vector2(0, 0));
-		// boundsHigh = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
-
-		GameObject buildingsHolder1 = new GameObject();
+	internal float getGameSpeed() {
+		return gameSpeed.current;// * (1 - gamePaused);
 	}
 
 	// public float colThickness = 4f;

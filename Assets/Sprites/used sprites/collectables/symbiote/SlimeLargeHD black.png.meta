@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 81410bae2015d1f4e9ad5be751d0aa64
+guid: 2665d8cc044e2cf409da65f3e747ed19
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -47,7 +47,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 48
+  spritePixelsToUnits: 500
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -141,13 +141,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: NES - Crystalis God Slayer - Web_0
+      name: SlimeLargeHD black_0
       rect:
         serializedVersion: 2
-        x: 276
-        y: 9
-        width: 16
-        height: 16
+        x: 0
+        y: 250
+        width: 250
+        height: 250
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -155,20 +155,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 60cfe24dbd6747b42b2808f3d582c300
-      internalID: 456790170
+      spriteID: 992434853c7fa944692408ff1c822e97
+      internalID: 112970169
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NES - Crystalis God Slayer - Web_1
+      name: SlimeLargeHD black_1
       rect:
         serializedVersion: 2
-        x: 258
-        y: 9
-        width: 16
-        height: 16
+        x: 250
+        y: 250
+        width: 250
+        height: 250
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -176,20 +176,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1d61490392ff7be4197ce9a556d5bfac
-      internalID: 11818324
+      spriteID: ce032d25343a25c4f83d04a6a27f9fc1
+      internalID: 821930918
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NES - Crystalis God Slayer - Web_2
+      name: SlimeLargeHD black_2
       rect:
         serializedVersion: 2
-        x: 294
-        y: 9
-        width: 16
-        height: 16
+        x: 500
+        y: 250
+        width: 250
+        height: 250
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -197,20 +197,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f7703acbef8167b45ba1bab2b176d76d
-      internalID: -1819212297
+      spriteID: c311f12ef640e8f45b8800921efa2bb2
+      internalID: -1769949333
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NES - Crystalis God Slayer - Web_3
+      name: SlimeLargeHD black_3
       rect:
         serializedVersion: 2
-        x: 310
-        y: 9
-        width: 16
-        height: 16
+        x: 750
+        y: 250
+        width: 250
+        height: 250
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -218,20 +218,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d8a60dca405ddb340a906bb372255b1f
-      internalID: 1887691634
+      spriteID: eeda00ff8e7c0d24195fc870d06c4264
+      internalID: 423503238
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NES - Crystalis God Slayer - Web_4
+      name: SlimeLargeHD black_4
       rect:
         serializedVersion: 2
-        x: 326
-        y: 9
-        width: 16
-        height: 16
+        x: 0
+        y: 0
+        width: 250
+        height: 250
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -239,8 +239,71 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 75a5ce2c3db77274b9df9eaa8e660f4b
-      internalID: 204693775
+      spriteID: 9d1ea0e0936e4c14197b460f15d9cdec
+      internalID: 1145897128
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlimeLargeHD black_5
+      rect:
+        serializedVersion: 2
+        x: 250
+        y: 0
+        width: 250
+        height: 250
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b82990ea1e1d86743b53d4e6baa3130c
+      internalID: -924186934
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlimeLargeHD black_6
+      rect:
+        serializedVersion: 2
+        x: 500
+        y: 0
+        width: 250
+        height: 250
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 79dac12cedb2cb84580aef3915569b5d
+      internalID: 2073710517
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlimeLargeHD black_7
+      rect:
+        serializedVersion: 2
+        x: 750
+        y: 0
+        width: 250
+        height: 250
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 91321fc9590e8444fa607f5d066b712c
+      internalID: 1712838995
       vertices: []
       indices: 
       edges: []
@@ -256,11 +319,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      NES - Crystalis God Slayer - Web_0: 456790170
-      NES - Crystalis God Slayer - Web_2: 11818324
-      NES - Crystalis God Slayer - Web_3: -1819212297
-      NES - Crystalis God Slayer - Web_1: 335850484
-      NES - Crystalis God Slayer - Web_4: 1887691634
+      SlimeLargeHD black_4: 1145897128
+      SlimeLargeHD black_5: -924186934
+      SlimeLargeHD black_7: 1712838995
+      SlimeLargeHD black_0: 112970169
+      SlimeLargeHD black_2: -1769949333
+      SlimeLargeHD black_6: 2073710517
+      SlimeLargeHD black_1: 821930918
+      SlimeLargeHD black_3: 423503238
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
