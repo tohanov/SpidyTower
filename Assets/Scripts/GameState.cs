@@ -9,7 +9,7 @@ public class GameState : MonoBehaviour
 	// [SerializeField] AnimationCurve gameSpeedCurve;
 	// float rawGameSpeed;
 	[SerializeField] GameObject spidyPrefab;
-	[SerializeField] GameObject spawnersWrapperPrefab;
+	[SerializeField] GameObject obstacleSpawner;
 	[SerializeField] GameObject buildingsGenerator;
 	internal Stat gameSpeed;
 	// private int gamePaused = 0;
@@ -32,7 +32,7 @@ public class GameState : MonoBehaviour
 
 	void setupScene() {
 		Instantiate(spidyPrefab, transform);
-		Instantiate(spawnersWrapperPrefab, transform);
+		Instantiate(obstacleSpawner, transform);
 		// Instantiate(buildingsGenerator); // TODO
 	}
 

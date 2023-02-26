@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6711114219845923013}
   - component: {fileID: 6711114219845923012}
   m_Layer: 0
-  m_Name: SpawnersWrapper
+  m_Name: Obstacle Generator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47,3 +47,8 @@ MonoBehaviour:
   rubbleSpawner: {fileID: 1035441153710414465, guid: 25d28b3b92b5bf746b5a9ede741efff6, type: 3}
   civilianSpawner: {fileID: 70940456186681266, guid: 266314d6d94983540a78754c27018364, type: 3}
   bombSpawner: {fileID: 5227128082447533334, guid: ac6bfb692b10524499d592fca47e5842, type: 3}
+  obstaclePrefabs: {fileID: 0}
+  bombPrefab: {fileID: 6454610239597450522, guid: ac0f087b2f85e5a4e953a02de49d1cd9, type: 3}
+  rubblePrefabs:
+  - {fileID: 6582638520290380336, guid: 91cf0a98a55f1bb48a1c28a99f139233, type: 3}
+  - {fileID: 1998389200560976152, guid: c468103e6ed87ca459426183e086dba9, type: 3}

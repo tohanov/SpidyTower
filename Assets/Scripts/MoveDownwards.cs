@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class MoveDownwards : MonoBehaviour
 {
-	
 	[SerializeField] float fallingSpeed;
 	GameState gameStateScript;
 	void Start() {

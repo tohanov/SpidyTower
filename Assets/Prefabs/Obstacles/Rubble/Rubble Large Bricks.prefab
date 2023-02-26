@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6769464420740655033}
   m_Layer: 0
   m_Name: bricksPallete_0
-  m_TagString: Untagged
+  m_TagString: Rubble
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -144,9 +144,10 @@ GameObject:
   - component: {fileID: 5906305987076274207}
   - component: {fileID: 1848189057135238553}
   - component: {fileID: 4389225949472364693}
+  - component: {fileID: -3008895491678074979}
   m_Layer: 0
   m_Name: Rubble Large Bricks
-  m_TagString: Untagged
+  m_TagString: Obstacle Outer Edge
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -201,6 +202,27 @@ EdgeCollider2D:
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
   m_UseAdjacentEndPoint: 0
+--- !u!50 &-3008895491678074979
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6582638520290380336}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &7017776888195160722
 GameObject:
   m_ObjectHideFlags: 0
@@ -215,7 +237,7 @@ GameObject:
   - component: {fileID: 691907948748260767}
   m_Layer: 0
   m_Name: bricksPallete_1
-  m_TagString: Untagged
+  m_TagString: Rubble
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

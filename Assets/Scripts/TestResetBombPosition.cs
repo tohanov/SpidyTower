@@ -8,9 +8,12 @@ public class TestResetBombPosition : MonoBehaviour
 	// Start is called before the first frame update
 	GenerateBuildings generateBuildings;
 	Animator animator;
+	bool shouldFall = true;
+TrailRenderer bombTrail;
 
 	void Start()
 	{
+		bombTrail = GetComponent<TrailRenderer>();
 		animator = gameObject.GetComponent<Animator>();
 		generateBuildings = GameObject.FindGameObjectWithTag("GameController").GetComponent<GenerateBuildings>();
 	}
@@ -28,9 +31,9 @@ public class TestResetBombPosition : MonoBehaviour
 			// }
 		}
 		
-		if (isActiveAndEnabled)
+		if (shouldFall)
 		{
-			transform.Rotate(Vector3.back * Time.deltaTime * 30f);
+		// 	transform.Rotate(Vector3.back * Time.deltaTime * 30f);
 			transform.position += Vector3.down * Time.deltaTime * 7f;
 		}
 	}
@@ -43,7 +46,11 @@ public class TestResetBombPosition : MonoBehaviour
 	// }
 
 	void explode()
-	{
+	{	
+		bombTrail.emitting = false;
+		bombTrail.Clear();
+
+		shouldFall = false;
 		animator.Play("Bomb_explode");
 		// animator.
 		
@@ -52,18 +59,25 @@ public class TestResetBombPosition : MonoBehaviour
 
 	void OnFinishedExploding() {
 		ReturnToPool();
+		transform.position = Vector3.up * generateBuildings.boundsHigh.y;
+		animator.Play("Bomb_idle");
+		
+		bombTrail.emitting = true;
+		bombTrail.Clear();
+
+		shouldFall = true;
 	}
 
 	void ReturnToPool() {
 		// TODO
-		Debug.Log("ReturnToPool");
+		Debug.Log("NEED TO RETURN TO POOL");
 		// Destroy(gameObject);
 	}
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
 		// Debug.Log("OnTriggerEnter2D");
-
-		transform.position = Vector3.up * generateBuildings.boundsHigh.y;
+		if (collision.CompareTag("Spidy")) explode();
+		if (collision.CompareTag("Screen Border Bottom")) transform.position = Vector3.up * generateBuildings.boundsHigh.y;
 	}
 }

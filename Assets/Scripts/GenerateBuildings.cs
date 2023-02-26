@@ -82,7 +82,11 @@ public class GenerateBuildings : MonoBehaviour
 			wrapper.AddComponent<BuildingsWrapperScript>();
 		}
 
-		EdgeCollider2D wrapperSwitchTrigger = new GameObject("Screen Bottom Trigger").AddComponent<EdgeCollider2D>();
+		GameObject screenBottom = new GameObject("Screen Border Bottom");
+		screenBottom.transform.SetParent(gameObject.transform);
+		screenBottom.gameObject.tag = "Screen Border Bottom";
+
+		EdgeCollider2D wrapperSwitchTrigger = screenBottom.AddComponent<EdgeCollider2D>();
 		wrapperSwitchTrigger.isTrigger = true;
 		wrapperSwitchTrigger.SetPoints(new List<Vector2>{
 			new Vector2(boundsHigh.x, boundsLow.y),
