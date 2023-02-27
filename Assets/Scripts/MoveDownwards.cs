@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class MoveDownwards : MonoBehaviour
 {
-	[SerializeField] float fallingSpeed;
+	/* [SerializeField]  */float fallingSpeed;
 	GameState gameStateScript;
 	void Start() {
 		var gameController = GameObject.FindGameObjectWithTag("GameController");
 		gameStateScript = gameController.GetComponent<GameState>();
+
+		fallingSpeed = gameStateScript.movementSpeed;
 	}
 
 	void FixedUpdate() {

@@ -16,6 +16,7 @@ public class BuildingsWrapperScript : MonoBehaviour
 	private void OnTriggerEnter2D(Collider2D collision) {
 		// Debug.Log("OnTriggerEnter2D");
 		
-		transform.position = generateBuildings.wrapperResetPosition;
+		// FIXME : regenerate blocks at top of screen
+		// transform.position = generateBuildings.wrapperResetPosition;
 	}
 }

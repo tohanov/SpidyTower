@@ -14,7 +14,7 @@ public class ObstacleGenerator : MonoBehaviour
 	GenerateBuildings generateBuildingsScript;
 
 	// TODO
-	float[] rubbleSpawnPositions;
+	Vector3[] rubbleSpawnPositions;
 	Vector2 boundsHigh;
 	Vector2 boundsLow;
 
@@ -77,17 +77,17 @@ public class ObstacleGenerator : MonoBehaviour
 
 				// random building position
 				int positionIndex = Random.Range(0, 3);
-				float spawnPosition = rubbleSpawnPositions[positionIndex];
+				// float spawnPosition = rubbleSpawnPositions[positionIndex];
 
 
 				var rubbleObject = Instantiate(rubblePrefabs[type], transform);
-				rubbleObject.transform.localPosition = Vector3.right * spawnPosition;
+				rubbleObject.transform.localPosition = rubbleSpawnPositions[positionIndex];
 				rubbleObject.GetComponent<Rigidbody2D>().velocity = Vector3.down * 2;
 			}
 			else {
 				float sourceRandomX = Random.Range(boundsLow.x, boundsHigh.x);
 
-				float targetRandomX = Random.Range(rubbleSpawnPositions[0], rubbleSpawnPositions[1]);
+				float targetRandomX = Random.Range(rubbleSpawnPositions[0].x, rubbleSpawnPositions[2].x);
 				float targetRandomY = Random.Range(
 					boundsLow.y,
 					(boundsHigh.y - boundsLow.y) * 0.75f + boundsLow.y

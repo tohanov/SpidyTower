@@ -3,7 +3,19 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Spidy
+  - Obstacle Outer Edge
+  - Collectables/Symbiote
+  - Collectables/Web Cartridge
+  - Obstacles/Bomb
+  - Obstacles/Rubble
+  - Web Cartridge
+  - Building Blocks Row
+  - Screen Border/Right
+  - Screen Border/Left
+  - Screen Border/Bottom
+  - Symbiote
   layers:
   - Default
   - TransparentFX
@@ -55,4 +67,7 @@ TagManager:
     locked: 0
   - name: Obstacles
     uniqueID: 1030624905
+    locked: 0
+  - name: HUD
+    uniqueID: 1579669295
     locked: 0

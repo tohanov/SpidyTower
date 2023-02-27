@@ -16,8 +16,10 @@ public class GameState : MonoBehaviour
 	[SerializeField] LayerMask regularCullingMask;
 	[SerializeField] LayerMask gamePauseCullingMask;
 
-	public Vector2 boundsHigh;
-	public Vector2 boundsLow;
+	internal Vector2 boundsHigh;
+	internal Vector2 boundsLow;
+
+	[SerializeField] internal float movementSpeed;
 
 	// internal Vector2 boundsHigh;
 	// internal Vector2 boundsLow;
@@ -28,6 +30,72 @@ public class GameState : MonoBehaviour
 		boundsLow = Camera.main.ScreenToWorldPoint(new Vector2(0, 0));
 		
 		setupScene();
+	}
+
+	void Start() {
+		Vector2 buildingBlockSize = GetComponent<GenerateBuildings>().blockSize;
+
+		createBorderEdgeCollider(
+			"Screen Border/Bottom",
+
+			boundsLow.x - buildingBlockSize.x,
+			boundsLow.y - buildingBlockSize.y, 
+
+			boundsHigh.x + buildingBlockSize.x, 
+			boundsLow.y - buildingBlockSize.y
+		);
+
+		createBorderEdgeCollider(
+			"Screen Border/Right",
+
+			boundsHigh.x + buildingBlockSize.x, 
+			boundsLow.y - buildingBlockSize.y,
+			
+			boundsHigh.x + buildingBlockSize.x,
+			boundsHigh.y
+		);
+
+		createBorderEdgeCollider(		
+			"Screen Border/Left",
+
+			boundsLow.x - buildingBlockSize.x,
+			boundsLow.y - buildingBlockSize.y,  
+		
+			boundsLow.x - buildingBlockSize.x,
+			boundsHigh.y
+		);
+	}
+
+	private void createBorderEdgeCollider(string tag, float x1, float y1, float x2, float y2)
+	{
+		GameObject screenBorder = new GameObject(tag);
+		screenBorder.transform.SetParent(gameObject.transform);
+		screenBorder.gameObject.tag = tag;
+
+		EdgeCollider2D triggerCollider = screenBorder.AddComponent<EdgeCollider2D>();
+		triggerCollider.isTrigger = true;
+		triggerCollider.SetPoints(new List<Vector2>{
+			new Vector2(x1, y1),
+			new Vector2(x2, y2),
+		});
+
+		// screenBorder.gameObject.AddComponent<Rigidbody2D>();
+
+		Rigidbody2D rb = screenBorder.AddComponent<Rigidbody2D>();
+		rb.isKinematic = true;
+		rb.bodyType = RigidbodyType2D.Kinematic;
+		rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+
+		rb.gravityScale = 0f;
+		rb.mass = 1.0f;
+		rb.drag = 0.0f;
+		rb.angularDrag = 0.05f;
+
+		// 	// Add a Rigidbody2D component to the game object this script is attached to
+		// Rigidbody2D rb = wrapper.AddComponent<Rigidbody2D>();
+
+		// 	// Set the Rigidbody2D properties as desired
+			
 	}
 
 	void setupScene() {

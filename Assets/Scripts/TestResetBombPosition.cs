@@ -9,7 +9,7 @@ public class TestResetBombPosition : MonoBehaviour
 	GenerateBuildings generateBuildings;
 	Animator animator;
 	bool shouldFall = true;
-TrailRenderer bombTrail;
+	TrailRenderer bombTrail;
 
 	void Start()
 	{
@@ -79,6 +79,6 @@ TrailRenderer bombTrail;
 	{
 		// Debug.Log("OnTriggerEnter2D");
 		if (collision.CompareTag("Spidy")) explode();
-		if (collision.CompareTag("Screen Border Bottom")) Destroy(gameObject);//transform.position = Vector3.up * generateBuildings.boundsHigh.y;
+		if (collision.CompareTag("Screen Border/Bottom")) Destroy(gameObject);//transform.position = Vector3.up * generateBuildings.boundsHigh.y;
 	}
 }
