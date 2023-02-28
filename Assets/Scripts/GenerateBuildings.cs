@@ -173,6 +173,7 @@ public class GenerateBuildings : MonoBehaviour
 		GameObject row = Instantiate(buildingBlocksRowPrefab);
 		RowBlocksGenerator bbGen = row.GetComponent<RowBlocksGenerator>();
 		bbGen.generateBuildingsScript = this;
+		bbGen.gameStateScript = gameState;
 		bbGen.setupCollider();
 		bbGen.generateRow();
 

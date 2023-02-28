@@ -33,7 +33,8 @@ public class PlayerState : MonoBehaviour
 	TrailRenderer spidyTrail;
 
 	SpriteRenderer spriteRenderer;
-	int invincibilityCoefficient = 1;
+	// internal int invincibilityCoefficient = 1;
+	internal bool isInvincible = false;
 
 	void Awake()
 	{	
@@ -259,7 +260,21 @@ public class PlayerState : MonoBehaviour
 		// collision.CompareTag("Web Cartridge");
 		// collision.CompareTag("Civilian");
 		// collision.CompareTag("Symbiote");
-		if (collision.CompareTag("Obstacles/Bomb")) {
+		Debug.Log("Spidy Trigger: " + collision.tag);
+		if (!isInvincible && collision.CompareTag("Obstacles/Bomb")) {
+			testBlinking();
+		}
+	}
+
+	private void OnCollisionEnter2D(Collision2D collision) {
+		// private void OnCollisionEnter2D(Collider2D collision) {
+
+		// TODO react accordingly
+		// collision.CompareTag("Web Cartridge");
+		// collision.CompareTag("Civilian");
+		// collision.CompareTag("Symbiote");
+		Debug.Log("Spidy Collider: " + collision.gameObject.tag);
+		if (!isInvincible && collision.gameObject.CompareTag("Obstacles/Rubble")) {
 			testBlinking();
 		}
 	}
@@ -338,16 +353,21 @@ public class PlayerState : MonoBehaviour
 			//.enabled = false;
 			yield return new WaitForSeconds(blinkingInterval);
 			spriteRenderer.color = Color.white;
+			// GetComponent<Collider2D>().isTrigger = true;
 			// spriteRenderer.enabled = true;
 			yield return new WaitForSeconds(blinkingInterval);
 			timeElapsed += 2*blinkingInterval;
+			GetComponent<Collider2D>().isTrigger = true;
 		}
 		
+		GetComponent<Collider2D>().isTrigger = false;
 		toggleInvincibility();
 	}
 
 	void toggleInvincibility() {
-		invincibilityCoefficient = 1 - invincibilityCoefficient;
+		// invincibilityCoefficient = 1 - invincibilityCoefficient;
+		isInvincible = !isInvincible;
+		// GetComponent<Collider2D>().isTrigger = !GetComponent<Collider2D>().isTrigger;
 	}
 
 	internal Vector3 getPositionAsVector3() {
@@ -356,4 +376,8 @@ public class PlayerState : MonoBehaviour
 			spidyCurrentPosition[1]
 		];
 	}
+
+	// bool isInvincible() {
+	// 	return invincibilityCoefficient == 0;
+	// }
 }

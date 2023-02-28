@@ -10,12 +10,12 @@ TagManager:
   - Collectables/Web Cartridge
   - Obstacles/Bomb
   - Obstacles/Rubble
-  - Web Cartridge
   - Building Blocks Row
   - Screen Border/Right
   - Screen Border/Left
   - Screen Border/Bottom
-  - Pause Overlay
+  - HUD/Stats/Steps
+  - HUD/Pause Overlay
   layers:
   - Default
   - TransparentFX

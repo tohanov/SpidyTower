@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8035945081927529581}
   m_Layer: 6
   m_Name: bricksPallete_0
-  m_TagString: Rubble
+  m_TagString: Obstacles/Rubble
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -231,7 +231,7 @@ GameObject:
   - component: {fileID: 7290232263459231588}
   m_Layer: 6
   m_Name: bricksPallete_1
-  m_TagString: Rubble
+  m_TagString: Obstacles/Rubble
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

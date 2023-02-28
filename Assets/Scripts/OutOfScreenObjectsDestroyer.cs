@@ -6,6 +6,7 @@ public class OutOfScreenObjectsDestroyer : MonoBehaviour
 {
 	void OnTriggerEnter2D(Collider2D collision) {
 		if (collision.CompareTag("Building Blocks Row") != true) {
+			Debug.Log("Destroying " + collision.tag);
 			Destroy(collision.gameObject);
 		}
 	}

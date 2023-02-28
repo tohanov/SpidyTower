@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 477115207267163756}
   m_Layer: 6
   m_Name: Web Cartrige
-  m_TagString: Web Cartridge
+  m_TagString: Collectables/Web Cartridge
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

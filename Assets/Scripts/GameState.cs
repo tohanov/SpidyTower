@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -12,9 +13,12 @@ public class GameState : MonoBehaviour
 	[SerializeField] GameObject obstacleSpawner;
 	[SerializeField] GameObject buildingsGenerator;
 	internal Stat gameSpeed;
+	int stepsTravelled;
+
 	// private int gamePaused = 0;
 	[SerializeField] LayerMask regularCullingMask;
 	[SerializeField] LayerMask gamePauseCullingMask;
+	TextMeshProUGUI stepsHUDStat;
 	GameObject pauseOverlay;
 	bool gamePaused;
 
@@ -26,16 +30,28 @@ public class GameState : MonoBehaviour
 	// internal Vector2 boundsHigh;
 	// internal Vector2 boundsLow;
 	void Awake() {
+
+		// TODO : disable debuggin if not in editor (release build)
+
 		gameSpeed = new Stat(1, 4, 1, null, null, null);
 
 		boundsHigh = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
 		boundsLow = Camera.main.ScreenToWorldPoint(new Vector2(0, 0));
 
-		pauseOverlay = GameObject.FindGameObjectWithTag("Pause Overlay");
+		pauseOverlay = GameObject.FindGameObjectWithTag("HUD/Pause Overlay");
 		pauseOverlay.SetActive(false);
 		gamePaused = false;
 
+		// stepsHUDStat = GameObject.FindGameObjectWithTag("HUD/Stats/Steps");
+		stepsHUDStat = GameObject.FindGameObjectWithTag("HUD/Stats/Steps").GetComponent<TextMeshProUGUI>();
+
 		setupScene();
+	}
+
+	internal void incrementStepsTravelled() {
+		++stepsTravelled;
+
+		stepsHUDStat.text = stepsTravelled.ToString();
 	}
 
 	void Start() {

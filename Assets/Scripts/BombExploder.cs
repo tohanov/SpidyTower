@@ -81,7 +81,7 @@ public class BombExploder : MonoBehaviour
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
 		// Debug.Log("OnTriggerEnter2D");
-		if (collision.CompareTag("Spidy")) explode();
+		if (collision.CompareTag("Spidy") && !collision.gameObject.GetComponent<PlayerState>().isInvincible) explode();
 		// if (collision.CompareTag("Screen Border/Bottom")) Destroy(gameObject);//transform.position = Vector3.up * generateBuildings.boundsHigh.y;
 	}
 }

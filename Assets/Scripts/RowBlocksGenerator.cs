@@ -9,6 +9,7 @@ public class RowBlocksGenerator : MonoBehaviour
 {
 	GameObject[] heldBlocks;
 	internal GenerateBuildings generateBuildingsScript;
+	internal GameState gameStateScript;
 
 	// internal GameObject[] regularMiddleBuildingBlockPrefabs;
 	// internal GameObject[] openWindowMiddleBuildingBlockPrefabs;
@@ -129,6 +130,8 @@ public class RowBlocksGenerator : MonoBehaviour
 
 		if (collision.CompareTag("Screen Border/Bottom")) {
 			Debug.Log("row collided");
+
+			gameStateScript.incrementStepsTravelled();
 
 			foreach (GameObject go in heldBlocks) {
 				Destroy(go);
