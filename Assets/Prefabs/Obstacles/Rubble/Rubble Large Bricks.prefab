@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 941589446281764579}
   - component: {fileID: 8370579332976639379}
   - component: {fileID: 5806656536519482452}
-  - component: {fileID: 6769464420740655033}
+  - component: {fileID: 8035945081927529581}
   m_Layer: 6
   m_Name: bricksPallete_0
   m_TagString: Rubble
@@ -112,7 +112,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.64, y: 0.32}
   m_EdgeRadius: 0
---- !u!50 &6769464420740655033
+--- !u!50 &8035945081927529581
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
@@ -131,7 +131,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
   m_Constraints: 0
 --- !u!1 &6582638520290380336
 GameObject:
@@ -143,11 +143,11 @@ GameObject:
   m_Component:
   - component: {fileID: 5906305987076274207}
   - component: {fileID: 1848189057135238553}
-  - component: {fileID: 4389225949472364693}
-  - component: {fileID: -3008895491678074979}
+  - component: {fileID: 3908946895769784383}
+  - component: {fileID: 3553049383781583270}
   m_Layer: 6
   m_Name: Rubble Large Bricks
-  m_TagString: Obstacle Outer Edge
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -180,8 +180,8 @@ SortingGroup:
   m_SortingLayerID: 1030624905
   m_SortingLayer: 5
   m_SortingOrder: 0
---- !u!68 &4389225949472364693
-EdgeCollider2D:
+--- !u!58 &3908946895769784383
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -193,16 +193,10 @@ EdgeCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_EdgeRadius: 0
-  m_Points:
-  - {x: -0.53, y: 0}
-  - {x: 0.93, y: 0}
-  m_AdjacentStartPoint: {x: 0, y: 0}
-  m_AdjacentEndPoint: {x: 0, y: 0}
-  m_UseAdjacentStartPoint: 0
-  m_UseAdjacentEndPoint: 0
---- !u!50 &-3008895491678074979
+  m_Offset: {x: -0.16324264, y: -0.31892043}
+  serializedVersion: 2
+  m_Radius: 0.2637682
+--- !u!50 &3553049383781583270
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
@@ -234,7 +228,7 @@ GameObject:
   - component: {fileID: 804453038650952278}
   - component: {fileID: 528415761773449255}
   - component: {fileID: 6598851460905375981}
-  - component: {fileID: 691907948748260767}
+  - component: {fileID: 7290232263459231588}
   m_Layer: 6
   m_Name: bricksPallete_1
   m_TagString: Rubble
@@ -335,7 +329,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.64, y: 0.32}
   m_EdgeRadius: 0
---- !u!50 &691907948748260767
+--- !u!50 &7290232263459231588
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
@@ -354,5 +348,5 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
   m_Constraints: 0

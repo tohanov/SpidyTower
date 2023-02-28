@@ -54,6 +54,7 @@ public class BombExploder : MonoBehaviour
 
 		shouldFall = false;
 		animator.Play("Bomb_explode");
+		Camera.main.GetComponent<ScreenShake>().performShake();
 		// animator.
 		
 		// gameObject.SetActive(false);

@@ -33,6 +33,7 @@ public class PlayerState : MonoBehaviour
 	TrailRenderer spidyTrail;
 
 	SpriteRenderer spriteRenderer;
+	int invincibilityCoefficient = 1;
 
 	void Awake()
 	{	
@@ -255,10 +256,12 @@ public class PlayerState : MonoBehaviour
 	private void OnTriggerEnter2D(Collider2D collision) {
 
 		// TODO react accordingly
-		collision.CompareTag("Symbiote");
-		collision.CompareTag("Web Cartridge");
-		collision.CompareTag("Civilian");
-		collision.CompareTag("Symbiote");
+		// collision.CompareTag("Web Cartridge");
+		// collision.CompareTag("Civilian");
+		// collision.CompareTag("Symbiote");
+		if (collision.CompareTag("Obstacles/Bomb")) {
+			testBlinking();
+		}
 	}
 
 	internal void dropCivilian()
@@ -327,6 +330,8 @@ public class PlayerState : MonoBehaviour
 
 	IEnumerator damageAnimation() {
 		float timeElapsed = 0;
+		
+		toggleInvincibility();
 
 		while (timeElapsed < damageInvincibiltyDuration) {
 			spriteRenderer.color = transparentWhite;
@@ -337,6 +342,12 @@ public class PlayerState : MonoBehaviour
 			yield return new WaitForSeconds(blinkingInterval);
 			timeElapsed += 2*blinkingInterval;
 		}
+		
+		toggleInvincibility();
+	}
+
+	void toggleInvincibility() {
+		invincibilityCoefficient = 1 - invincibilityCoefficient;
 	}
 
 	internal Vector3 getPositionAsVector3() {

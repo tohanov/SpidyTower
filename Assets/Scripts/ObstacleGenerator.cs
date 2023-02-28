@@ -84,7 +84,7 @@ public class ObstacleGenerator : MonoBehaviour
 
 				var rubbleObject = Instantiate(rubblePrefabs[type], transform);
 				rubbleObject.transform.localPosition = rubbleSpawnPositions[positionIndex];
-				rubbleObject.GetComponent<Rigidbody2D>().velocity = Vector3.down * 2;
+				// rubbleObject.GetComponent<Rigidbody2D>().velocity = Vector3.down * 2;
 			}
 			else {
 				bool aimedAtSpidy = Util.trueWithProbability(0.5f); // TODO
