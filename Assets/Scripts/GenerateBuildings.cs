@@ -131,9 +131,9 @@ public class GenerateBuildings : MonoBehaviour
 	void generateBlock(GameObject[] regularCollection, GameObject[] openWindowCollection, float horizontalPosition, Quaternion rotation, GameObject row) {
 		float probabilityConstant = 1f/(3*numberOfBlocksToFillScreen);
 		
-		var isOpenWindow = trueWithProbability(probabilityConstant);
-		var containsWebCartridge = trueWithProbability(probabilityConstant);
-		var containsSymbiote = trueWithProbability(probabilityConstant);
+		var isOpenWindow = Util.trueWithProbability(probabilityConstant);
+		var containsWebCartridge = Util.trueWithProbability(probabilityConstant);
+		var containsSymbiote = Util.trueWithProbability(probabilityConstant);
 
 		// containsSymbiote = false;
 		// containsWebCartridge = false;
@@ -142,11 +142,11 @@ public class GenerateBuildings : MonoBehaviour
 		GameObject block;
 
 		if (isOpenWindow) {
-			block = Instantiate(randomElement(openWindowCollection), row.transform/*, buildingsWrapper.transform*/);
+			block = Instantiate(Util.randomElement(openWindowCollection), row.transform/*, buildingsWrapper.transform*/);
 			block.transform.localPosition = new Vector3(horizontalPosition, 0);
 		}
 		else {
-			block = Instantiate(randomElement(regularCollection), row.transform/*, buildingsWrapper.transform*/);
+			block = Instantiate(Util.randomElement(regularCollection), row.transform/*, buildingsWrapper.transform*/);
 			block.transform.localPosition = new Vector3(horizontalPosition, 0);
 		}
 
@@ -222,16 +222,6 @@ public class GenerateBuildings : MonoBehaviour
 		}
 
 		buildingRegenerationHeight = previousHeight - blockSize.y;
-	}
-
-	
-	T randomElement<T>(T[] a) {
-		return a[Random.Range(0, a.Length*10) / 10];
-	}
-
-
-	bool trueWithProbability(float a) {
-		return a > Random.Range(0f, 100)/100;
 	}
 
 

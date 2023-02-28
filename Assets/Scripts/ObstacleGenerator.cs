@@ -17,6 +17,7 @@ public class ObstacleGenerator : MonoBehaviour
 	Vector3[] rubbleSpawnPositions;
 	Vector2 boundsHigh;
 	Vector2 boundsLow;
+	PlayerState playerStateScript;
 
 	// Vector3 bombSpawnerBounds;
 	// Vector3[,] civilianSpawnerBounds;
@@ -29,7 +30,8 @@ public class ObstacleGenerator : MonoBehaviour
 		var gameController = GameObject.FindGameObjectWithTag("GameController");
 		gameStateScript = gameController.GetComponent<GameState>();
 		generateBuildingsScript = gameController.GetComponent<GenerateBuildings>();
-
+		
+		playerStateScript = GameObject.FindGameObjectWithTag("Spidy").GetComponent<PlayerState>();
 
 		// initializeSpawnerPositions();
 
@@ -85,17 +87,36 @@ public class ObstacleGenerator : MonoBehaviour
 				rubbleObject.GetComponent<Rigidbody2D>().velocity = Vector3.down * 2;
 			}
 			else {
+				bool aimedAtSpidy = Util.trueWithProbability(0.5f); // TODO
+				Vector3 bombTargetPosition;
+
 				float sourceRandomX = Random.Range(boundsLow.x, boundsHigh.x);
 
-				float targetRandomX = Random.Range(rubbleSpawnPositions[0].x, rubbleSpawnPositions[2].x);
-				float targetRandomY = Random.Range(
-					boundsLow.y,
-					(boundsHigh.y - boundsLow.y) * 0.75f + boundsLow.y
-				);
+				if (aimedAtSpidy) {
+					Debug.Log("aimed at spidy" + Random.Range(0f,1));
+					// bombTargetPosition = playerStateScript.transform.position;
+					bombTargetPosition = playerStateScript.getPositionAsVector3();
+				}
+				else {
+					Debug.Log("NOT aimed at spidy" + Random.Range(0f,1));
+					float targetRandomX = Random.Range(rubbleSpawnPositions[0].x, rubbleSpawnPositions[2].x);
+					float targetRandomY = Random.Range(
+						boundsLow.y,
+						(boundsHigh.y - boundsLow.y) * 0.75f + boundsLow.y
+					);
+
+					bombTargetPosition = new Vector3(targetRandomX, targetRandomY);
+				}
 
 				var bombObject = Instantiate(bombPrefab, transform);
 				bombObject.transform.localPosition = Vector3.right * sourceRandomX;
-				bombObject.GetComponent<Rigidbody2D>().velocity = Vector3.Normalize(new Vector3(targetRandomX, targetRandomY) - bombObject.transform.position) * 4;
+				// bombObject.transform.position = new Vector3(sourceRandomX, boundsHigh.y);
+
+				var heading = bombTargetPosition - bombObject.transform.position;
+				var direction = heading / heading.magnitude; // This is now the normalized direction.
+
+				Debug.DrawLine(bombObject.transform.position, bombTargetPosition, Color.green, 1f);
+				bombObject.GetComponent<Rigidbody2D>().velocity = direction * 4;
 			}
 		}
 	}

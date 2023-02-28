@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestResetBombPosition : MonoBehaviour
+public class BombExploder : MonoBehaviour
 {
 	// Start is called before the first frame update
 	GenerateBuildings generateBuildings;
@@ -31,11 +31,11 @@ public class TestResetBombPosition : MonoBehaviour
 			// }
 		}
 		
-		if (shouldFall)
-		{
-		// 	transform.Rotate(Vector3.back * Time.deltaTime * 30f);
-			transform.position += Vector3.down * Time.deltaTime * 7f;
-		}
+		// if (shouldFall)
+		// {
+		// // 	transform.Rotate(Vector3.back * Time.deltaTime * 30f);
+		// 	transform.position += Vector3.down * Time.deltaTime * 7f;
+		// }
 	}
 
 	// private void recreate()
@@ -50,6 +50,8 @@ public class TestResetBombPosition : MonoBehaviour
 		bombTrail.emitting = false;
 		bombTrail.Clear();
 
+		GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+
 		shouldFall = false;
 		animator.Play("Bomb_explode");
 		// animator.
@@ -59,7 +61,6 @@ public class TestResetBombPosition : MonoBehaviour
 
 	void OnFinishedExploding() {
 		ReturnToPool();
-		Destroy(gameObject);
 		transform.position = Vector3.up * generateBuildings.boundsHigh.y;
 		animator.Play("Bomb_idle");
 
@@ -72,6 +73,7 @@ public class TestResetBombPosition : MonoBehaviour
 	void ReturnToPool() {
 		// TODO
 		Debug.Log("NEED TO RETURN TO POOL");
+		Destroy(gameObject);
 		// Destroy(gameObject);
 	}
 
@@ -79,6 +81,6 @@ public class TestResetBombPosition : MonoBehaviour
 	{
 		// Debug.Log("OnTriggerEnter2D");
 		if (collision.CompareTag("Spidy")) explode();
-		if (collision.CompareTag("Screen Border/Bottom")) Destroy(gameObject);//transform.position = Vector3.up * generateBuildings.boundsHigh.y;
+		// if (collision.CompareTag("Screen Border/Bottom")) Destroy(gameObject);//transform.position = Vector3.up * generateBuildings.boundsHigh.y;
 	}
 }

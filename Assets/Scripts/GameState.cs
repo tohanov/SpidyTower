@@ -78,6 +78,8 @@ public class GameState : MonoBehaviour
 		screenBorder.transform.SetParent(gameObject.transform);
 		screenBorder.gameObject.tag = tag;
 
+		screenBorder.AddComponent<OutOfScreenObjectsDestroyer>();
+
 		EdgeCollider2D triggerCollider = screenBorder.AddComponent<EdgeCollider2D>();
 		triggerCollider.isTrigger = true;
 		triggerCollider.SetPoints(new List<Vector2>{

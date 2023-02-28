@@ -27,30 +27,31 @@ public class PlayerState : MonoBehaviour
 	[SerializeField] AnimationCurve jumpTimeCurve;
 	[SerializeField] float jumpDuration = 1f;
 	[SerializeField] float yJumpMax;
-	Vector3[,] spidyPositions;
-	int[] spidyCurrentPosition;
+	internal Vector3[,] spidyPositions;
+	internal int[] spidyCurrentPosition;
 	bool midJump = false;
 	TrailRenderer spidyTrail;
 
+	SpriteRenderer spriteRenderer;
+
 	void Awake()
 	{	
-		animator = gameObject.GetComponent<Animator>();
+		animator = GetComponent<Animator>();
 		spidyTrail = GetComponent<TrailRenderer>();
 		// spidyTrail.emitting = false;
-		spidyTrail.enabled = false;
-		spidyTrail.Clear();
+		// spidyTrail.enabled = false;
+		// spidyTrail.Clear();
 
-		
+		spriteRenderer = GetComponent<SpriteRenderer>();
+
 		healthDamage = new Dictionary<DamageSource, float>() {
 			{DamageSource.Grenade, 1f},
 			{DamageSource.Rubble, 0.5f}
 		};
-
 		speedDamage = new Dictionary<DamageSource, float>() {
 			{DamageSource.Grenade, 1f},
 			{DamageSource.Rubble, 0}
 		};
-
 		redHalfHearts = new Stat(
 			6,
 			0,
@@ -59,7 +60,6 @@ public class PlayerState : MonoBehaviour
 			deathAndGameOver,
 			null
 		);
-
 		blackHalfHearts = new Stat(
 			0,
 			0,
@@ -68,7 +68,6 @@ public class PlayerState : MonoBehaviour
 			updateGameSpeed,
 			null
 		);
-
 		webs = new Stat(
 			5,
 			0,
@@ -77,7 +76,6 @@ public class PlayerState : MonoBehaviour
 			disableUnloadingOfCivilian,
 			null
 		);
-
 		missedPeople = new Stat(
 			0,
 			0,
@@ -86,9 +84,7 @@ public class PlayerState : MonoBehaviour
 			null,
 			failAndEndGame
 		);
-
 		// GetComponent<GameState>();
-		
 	}
 
 	void Start() {
@@ -96,7 +92,7 @@ public class PlayerState : MonoBehaviour
 		
 		spidyCurrentPosition = new int[] {1, 0};
 		populatePositions();
-		transform.position = spidyPositions[1, 0];
+		transform.position = getPositionAsVector3();
 
 		spidyTrail.enabled = true;
 		spidyTrail.Clear();
@@ -202,7 +198,7 @@ public class PlayerState : MonoBehaviour
 		spidyCurrentPosition[0] = newPositionX;
 		StartCoroutine(ShortJumpCoroutine(
 			transform.position, 
-			spidyPositions[spidyCurrentPosition[0], spidyCurrentPosition[1]]
+			getPositionAsVector3()
 		));
 
 		// transform.position = spidyPositions[newPositionX, playerCurrentPosition[1]];
@@ -247,10 +243,10 @@ public class PlayerState : MonoBehaviour
 		if (newPositionY != spidyCurrentPosition[1]) {
 			// animator.Play(y < 0 ? "Spidy_jump_left" : "Spidy_jump_right");
 			
-			transform.position = spidyPositions[spidyCurrentPosition[0], newPositionY];
+			spidyCurrentPosition[1] = newPositionY;
+			transform.position = getPositionAsVector3();
 			// transform.localPosition = Vector3.zero;//spidyPositions[newPosition, playerCurrentPosition[1]];
 			// transform.TransformPoint(Vector2.one);
-			spidyCurrentPosition[1] = newPositionY;
 		}
 
 		// Debug.Log("updated position: " + string.Join(", ", spidyCurrentPosition));
@@ -318,5 +314,35 @@ public class PlayerState : MonoBehaviour
 	private void disableUnloadingOfCivilian()
 	{
 		throw new NotImplementedException();
+	}
+
+	[SerializeField] float blinkingInterval = 0.15f;
+	[SerializeField] float damageInvincibiltyDuration = 2.5f; 
+	[SerializeField] static float blinkingOpacity = 0.25f; 
+	static Color transparentWhite = new Color(1,1,1,blinkingOpacity);
+	[ContextMenu("Test Blinking")]
+	void testBlinking() {
+		StartCoroutine(damageAnimation());
+	}
+
+	IEnumerator damageAnimation() {
+		float timeElapsed = 0;
+
+		while (timeElapsed < damageInvincibiltyDuration) {
+			spriteRenderer.color = transparentWhite;
+			//.enabled = false;
+			yield return new WaitForSeconds(blinkingInterval);
+			spriteRenderer.color = Color.white;
+			// spriteRenderer.enabled = true;
+			yield return new WaitForSeconds(blinkingInterval);
+			timeElapsed += 2*blinkingInterval;
+		}
+	}
+
+	internal Vector3 getPositionAsVector3() {
+		return spidyPositions[
+			spidyCurrentPosition[0], 
+			spidyCurrentPosition[1]
+		];
 	}
 }
