@@ -299,7 +299,18 @@ public class PlayerState : MonoBehaviour
 		// collision.CompareTag("Symbiote");
 		Debug.Log("Spidy Trigger: " + collision.tag);
 		if (!isInvincible && collision.CompareTag("Obstacles/Bomb")) {
+			// TODO take damage
 			testBlinking();
+		}
+		else if (collision.CompareTag("Collectables/Web Cartridge")) {
+			Destroy(collision.gameObject);
+
+			// TODO collect
+		}
+		else if (collision.CompareTag("Collectables/Symbiote")) {
+			Destroy(collision.gameObject);
+			
+			// TODO collect
 		}
 	}
 
