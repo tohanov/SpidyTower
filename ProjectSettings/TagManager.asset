@@ -17,6 +17,8 @@ TagManager:
   - HUD/Stats/Steps
   - HUD/Pause Overlay
   - HUD/Stats/Healthbar
+  - HUD/Stats/Web Cartridges
+  - HUD/Stats/Missed Civilians
   layers:
   - Default
   - TransparentFX

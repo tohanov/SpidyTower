@@ -19,6 +19,8 @@ public class GameState : MonoBehaviour
 	[SerializeField] LayerMask regularCullingMask;
 	[SerializeField] LayerMask gamePauseCullingMask;
 	TextMeshProUGUI stepsHUDStat;
+	TextMeshProUGUI websHUDStat;
+	TextMeshProUGUI missedHUDStat;
 	GameObject pauseOverlay;
 	bool gamePaused;
 
@@ -44,6 +46,8 @@ public class GameState : MonoBehaviour
 
 		// stepsHUDStat = GameObject.FindGameObjectWithTag("HUD/Stats/Steps");
 		stepsHUDStat = GameObject.FindGameObjectWithTag("HUD/Stats/Steps").GetComponent<TextMeshProUGUI>();
+		websHUDStat = GameObject.FindGameObjectWithTag("HUD/Stats/Web Cartridges").GetComponent<TextMeshProUGUI>();
+		missedHUDStat = GameObject.FindGameObjectWithTag("HUD/Stats/Missed Civilians").GetComponent<TextMeshProUGUI>();
 
 		setupScene();
 	}
@@ -57,6 +61,14 @@ public class GameState : MonoBehaviour
 		++stepsTravelled;
 
 		stepsHUDStat.text = stepsTravelled.ToString();
+	}
+
+	internal void updateAvailableWebCartridges(int current, int max) {
+		websHUDStat.text = current + "/" + max;
+	}
+	
+	internal void updateMissedCivilians(int current, int max) {
+		missedHUDStat.text = current + "/" + max;
 	}
 
 	void Start() {

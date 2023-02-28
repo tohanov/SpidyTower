@@ -11,8 +11,8 @@ public class PlayerState : MonoBehaviour
 	internal Stat redHalfHearts;
 	internal Stat blackHalfHearts;
 
-	Stat missedPeople;
-	Stat webs;
+	Stat missedCivilians;
+	Stat webCartridges;
 
 	GameState gameState;
 	
@@ -77,15 +77,15 @@ public class PlayerState : MonoBehaviour
 			updateGameSpeed,
 			null
 		);
-		webs = new Stat(
-			5,
+		webCartridges = new Stat(
+			3,
 			0,
 			5,
 			() => {redrawWebsCounter(); enableUnloadingOfCivilianIfHasWebs();},
 			disableUnloadingOfCivilian,
 			null
 		);
-		missedPeople = new Stat(
+		missedCivilians = new Stat(
 			0,
 			0,
 			5,
@@ -94,6 +94,15 @@ public class PlayerState : MonoBehaviour
 			failAndEndGame
 		);
 		// GetComponent<GameState>();
+
+		updateWholeHUD();
+	}
+
+	private void updateWholeHUD()
+	{
+		// redrawHearts(); // not needed
+		redrawWebsCounter();
+		redrawMissedCiviliansCounter();
 	}
 
 	void Start() {
@@ -169,7 +178,9 @@ public class PlayerState : MonoBehaviour
 	{
 		switch(itemType) {
 			case ItemType.WebCartridge:
+			webCartridges.updateCurrent(webCartridges.current + 1);
 			break;
+
 			case ItemType.Symbiote:
 			blackHalfHearts.updateCurrent(blackHalfHearts.current + 2);
 			break;
@@ -357,7 +368,7 @@ public class PlayerState : MonoBehaviour
 
 	private void redrawMissedCiviliansCounter()
 	{
-		throw new NotImplementedException();
+		gameState.updateMissedCivilians(missedCivilians.current, missedCivilians.max);
 	}
 
 	private void redrawHearts()
@@ -391,12 +402,12 @@ public class PlayerState : MonoBehaviour
 
 	private void enableUnloadingOfCivilianIfHasWebs()
 	{
-		throw new NotImplementedException();
+		// throw new NotImplementedException();
 	}
 
 	private void redrawWebsCounter()
 	{
-		throw new NotImplementedException();
+		gameState.updateAvailableWebCartridges(webCartridges.current, webCartridges.max);
 	}
 
 	private void disableUnloadingOfCivilian()

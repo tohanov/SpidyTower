@@ -22,8 +22,8 @@ public class Stat
 	Action onFullAction;
 	Action onEmptyAction;
 	public int current { get; private set; }
-	readonly int max;
-	readonly int min;
+	internal int max;
+	internal int min;
 
 	public Stat(int start, int min, int max, Action onUpdatedAction, Action onFullAction, Action onEmptyAction)
 	{

@@ -1613,6 +1613,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -19.800049
       objectReference: {fileID: 0}
+    - target: {fileID: 4691584511662338905, guid: c1e04fee7eac27047b2e973ace9b2a2a, type: 3}
+      propertyPath: m_text
+      value: 0/0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4691584511662338905, guid: c1e04fee7eac27047b2e973ace9b2a2a, type: 3}
+      propertyPath: m_fontSize
+      value: 33.35
+      objectReference: {fileID: 0}
     - target: {fileID: 5000401762339692702, guid: c1e04fee7eac27047b2e973ace9b2a2a, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1709,6 +1717,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -2.2090883
       objectReference: {fileID: 0}
+    - target: {fileID: 5606022877909655726, guid: c1e04fee7eac27047b2e973ace9b2a2a, type: 3}
+      propertyPath: m_TagString
+      value: HUD/Stats/Web Cartridges
+      objectReference: {fileID: 0}
     - target: {fileID: 7502807258133486304, guid: c1e04fee7eac27047b2e973ace9b2a2a, type: 3}
       propertyPath: m_SortingOrder
       value: 0
@@ -1764,6 +1776,18 @@ PrefabInstance:
     - target: {fileID: 8316688667725979638, guid: c1e04fee7eac27047b2e973ace9b2a2a, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8409111604012466668, guid: c1e04fee7eac27047b2e973ace9b2a2a, type: 3}
+      propertyPath: m_text
+      value: 0/0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8409111604012466668, guid: c1e04fee7eac27047b2e973ace9b2a2a, type: 3}
+      propertyPath: m_fontSize
+      value: 33.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 8675174410427585051, guid: c1e04fee7eac27047b2e973ace9b2a2a, type: 3}
+      propertyPath: m_TagString
+      value: HUD/Stats/Missed Civilians
       objectReference: {fileID: 0}
     - target: {fileID: 8820735364339716849, guid: c1e04fee7eac27047b2e973ace9b2a2a, type: 3}
       propertyPath: m_Type
