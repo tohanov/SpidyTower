@@ -171,7 +171,7 @@ public class GenerateBuildings : MonoBehaviour
 		var fixedHeight = height + boundsLow.y + blockSize.y / 2;
 
 		GameObject row = Instantiate(buildingBlocksRowPrefab);
-		BuildingBlocksGenerator bbGen = row.GetComponent<BuildingBlocksGenerator>();
+		RowBlocksGenerator bbGen = row.GetComponent<RowBlocksGenerator>();
 		bbGen.generateBuildingsScript = this;
 		bbGen.setupCollider();
 		bbGen.generateRow();

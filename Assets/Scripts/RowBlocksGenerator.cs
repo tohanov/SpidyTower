@@ -5,7 +5,7 @@ using System;
 using Unity;
 using Random = UnityEngine.Random;
 
-public class BuildingBlocksGenerator : MonoBehaviour
+public class RowBlocksGenerator : MonoBehaviour
 {
 	GameObject[] heldBlocks;
 	internal GenerateBuildings generateBuildingsScript;

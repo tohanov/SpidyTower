@@ -15,7 +15,7 @@ TagManager:
   - Screen Border/Right
   - Screen Border/Left
   - Screen Border/Bottom
-  - Symbiote
+  - Pause Overlay
   layers:
   - Default
   - TransparentFX

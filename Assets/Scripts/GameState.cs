@@ -15,6 +15,8 @@ public class GameState : MonoBehaviour
 	// private int gamePaused = 0;
 	[SerializeField] LayerMask regularCullingMask;
 	[SerializeField] LayerMask gamePauseCullingMask;
+	GameObject pauseOverlay;
+	bool gamePaused;
 
 	internal Vector2 boundsHigh;
 	internal Vector2 boundsLow;
@@ -28,7 +30,11 @@ public class GameState : MonoBehaviour
 
 		boundsHigh = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
 		boundsLow = Camera.main.ScreenToWorldPoint(new Vector2(0, 0));
-		
+
+		pauseOverlay = GameObject.FindGameObjectWithTag("Pause Overlay");
+		pauseOverlay.SetActive(false);
+		gamePaused = false;
+
 		setupScene();
 	}
 
@@ -106,6 +112,8 @@ public class GameState : MonoBehaviour
 
 	internal void TogglePauseGame(InputAction.CallbackContext context)
 	{
+		pauseOverlay.SetActive(gamePaused = !gamePaused);
+
 		// gamePaused = 1 - gamePaused; // FIXME : remove reference to this from everywhere
 		Time.timeScale = 1 - Time.timeScale;
 

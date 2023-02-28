@@ -42,7 +42,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4739989731858629743}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f18551fb83e7afe4994c18df9b6e25a2, type: 3}
+  m_Script: {fileID: 11500000, guid: 7cd25886a2da473468a6007b847829bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1453460376578778212
@@ -57,4 +57,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5f9425c76fd2d0458748cfc1e5990db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fallingSpeed: 0
