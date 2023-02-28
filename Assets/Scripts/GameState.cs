@@ -31,9 +31,9 @@ public class GameState : MonoBehaviour
 	// internal Vector2 boundsLow;
 	void Awake() {
 
-		// TODO : disable debuggin if not in editor (release build)
+		// TODO : disable debugging if not in editor (release build)
 
-		gameSpeed = new Stat(1, 4, 1, null, null, null);
+		gameSpeed = new Stat(1, 1, 4, updateTimeScale, null, null);
 
 		boundsHigh = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
 		boundsLow = Camera.main.ScreenToWorldPoint(new Vector2(0, 0));
@@ -46,6 +46,11 @@ public class GameState : MonoBehaviour
 		stepsHUDStat = GameObject.FindGameObjectWithTag("HUD/Stats/Steps").GetComponent<TextMeshProUGUI>();
 
 		setupScene();
+	}
+
+	private void updateTimeScale()
+	{
+		Time.timeScale = gameSpeed.current;
 	}
 
 	internal void incrementStepsTravelled() {
@@ -133,7 +138,8 @@ public class GameState : MonoBehaviour
 		pauseOverlay.SetActive(gamePaused = !gamePaused);
 
 		// gamePaused = 1 - gamePaused; // FIXME : remove reference to this from everywhere
-		Time.timeScale = 1 - Time.timeScale;
+		if (gamePaused) Time.timeScale = 0;
+		else Time.timeScale = 1;
 
 		// TODO : hide obstacles, civilians and collectables
 		Camera.main.cullingMask = Time.timeScale != 0 ? regularCullingMask : gamePauseCullingMask;

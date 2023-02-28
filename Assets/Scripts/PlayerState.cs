@@ -8,8 +8,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerState : MonoBehaviour
 {
-	Stat redHalfHearts;
-	Stat blackHalfHearts;
+	internal Stat redHalfHearts;
+	internal Stat blackHalfHearts;
 
 	Stat missedPeople;
 	Stat webs;
@@ -17,7 +17,9 @@ public class PlayerState : MonoBehaviour
 	GameState gameState;
 	
 	GenerateBuildings generateBuildingsScript;
-	Dictionary<DamageSource, float> healthDamage;
+	HealthbarPainter healthbarPainterScript;
+
+	Dictionary<DamageSource, int> healthDamage;
 	Dictionary<DamageSource, float> speedDamage;
 	// float[] spidyVerticalPositions;
 	// float[] spidyHorizontalPositions;
@@ -44,33 +46,34 @@ public class PlayerState : MonoBehaviour
 
 		animator = GetComponent<Animator>();
 		spidyTrail = GetComponent<TrailRenderer>();
+		gameState = GetComponentInParent<GameState>();
 		// spidyTrail.emitting = false;
 		// spidyTrail.enabled = false;
 		// spidyTrail.Clear();
 
 		spriteRenderer = GetComponent<SpriteRenderer>();
 
-		healthDamage = new Dictionary<DamageSource, float>() {
-			{DamageSource.Grenade, 1f},
-			{DamageSource.Rubble, 0.5f}
+		healthDamage = new Dictionary<DamageSource, int>() {
+			{DamageSource.Bomb, 2},
+			{DamageSource.Rubble, 1}
 		};
 		speedDamage = new Dictionary<DamageSource, float>() {
-			{DamageSource.Grenade, 1f},
+			{DamageSource.Bomb, 1},
 			{DamageSource.Rubble, 0}
 		};
 		redHalfHearts = new Stat(
 			6,
 			0,
 			6,
-			redrawRedHearts,
+			redrawHearts,
 			deathAndGameOver,
 			null
 		);
 		blackHalfHearts = new Stat(
 			0,
 			0,
-			float.PositiveInfinity,
-			() => {redrawBlackHearts(); updatePlayerStats();},
+			int.MaxValue,
+			() => {redrawHearts(); updatePlayerStats();},
 			updateGameSpeed,
 			null
 		);
@@ -95,7 +98,8 @@ public class PlayerState : MonoBehaviour
 
 	void Start() {
 		generateBuildingsScript = GameObject.FindGameObjectWithTag("GameController").GetComponent<GenerateBuildings>();
-		
+		healthbarPainterScript = GameObject.FindGameObjectWithTag("HUD/Stats/Healthbar").GetComponent<HealthbarPainter>();
+
 		spidyCurrentPosition = new int[] {1, 0};
 		populatePositions();
 		transform.position = getPositionAsVector3();
@@ -146,20 +150,30 @@ public class PlayerState : MonoBehaviour
 
 	public void takeDamage(DamageSource damageSource)
 	{
-		Stat relevantHealthbar = redHalfHearts;
+		int damageLeftovers = Mathf.Clamp(healthDamage[damageSource] - blackHalfHearts.current, 0, int.MaxValue);
 
-		if (!blackHalfHearts.isEmpty())
+		blackHalfHearts.updateCurrent(blackHalfHearts.current - healthDamage[damageSource]);
+
+		if (damageLeftovers > 0)
 		{
-			relevantHealthbar = blackHalfHearts;
+			redHalfHearts.updateCurrent(redHalfHearts.current - damageLeftovers);
 		}
 
-		relevantHealthbar.updateCurrent(relevantHealthbar.current - healthDamage[damageSource]);
-		gameState.gameSpeed.updateCurrent(gameState.gameSpeed.current - speedDamage[damageSource]); // TODO : might want to make immune to speed loss when have black hearts
+		// healthDamage[damageSource]
+
+		
+		// gameState.gameSpeed.updateCurrent(gameState.gameSpeed.current - speedDamage[damageSource]); // TODO : might want to make immune to speed loss when have black hearts
 	}
 
 	public void collectItem(ItemType itemType)
 	{
-		throw new NotImplementedException();
+		switch(itemType) {
+			case ItemType.WebCartridge:
+			break;
+			case ItemType.Symbiote:
+			blackHalfHearts.updateCurrent(blackHalfHearts.current + 2);
+			break;
+		}
 	}
 	
 	public void Fire(int x) {
@@ -300,16 +314,19 @@ public class PlayerState : MonoBehaviour
 		Debug.Log("Spidy Trigger: " + collision.tag);
 		if (!isInvincible && collision.CompareTag("Obstacles/Bomb")) {
 			// TODO take damage
-			testBlinking();
+			invincibilityBlink();
+			takeDamage(DamageSource.Bomb);
 		}
 		else if (collision.CompareTag("Collectables/Web Cartridge")) {
+			collectItem(ItemType.WebCartridge);
 			Destroy(collision.gameObject);
 
 			// TODO collect
 		}
 		else if (collision.CompareTag("Collectables/Symbiote")) {
+			collectItem(ItemType.Symbiote);
 			Destroy(collision.gameObject);
-			
+
 			// TODO collect
 		}
 	}
@@ -323,7 +340,8 @@ public class PlayerState : MonoBehaviour
 		// collision.CompareTag("Symbiote");
 		Debug.Log("Spidy Collider: " + collision.gameObject.tag);
 		if (!isInvincible && collision.gameObject.CompareTag("Obstacles/Rubble")) {
-			testBlinking();
+			invincibilityBlink();
+			takeDamage(DamageSource.Rubble);
 		}
 	}
 
@@ -342,9 +360,9 @@ public class PlayerState : MonoBehaviour
 		throw new NotImplementedException();
 	}
 
-	private void redrawRedHearts()
+	private void redrawHearts()
 	{
-		throw new NotImplementedException();
+		healthbarPainterScript.UpdateHearts();
 	}
 
 	private void deathAndGameOver()
@@ -354,18 +372,22 @@ public class PlayerState : MonoBehaviour
 
 	private void updateGameSpeed()
 	{
-		throw new NotImplementedException();
+		// throw new NotImplementedException();
+		Debug.Log("updateGameSpeed: NOT IMPLEMENTED");
 	}
 
 	private void updatePlayerStats()
 	{
-		throw new NotImplementedException();
+		// TODO update speed, web cartridges max, missed people max
+		// throw new NotImplementedException();
+
+		Debug.Log("updatePlayerStats: NOT IMPLEMENTED");
 	}
 
-	private void redrawBlackHearts()
-	{
-		throw new NotImplementedException();
-	}
+	// private void redrawBlackHearts()
+	// {
+	// 	throw new NotImplementedException();
+	// }
 
 	private void enableUnloadingOfCivilianIfHasWebs()
 	{
@@ -387,7 +409,7 @@ public class PlayerState : MonoBehaviour
 	[SerializeField] static float blinkingOpacity = 0.25f; 
 	static Color transparentWhite = new Color(1,1,1,blinkingOpacity);
 	[ContextMenu("Test Blinking")]
-	void testBlinking() {
+	void invincibilityBlink() {
 		StartCoroutine(damageAnimation());
 	}
 

@@ -16,6 +16,7 @@ TagManager:
   - Screen Border/Bottom
   - HUD/Stats/Steps
   - HUD/Pause Overlay
+  - HUD/Stats/Healthbar
   layers:
   - Default
   - TransparentFX

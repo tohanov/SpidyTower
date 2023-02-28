@@ -9,7 +9,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1016851205607727061, guid: 4afd49a9b674dcf4284b8373865474a3, type: 3}
       propertyPath: m_Name
-      value: black heart
+      value: Single Black Heart
       objectReference: {fileID: 0}
     - target: {fileID: 1016851205607727061, guid: 4afd49a9b674dcf4284b8373865474a3, type: 3}
       propertyPath: m_IsActive
@@ -31,6 +31,18 @@ PrefabInstance:
       propertyPath: emptyHeart
       value: 
       objectReference: {fileID: -1001639430, guid: 5b261975353099243b138bd845220562, type: 3}
+    - target: {fileID: 4686926672656331430, guid: 4afd49a9b674dcf4284b8373865474a3, type: 3}
+      propertyPath: fullHeartSprite
+      value: 
+      objectReference: {fileID: -1001639430, guid: 1c88f7a03cb248f4e9f37ef9ba35af2d, type: 3}
+    - target: {fileID: 4686926672656331430, guid: 4afd49a9b674dcf4284b8373865474a3, type: 3}
+      propertyPath: halfHeartSprite
+      value: 
+      objectReference: {fileID: -352276433, guid: 1c88f7a03cb248f4e9f37ef9ba35af2d, type: 3}
+    - target: {fileID: 4686926672656331430, guid: 4afd49a9b674dcf4284b8373865474a3, type: 3}
+      propertyPath: emptyHeartSprite
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 7395827622753441106, guid: 4afd49a9b674dcf4284b8373865474a3, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -117,28 +129,3 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4afd49a9b674dcf4284b8373865474a3, type: 3}
---- !u!1 &5892703802933728961 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1016851205607727061, guid: 4afd49a9b674dcf4284b8373865474a3, type: 3}
-  m_PrefabInstance: {fileID: 6907257578990356756}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &304655966399655768
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5892703802933728961}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IgnoreLayout: 0
-  m_MinWidth: -1
-  m_MinHeight: -1
-  m_PreferredWidth: -1
-  m_PreferredHeight: -1
-  m_FlexibleWidth: -1
-  m_FlexibleHeight: -1
-  m_LayoutPriority: 1

@@ -21,15 +21,15 @@ public class BombExploder : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		if (Input.GetMouseButtonDown(0)){
-			// if (isActiveAndEnabled) {
-				Debug.Log("explode " + UnityEngine.Random.Range(1,2));
-				explode();
+		// if (Input.GetMouseButtonDown(0)){
+		// 	// if (isActiveAndEnabled) {
+		// 		Debug.Log("explode " + UnityEngine.Random.Range(1,2));
+		// 		explode();
 			// }
 			// else {
 			// 	recreate();
 			// }
-		}
+		// }
 		
 		// if (shouldFall)
 		// {

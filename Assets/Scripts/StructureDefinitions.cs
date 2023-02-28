@@ -6,13 +6,13 @@ using UnityEngine.UI;
 
 public enum DamageSource
 {
-	Grenade,
+	Bomb,
 	Rubble,
 }
 
 public enum ItemType
 {
-	Web,
+	WebCartridge,
 	Symbiote,
 }
 
@@ -21,11 +21,11 @@ public class Stat
 	Action onUpdatedAction;
 	Action onFullAction;
 	Action onEmptyAction;
-	public float current { get; private set; }
-	readonly float max;
-	readonly float min;
+	public int current { get; private set; }
+	readonly int max;
+	readonly int min;
 
-	public Stat(float start, float max, float min, Action onUpdatedAction, Action onFullAction, Action onEmptyAction)
+	public Stat(int start, int min, int max, Action onUpdatedAction, Action onFullAction, Action onEmptyAction)
 	{
 		this.onUpdatedAction = onUpdatedAction;
 		this.onFullAction = onFullAction;
@@ -36,9 +36,9 @@ public class Stat
 		current = Clamped(start);
 	}
 
-	public void updateCurrent(float updatedValue)
+	public void updateCurrent(int updatedValue)
 	{
-		float clampedUpdatedValue = Clamped(updatedValue);
+		int clampedUpdatedValue = Clamped(updatedValue);
 
 		if (current == clampedUpdatedValue)
 		{
@@ -46,19 +46,20 @@ public class Stat
 		}
 
 		current = clampedUpdatedValue;
-		onUpdatedAction();
+
+		if (onUpdatedAction != null) onUpdatedAction();
 		
-		if (isEmpty())
+		if (isEmpty() && onEmptyAction != null)
 		{
 			onEmptyAction();
 		}
-		else if (isFull())
+		else if (isFull() && onFullAction != null)
 		{
 			onFullAction();
 		}
 	}
 
-	float Clamped(float updatedValue)
+	internal int Clamped(int updatedValue)
 	{
 		return Mathf.Clamp(updatedValue, min, max);
 	}

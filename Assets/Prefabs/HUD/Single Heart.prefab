@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 2913234165864661606}
   - component: {fileID: 1128896183957403323}
   - component: {fileID: 1341161542236474096}
+  - component: {fileID: 4686926672656331430}
+  - component: {fileID: 259534293873084861}
   m_Layer: 5
   m_Name: Single Heart
   m_TagString: Untagged
@@ -78,6 +80,41 @@ MonoBehaviour:
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
 --- !u!114 &1341161542236474096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1016851205607727061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreLayout: 0
+  m_MinWidth: -1
+  m_MinHeight: -1
+  m_PreferredWidth: -1
+  m_PreferredHeight: -1
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
+--- !u!114 &4686926672656331430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1016851205607727061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c78071ad9642b740b0aa2508748b0d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  emptyHeartSprite: {fileID: 1561211886, guid: 1c88f7a03cb248f4e9f37ef9ba35af2d, type: 3}
+  halfHeartSprite: {fileID: 2121076890, guid: 1c88f7a03cb248f4e9f37ef9ba35af2d, type: 3}
+  fullHeartSprite: {fileID: 1418345857, guid: 1c88f7a03cb248f4e9f37ef9ba35af2d, type: 3}
+--- !u!114 &259534293873084861
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
