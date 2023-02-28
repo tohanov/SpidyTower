@@ -25,6 +25,8 @@ public class PlayerState : MonoBehaviour
 
 	[SerializeField] AnimationCurve yJumpCurve;
 	[SerializeField] AnimationCurve jumpTimeCurve;
+	[SerializeField] AnimationCurve verticalJumpTimeCurve;
+
 	[SerializeField] float jumpDuration = 1f;
 	[SerializeField] float yJumpMax;
 	internal Vector3[,] spidyPositions;
@@ -38,6 +40,8 @@ public class PlayerState : MonoBehaviour
 
 	void Awake()
 	{	
+		// Time.timeScale = 2;
+
 		animator = GetComponent<Animator>();
 		spidyTrail = GetComponent<TrailRenderer>();
 		// spidyTrail.emitting = false;
@@ -215,14 +219,15 @@ public class PlayerState : MonoBehaviour
 		midJump = true;
 		animator.Play("Spidy_jump_up");
 		
-		float normalizedElapsedTime = 0;
+		float elapsedTime = 0;
 
-		while (normalizedElapsedTime < jumpDuration) {
-			normalizedElapsedTime += Time.deltaTime;
-			float temp = normalizedElapsedTime / jumpDuration;
-			if (normalizedElapsedTime / jumpDuration >= 0.7f) animator.Play("Spidy_jump_down");
+		while (elapsedTime < jumpDuration) {
+			elapsedTime += Time.deltaTime;
+			float normalizedElapsedTime = elapsedTime / jumpDuration;
 
-			float modifiedTime = jumpTimeCurve.Evaluate(temp);
+			if (elapsedTime / jumpDuration >= 0.7f) animator.Play("Spidy_jump_down");
+
+			float modifiedTime = jumpTimeCurve.Evaluate(normalizedElapsedTime);
 
 			transform.position = new Vector3(
 				Mathf.Lerp(start.x, end.x, modifiedTime),
@@ -242,16 +247,48 @@ public class PlayerState : MonoBehaviour
 		
 		int newPositionY = Mathf.Clamp(spidyCurrentPosition[1] + y, 0, 2);
 		
-		if (newPositionY != spidyCurrentPosition[1]) {
-			// animator.Play(y < 0 ? "Spidy_jump_left" : "Spidy_jump_right");
-			
-			spidyCurrentPosition[1] = newPositionY;
-			transform.position = getPositionAsVector3();
-			// transform.localPosition = Vector3.zero;//spidyPositions[newPosition, playerCurrentPosition[1]];
-			// transform.TransformPoint(Vector2.one);
-		}
+		if (newPositionY == spidyCurrentPosition[1]) return;
+		// animator.Play(y < 0 ? "Spidy_jump_left" : "Spidy_jump_right");
+		
+		spidyCurrentPosition[1] = newPositionY;
+
+		StartCoroutine(MoveVerticallyCoroutine(
+			transform.position, 
+			getPositionAsVector3()
+		));
+		// transform.position = getPositionAsVector3();
+		// transform.localPosition = Vector3.zero;//spidyPositions[newPosition, playerCurrentPosition[1]];
+		// transform.TransformPoint(Vector2.one);
 
 		// Debug.Log("updated position: " + string.Join(", ", spidyCurrentPosition));
+	}
+
+	private IEnumerator MoveVerticallyCoroutine(Vector3 start, Vector3 end) 
+	{
+		midJump = true;
+		if (end.y < start.y) animator.Play("Spidy_jump_down");
+		
+		float elapsedTime = 0;
+
+		while (elapsedTime < jumpDuration) {
+			elapsedTime += Time.deltaTime;
+			float normalizedElapsedTime = elapsedTime / jumpDuration;
+			// if (normalizedElapsedTime / jumpDuration >= 0.7f) animator.Play("Spidy_jump_down");
+
+			float modifiedTime = verticalJumpTimeCurve.Evaluate(normalizedElapsedTime);
+
+			transform.position = new Vector3(
+				// Mathf.Lerp(start.x, end.x, modifiedTime),
+				// start.y + yJumpMax * yJumpCurve.Evaluate(modifiedTime)
+				start.x,
+				Mathf.Lerp(start.y, end.y, modifiedTime)
+			);
+
+			yield return null;
+		}
+
+		animator.Play("Spidy_climb");
+		midJump = false;
 	}
 
 	private void OnTriggerEnter2D(Collider2D collision) {
