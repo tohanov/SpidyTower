@@ -14,6 +14,6 @@ public class MoveDownwards : MonoBehaviour
 	}
 
 	void FixedUpdate() {
-		transform.position += Vector3.down * Time.fixedDeltaTime * gameStateScript.getGameSpeed();
+		transform.position += gameStateScript.shootingMovementStopper * Vector3.down * Time.fixedDeltaTime * gameStateScript.getGameSpeed();
 	}
 }

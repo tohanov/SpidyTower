@@ -193,7 +193,9 @@ public class PlayerState : MonoBehaviour
 		if (spidyCurrentPosition[0] == 0 && x < 0 || spidyCurrentPosition[0] == 2 && x > 0) return;
 		
 		rotatePlayerInDirection(x);
-		
+
+		gameState.shootingMovementStopper = 0;
+
 		animator.Play("Spidy_shoot");
 	}
 
@@ -201,6 +203,8 @@ public class PlayerState : MonoBehaviour
 		// Debug.Log("Fired " + (context.ReadValue<float>() < 0 ? "left" : "right"));
 
 		animator.Play("Spidy_climb");
+
+		gameState.shootingMovementStopper = 1;
 	}
 
 	// internal void Move(InputAction.CallbackContext context)

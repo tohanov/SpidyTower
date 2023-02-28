@@ -28,6 +28,7 @@ public class GameState : MonoBehaviour
 	internal Vector2 boundsLow;
 
 	[SerializeField] internal float movementSpeed;
+	internal int shootingMovementStopper = 1;
 
 	// internal Vector2 boundsHigh;
 	// internal Vector2 boundsLow;
