@@ -25,6 +25,7 @@ public class ObstacleGenerator : MonoBehaviour
 	[SerializeField] GameObject[] rubblePrefabs;
 	// [SerializeField] GameObject civilianPrefab;
 	WaitForSeconds spawnDelay;
+	[SerializeField] GameObject civilianPrefab;
 
 	void Awake() {
 		var gameController = GameObject.FindGameObjectWithTag("GameController");
@@ -66,27 +67,27 @@ public class ObstacleGenerator : MonoBehaviour
 
 	IEnumerator ObstacleSpawningCoroutine() {
 		
-		Debug.Log("In spawner coroutine");
+		// Debug.Log("In spawner coroutine");
+
+
 
 		while (true) {
 			yield return spawnDelay;
 
-			Debug.Log("In spawner loop");
+			// Debug.Log("In spawner loop");
 			// random type of obstacle
-			int type = Random.Range(0, 3);
+			int type = Random.Range(0, 4 * 1000) / 1000;
 
 			if (type <= 1) { // chose rubble
-
 				// random building position
 				int positionIndex = Random.Range(0, 3);
 				// float spawnPosition = rubbleSpawnPositions[positionIndex];
-
 
 				var rubbleObject = Instantiate(rubblePrefabs[type], transform);
 				rubbleObject.transform.localPosition = rubbleSpawnPositions[positionIndex];
 				// rubbleObject.GetComponent<Rigidbody2D>().velocity = Vector3.down * 2;
 			}
-			else {
+			else if (type == 2) { // chose bomb
 				bool aimedAtSpidy = Util.trueWithProbability(0.5f); // TODO
 				Vector3 bombTargetPosition;
 
@@ -117,6 +118,27 @@ public class ObstacleGenerator : MonoBehaviour
 
 				Debug.DrawLine(bombObject.transform.position, bombTargetPosition, Color.green, 1f);
 				bombObject.GetComponent<Rigidbody2D>().velocity = direction * 4;
+			}
+			else { // chose civilian
+				bool firstHalf = Util.trueWithProbability(0.5f);
+				int firstIndex;
+
+				if (firstHalf) {
+					firstIndex = 0;
+				}
+				else {
+					firstIndex = 1;
+				}
+
+				float sourceRandomX = Random.Range(
+					rubbleSpawnPositions[firstIndex].x + generateBuildingsScript.blockSize.y/2, 
+					rubbleSpawnPositions[firstIndex + 1].x - generateBuildingsScript.blockSize.y/2
+				);
+
+				var civilian = Instantiate(civilianPrefab, transform);
+				civilian.transform.localPosition = Vector3.right * sourceRandomX;
+				
+				civilian.transform.rotation = Quaternion.Euler(0, 0, Random.Range(0.0f, 360.0f));
 			}
 		}
 	}

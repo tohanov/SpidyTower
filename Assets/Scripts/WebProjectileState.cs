@@ -8,6 +8,7 @@ public class WebProjectileState : MonoBehaviour
 	static Vector3 spawnPoint = new Vector3(0.7f, 0.1f);
 	[SerializeField] float projectileSpeed = 10;
 	int direction = 1;
+	internal Vector3 velocity;
 
     void Awake() {
 		transform.localPosition = spawnPoint;
@@ -16,10 +17,12 @@ public class WebProjectileState : MonoBehaviour
 			direction = -1;
 		}
 		transform.parent = null;
+
+		velocity = direction * projectileSpeed * Vector3.right;
 	}
 
 	void Update() {
-		transform.position += (direction * projectileSpeed * Time.deltaTime) * Vector3.right;
+		transform.position +=  velocity * Time.deltaTime;
 	}
 	// onTrigger
 }

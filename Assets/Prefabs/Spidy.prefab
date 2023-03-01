@@ -213,7 +213,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   webProjectilePrefab: {fileID: 368709259868104247, guid: f0fd058095576b74d8827ca7b53850fc, type: 3}
-  jumpDuration: 0.2
+  jumpDuration: 0.3
   yJumpMax: 1
   blinkingInterval: 0.15
   damageInvincibiltyDuration: 2.5
@@ -354,7 +354,7 @@ Rigidbody2D:
   m_GameObject: {fileID: 2815123548279476928}
   m_BodyType: 1
   m_Simulated: 1
-  m_UseFullKinematicContacts: 0
+  m_UseFullKinematicContacts: 1
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0

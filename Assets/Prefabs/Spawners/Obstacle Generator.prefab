@@ -52,3 +52,4 @@ MonoBehaviour:
   rubblePrefabs:
   - {fileID: 6582638520290380336, guid: 91cf0a98a55f1bb48a1c28a99f139233, type: 3}
   - {fileID: 1998389200560976152, guid: c468103e6ed87ca459426183e086dba9, type: 3}
+  civilianPrefab: {fileID: 1520808304915989497, guid: 662eeb710606db8419386989b948687b, type: 3}
