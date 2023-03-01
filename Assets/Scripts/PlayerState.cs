@@ -50,6 +50,8 @@ public class PlayerState : MonoBehaviour
 	TrailRenderer spidyTrail;
 	string animationNamePrefix = "";
 
+	string playedLast = "Spidy_shoot";
+
 	SpriteRenderer spriteRenderer;
 	// internal int invincibilityCoefficient = 1;
 	internal bool isInvincible = false;
@@ -228,7 +230,8 @@ public class PlayerState : MonoBehaviour
 		if (midJump) return;
 
 		rotatePlayerInDirection(x);
-		animator.Play(animationNamePrefix + "Spidy_shoot");
+
+		setAnimation("Spidy_shoot");
 
 		if (webCartridges.isEmpty()) return;
 		
@@ -241,10 +244,17 @@ public class PlayerState : MonoBehaviour
 		Instantiate(webProjectilePrefab, transform);
 	}
 
+	private void setAnimation(string animationName)
+	{
+		playedLast = animationName;
+		animator.Play(animationNamePrefix + animationName);
+	}
+
 	public void EndFire(int x) {
 		// Debug.Log("Fired " + (context.ReadValue<float>() < 0 ? "left" : "right"));
 
-		animator.Play(animationNamePrefix + "Spidy_climb");
+		
+		setAnimation("Spidy_climb");
 
 		gameState.shootingMovementStopper = 1;
 
@@ -294,7 +304,7 @@ public class PlayerState : MonoBehaviour
 	private IEnumerator ShortJumpCoroutine(Vector3 start, Vector3 end) 
 	{
 		// midJump = true;
-		animator.Play(animationNamePrefix + "Spidy_jump_up");
+		setAnimation("Spidy_jump_up");
 		
 		float elapsedTime = 0;
 
@@ -302,7 +312,7 @@ public class PlayerState : MonoBehaviour
 			elapsedTime += gameState.getOverallSpeed()/gameState.symbioteBoost * Time.fixedDeltaTime;
 			float normalizedElapsedTime = elapsedTime / jumpDuration;
 
-			if (elapsedTime / jumpDuration >= 0.7f) animator.Play(animationNamePrefix + "Spidy_jump_down");
+			if (elapsedTime / jumpDuration >= 0.7f) setAnimation("Spidy_jump_down");
 
 			float modifiedTime = jumpTimeCurve.Evaluate(normalizedElapsedTime);
 
@@ -315,7 +325,7 @@ public class PlayerState : MonoBehaviour
 			yield return wffu;
 		}
 
-		animator.Play(animationNamePrefix + "Spidy_climb");
+		setAnimation("Spidy_climb");
 
 		inputDelegator.spidyActions.Enable();
 		// midJump = false;
@@ -350,7 +360,7 @@ public class PlayerState : MonoBehaviour
 	private IEnumerator MoveVerticallyCoroutine(Vector3 start, Vector3 end) 
 	{
 		// midJump = true;
-		if (end.y < start.y) animator.Play(animationNamePrefix + "Spidy_jump_down");
+		if (end.y < start.y) setAnimation("Spidy_jump_down");
 		
 		float elapsedTime = 0;
 
@@ -371,7 +381,7 @@ public class PlayerState : MonoBehaviour
 			yield return wffu;
 		}
 
-		animator.Play(animationNamePrefix + "Spidy_climb");
+		setAnimation("Spidy_climb");
 
 		inputDelegator.spidyActions.Enable();
 		// midJump = false;
@@ -461,7 +471,7 @@ public class PlayerState : MonoBehaviour
 	{
 		collider.enabled = false;
 
-		animator.Play(animationNamePrefix + "Spidy_jump_down");
+		setAnimation("Spidy_jump_down");
 		float elapsedTime = 0;
 
 		while (elapsedTime < 3) {
@@ -534,7 +544,7 @@ public class PlayerState : MonoBehaviour
 		// TODO update speed, web cartridges max, missed people max
 		// throw new NotImplementedException();
 
-		Debug.Log("updatePlayerStats: NOT IMPLEMENTED");
+		// Debug.Log("updatePlayerStats: NOT IMPLEMENTED");
 
 		missedCivilians.max = originalMissedCiviliansMax + blackHalfHearts.current / 2;
 		webCartridges.max = originalWebCartridgesMax + 3 * blackHalfHearts.current / 2;
@@ -544,6 +554,8 @@ public class PlayerState : MonoBehaviour
 
 		if ( ! blackHalfHearts.isEmpty()) {
 			animationNamePrefix = "Black";
+			animator.PlayInFixedTime(animationNamePrefix + playedLast, -1, animator.playbackTime);
+			
 			spidyTrail.colorGradient = blackSpidyGradient;
 			// set current animation to black
 			// set future animations to black
@@ -552,6 +564,8 @@ public class PlayerState : MonoBehaviour
 		else {
 			animationNamePrefix = "";
 			// spidyTrail.colorGradient.colorKeys[0].color = Color.black; // Color.red;
+			animator.PlayInFixedTime(animationNamePrefix + playedLast, -1, animator.playbackTime);
+			
 			spidyTrail.colorGradient = redSpidyGradient;
 			// set current animation to red
 			// set future animations to red
