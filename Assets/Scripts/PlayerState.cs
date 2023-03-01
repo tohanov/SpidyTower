@@ -41,11 +41,12 @@ public class PlayerState : MonoBehaviour
 	SpriteRenderer spriteRenderer;
 	// internal int invincibilityCoefficient = 1;
 	internal bool isInvincible = false;
+	Collider2D collider;
 
 	void Awake()
 	{	
 		// Time.timeScale = 2;
-
+		collider = GetComponent<Collider2D>();
 		animator = GetComponent<Animator>();
 		spidyTrail = GetComponent<TrailRenderer>();
 		gameState = GetComponentInParent<GameState>();
@@ -68,16 +69,16 @@ public class PlayerState : MonoBehaviour
 			0,
 			6,
 			redrawHearts,
-			deathAndGameOver,
-			null
+			null,
+			deathAndGameOver
 		);
 		blackHalfHearts = new Stat(
 			0,
 			0,
 			int.MaxValue,
 			() => {redrawHearts(); updatePlayerStats();},
-			updateGameSpeed,
-			null
+			null, // updateGameSpeed,
+			deathAndGameOver
 		);
 		webCartridges = new Stat(
 			5, //3,
@@ -193,14 +194,17 @@ public class PlayerState : MonoBehaviour
 		// Debug.Log("Fired " + (context.ReadValue<float>() < 0 ? "left" : "right"));
 
 		if (spidyCurrentPosition[0] == 0 && x < 0 || spidyCurrentPosition[0] == 2 && x > 0) return;
-		
-		rotatePlayerInDirection(x);
+		if (midJump) return;
 
+		rotatePlayerInDirection(x);
+		animator.Play("Spidy_shoot");
+
+		if (webCartridges.isEmpty()) return;
+
+		webCartridges.updateCurrent(webCartridges.current - 1);
 		gameState.shootingMovementStopper = 0;
 
 		Instantiate(webProjectilePrefab, transform);
-
-		animator.Play("Spidy_shoot");
 	}
 
 	public void EndFire(int x) {
@@ -255,7 +259,7 @@ public class PlayerState : MonoBehaviour
 		float elapsedTime = 0;
 
 		while (elapsedTime < jumpDuration) {
-			elapsedTime += gameState.shootingMovementStopper * Time.deltaTime;
+			elapsedTime += gameState.shootingMovementStopper * gameState.gameOverStopper * Time.deltaTime;
 			float normalizedElapsedTime = elapsedTime / jumpDuration;
 
 			if (elapsedTime / jumpDuration >= 0.7f) animator.Play("Spidy_jump_down");
@@ -304,7 +308,7 @@ public class PlayerState : MonoBehaviour
 		float elapsedTime = 0;
 
 		while (elapsedTime < jumpDuration) {
-			elapsedTime += Time.deltaTime;
+			elapsedTime += gameState.shootingMovementStopper * gameState.gameOverStopper * Time.deltaTime;
 			float normalizedElapsedTime = elapsedTime / jumpDuration;
 			// if (normalizedElapsedTime / jumpDuration >= 0.7f) animator.Play("Spidy_jump_down");
 
@@ -386,8 +390,45 @@ public class PlayerState : MonoBehaviour
 
 	private void deathAndGameOver()
 	{
-		throw new NotImplementedException();
+		if (blackHalfHearts.current != 0 || redHalfHearts.current != 0) return;
+		
+		Debug.Log("deathAndGameOver() after the if");
+		gameState.GetComponent<InputDelegator>().disableSpidyInput();
+		gameState.gameOverStopper = 0;
+
+		spidyTrail.emitting = false;
+		spidyTrail.enabled = false;
+		spidyTrail.Clear();
+
+		gameState.gameSpeed.updateCurrent(1);
+		StopAllCoroutines();
+		
+		Vector3 target = new Vector3(transform.position.x, gameState.boundsLow.y - generateBuildingsScript.blockSize.y);
+		// Vector3 source = transform.position;
+
+		StartCoroutine(deathFallCoroutine(transform.position, target));
+
+		// Destroy(gameObject);
 	}
+
+	private IEnumerator deathFallCoroutine(Vector3 source, Vector3 target) 
+	{
+		collider.enabled = false;
+
+		animator.Play("Spidy_jump_down");
+		float elapsedTime = 0;
+
+		while (elapsedTime < 3) {
+			elapsedTime += 0.5f * Time.deltaTime;
+			transform.position = Vector3.Lerp(source, target, elapsedTime);
+			yield return null;
+		}
+
+		Time.timeScale = 0;
+		// gameState.gameSpeed.updateCurrent(0);
+		// Time.timeScale = 0;
+	}
+
 
 	private void updateGameSpeed()
 	{
@@ -446,10 +487,10 @@ public class PlayerState : MonoBehaviour
 			// spriteRenderer.enabled = true;
 			yield return new WaitForSeconds(blinkingInterval);
 			timeElapsed += 2*blinkingInterval;
-			GetComponent<Collider2D>().isTrigger = true;
+			collider.isTrigger = true;
 		}
 		
-		GetComponent<Collider2D>().isTrigger = false;
+		collider.isTrigger = false;
 		toggleInvincibility();
 	}
 

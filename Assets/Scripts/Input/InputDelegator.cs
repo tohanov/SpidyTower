@@ -74,7 +74,7 @@ public class InputDelegator : MonoBehaviour
     {
 		if (spidyActions.enabled) spidyActions.Disable();
 		else spidyActions.Enable();
-		
+
         gameState.TogglePauseGame(context);
     }
 
@@ -86,5 +86,10 @@ public class InputDelegator : MonoBehaviour
 	private void HandleSkip(InputAction.CallbackContext obj)
 	{
 		throw new NotImplementedException();
+	}
+
+	internal void disableSpidyInput()
+	{
+		spidyActions.Disable();
 	}
 }
