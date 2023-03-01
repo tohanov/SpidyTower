@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Random = UnityEngine.Random;
 
 public class GameState : MonoBehaviour
 {
@@ -31,7 +32,7 @@ public class GameState : MonoBehaviour
 	internal int shootingMovementStopper = 1;
 	internal int gameOverStopper = 1;
 	internal float civilianHoldingCoefficient = 1;
-	internal int /*float*/ symbioteBoost = 1; // 2; // boosting is done by halfs, so need to start with 2 to start normally
+	internal /* int */ float symbioteBoost = 1; // 2; // boosting is done by halfs, so need to start with 2 to start normally
 
 	// internal Vector2 boundsHigh;
 	// internal Vector2 boundsLow;
@@ -172,7 +173,12 @@ public class GameState : MonoBehaviour
 
 	internal float getOverallSpeed()
 	{
-		return (symbioteBoost/* /2 */) * civilianHoldingCoefficient * gameOverStopper * shootingMovementStopper;
+
+		float result = (symbioteBoost/* /2 */) * civilianHoldingCoefficient * gameOverStopper * shootingMovementStopper;
+
+		Debug.Log(Random.Range(0f, 1) + " overallspeed: " + result);
+
+		return result;
 	}
 
 	// public float colThickness = 4f;

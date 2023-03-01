@@ -86,7 +86,7 @@ MonoBehaviour:
     m_HSlider: 0
     m_VSlider: 0
     m_IgnoreScrollWheelUntilClicked: 0
-    m_EnableMouseInput: 1
+    m_EnableMouseInput: 0
     m_EnableSliderZoomHorizontal: 0
     m_EnableSliderZoomVertical: 0
     m_UniformScale: 1
@@ -187,8 +187,8 @@ MonoBehaviour:
     y: 0
     width: 594
     height: 563
-  m_MinSize: {x: 100, y: 100}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 101, y: 121}
+  m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 2}
   m_Panes:
   - {fileID: 2}
@@ -213,8 +213,8 @@ MonoBehaviour:
     y: 0
     width: 604
     height: 563
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 202, y: 221}
+  m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 7}
   m_Panes:
   - {fileID: 7}
@@ -599,8 +599,8 @@ MonoBehaviour:
     y: 0
     width: 290
     height: 563
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 202, y: 221}
+  m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 9}
   m_Panes:
   - {fileID: 9}
@@ -639,7 +639,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: de40feff9453feff3455fefff061feff16fbffff22fbffff24fbffffc46e0000da6e0000dc6e0000e86e0000
+      m_ExpandedIDs: aecefbff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -687,7 +687,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 47509
+  controlID: 62324
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -698,7 +698,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: ProjectBrowser
+  m_Name: ConsoleWindow
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
@@ -707,16 +707,16 @@ MonoBehaviour:
     y: 0
     width: 678
     height: 424
-  m_MinSize: {x: 231, y: 271}
-  m_MaxSize: {x: 10001, y: 10021}
-  m_ActualView: {fileID: 12}
+  m_MinSize: {x: 101, y: 121}
+  m_MaxSize: {x: 4001, y: 4021}
+  m_ActualView: {fileID: 13}
   m_Panes:
   - {fileID: 12}
   - {fileID: 13}
   - {fileID: 14}
   - {fileID: 15}
-  m_Selected: 0
-  m_LastSelected: 1
+  m_Selected: 1
+  m_LastSelected: 0
 --- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -758,22 +758,22 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Sprites/used sprites/sliced building/open windows
+    - Assets/Prefabs
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Sprites/used sprites/sliced building/open windows
+  - Assets/Prefabs
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\SB\UnityProjects\Spidy Tower v2
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 357}
-    m_SelectedIDs: e8800000
-    m_LastClickedID: 33000
-    m_ExpandedIDs: 00000000587400005a7400005c7400005e74000060740000627400006474000066740000687400006a7400006c7400006e740000f882000000ca9a3b
+    scrollPos: {x: 0, y: 255}
+    m_SelectedIDs: 68740000
+    m_LastClickedID: 29800
+    m_ExpandedIDs: 00000000587400005a7400005c7400005e74000060740000627400006474000066740000687400006a7400006c7400006e74000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -826,10 +826,10 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 
-    m_LastClickedInstanceID: 0
+    m_SelectedInstanceIDs: ccee0000
+    m_LastClickedInstanceID: 61132
     m_HadKeyboardFocusLastEvent: 0
-    m_ExpandedInstanceIDs: 7a620000746200002a790000507e0000047e0000d0a8000000000000f2c4000076b50000beba0000ca8d0000c88d000088970000ac8d00006c6f00004e6f0000e694000090700000a87000008c710000907d000094f50000c0bb0000f2700000d4710000e0700000ec700000ea700000e2700000
+    m_ExpandedInstanceIDs: 7a620000746200002a790000507e0000047e0000d0a8000000000000f2c4000076b50000beba0000ca8d0000c88d000088970000ac8d00006c6f00004e6f0000e694000090700000a87000008c710000907d000094f50000c0bb0000f2700000d4710000e0700000ec700000ea700000e2700000d6700000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1947,8 +1947,8 @@ MonoBehaviour:
     y: 0
     width: 810
     height: 424
-  m_MinSize: {x: 100, y: 100}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 102, y: 121}
+  m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 17}
   m_Panes:
   - {fileID: 17}
@@ -1985,7 +1985,7 @@ MonoBehaviour:
     m_SaveData: []
   m_LockTracker:
     m_IsLocked: 0
-  m_LastSelectedObjectID: 55600
+  m_LastSelectedObjectID: 61132
 --- !u!114 &18
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -2103,9 +2103,9 @@ MonoBehaviour:
       e32: 0
       e33: 1
   m_PreviewAnimator: {fileID: 0}
-  m_AnimatorController: {fileID: 9100000, guid: 37224e0dabe422e47a242f9880a706e1, type: 2}
+  m_AnimatorController: {fileID: 9100000, guid: 816557a1788719b4bb951d32b9db9015, type: 2}
   m_BreadCrumbs:
-  - m_Target: {fileID: -5672123667230590150, guid: 37224e0dabe422e47a242f9880a706e1, type: 2}
+  - m_Target: {fileID: -8409240304295276180, guid: 816557a1788719b4bb951d32b9db9015, type: 2}
     m_ScrollPosition: {x: 0, y: 0}
   stateMachineGraph: {fileID: 0}
   stateMachineGraphGUI: {fileID: 0}
@@ -2137,8 +2137,8 @@ MonoBehaviour:
     y: 0
     width: 367
     height: 987
-  m_MinSize: {x: 275, y: 50}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 276, y: 71}
+  m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 20}
   m_Panes:
   - {fileID: 20}

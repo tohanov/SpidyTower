@@ -6,6 +6,15 @@ using UnityEngine.UI;
 using UnityEngine.InputSystem;
 
 
+
+
+	
+		// spidyActions.Firing.
+		// spidyActions.Movement.
+		// spidyActions.DropCivilian.
+
+
+
 public class PlayerState : MonoBehaviour
 {
 	[SerializeField] Gradient redSpidyGradient;
@@ -210,6 +219,7 @@ public class PlayerState : MonoBehaviour
 			break;
 		}
 	}
+
 	
 	public void Fire(int x) {
 		// Debug.Log("Fired " + (context.ReadValue<float>() < 0 ? "left" : "right"));
@@ -221,6 +231,9 @@ public class PlayerState : MonoBehaviour
 		animator.Play(animationNamePrefix + "Spidy_shoot");
 
 		if (webCartridges.isEmpty()) return;
+		
+		// midJump = true; // hack to block jumping while shooting cause it causes a bug
+		inputDelegator.spidyActions.Disable();
 
 		webCartridges.updateCurrent(webCartridges.current - 1);
 		gameState.shootingMovementStopper = 0;
@@ -234,6 +247,9 @@ public class PlayerState : MonoBehaviour
 		animator.Play(animationNamePrefix + "Spidy_climb");
 
 		gameState.shootingMovementStopper = 1;
+
+		inputDelegator.spidyActions.Enable();
+		// midJump = false;
 	}
 
 	// internal void Move(InputAction.CallbackContext context)
@@ -252,6 +268,9 @@ public class PlayerState : MonoBehaviour
 	internal void ShortJump(int x)
 	{
 		if (midJump) return;
+		
+		// midJump = true;
+		inputDelegator.spidyActions.Disable();
 
 		int newPositionX = Mathf.Clamp(spidyCurrentPosition[0] + x, 0, 2);
 
@@ -274,13 +293,13 @@ public class PlayerState : MonoBehaviour
 
 	private IEnumerator ShortJumpCoroutine(Vector3 start, Vector3 end) 
 	{
-		midJump = true;
+		// midJump = true;
 		animator.Play(animationNamePrefix + "Spidy_jump_up");
 		
 		float elapsedTime = 0;
 
 		while (elapsedTime < jumpDuration) {
-			elapsedTime += gameState.getOverallSpeed() * Time.deltaTime;
+			elapsedTime += gameState.getOverallSpeed()/gameState.symbioteBoost * Time.fixedDeltaTime;
 			float normalizedElapsedTime = elapsedTime / jumpDuration;
 
 			if (elapsedTime / jumpDuration >= 0.7f) animator.Play(animationNamePrefix + "Spidy_jump_down");
@@ -292,16 +311,21 @@ public class PlayerState : MonoBehaviour
 				start.y + yJumpMax * yJumpCurve.Evaluate(modifiedTime)
 			);
 
-			yield return null;
+			// yield return null;
+			yield return wffu;
 		}
 
 		animator.Play(animationNamePrefix + "Spidy_climb");
-		midJump = false;
+
+		inputDelegator.spidyActions.Enable();
+		// midJump = false;
 	}
 
 	internal void MoveVertically(int y)
 	{
 		if (midJump) return;
+		// midJump = true;
+		inputDelegator.spidyActions.Disable();
 		
 		int newPositionY = Mathf.Clamp(spidyCurrentPosition[1] + y, 0, 2);
 		
@@ -321,15 +345,17 @@ public class PlayerState : MonoBehaviour
 		// Debug.Log("updated position: " + string.Join(", ", spidyCurrentPosition));
 	}
 
+	WaitForFixedUpdate wffu = new WaitForFixedUpdate();
+
 	private IEnumerator MoveVerticallyCoroutine(Vector3 start, Vector3 end) 
 	{
-		midJump = true;
+		// midJump = true;
 		if (end.y < start.y) animator.Play(animationNamePrefix + "Spidy_jump_down");
 		
 		float elapsedTime = 0;
 
 		while (elapsedTime < jumpDuration) {
-			elapsedTime += gameState.getOverallSpeed() * Time.deltaTime;
+			elapsedTime += gameState.getOverallSpeed()/gameState.symbioteBoost * Time.fixedDeltaTime;
 			float normalizedElapsedTime = elapsedTime / jumpDuration;
 			// if (normalizedElapsedTime / jumpDuration >= 0.7f) animator.Play("Spidy_jump_down");
 
@@ -342,11 +368,13 @@ public class PlayerState : MonoBehaviour
 				Mathf.Lerp(start.y, end.y, modifiedTime)
 			);
 
-			yield return null;
+			yield return wffu;
 		}
 
 		animator.Play(animationNamePrefix + "Spidy_climb");
-		midJump = false;
+
+		inputDelegator.spidyActions.Enable();
+		// midJump = false;
 	}
 
 	private void OnTriggerEnter2D(Collider2D collision) {
@@ -470,14 +498,19 @@ public class PlayerState : MonoBehaviour
 	internal void catchCivilian(CivilianState state) {
 		heldCivilianStateScript = state;
 
-		gameState.civilianHoldingCoefficient = 0.5f;
+		gameState.civilianHoldingCoefficient = 0.70f;
 	}
 
 	internal void dropCivilian()
 	{
 		if (midJump || webCartridges.isEmpty()) return;
 
-		heldCivilianStateScript.setState(CivilianState.State.Bound);
+		// heldCivilianStateScript.setState(CivilianState.State.Bound);
+		heldCivilianStateScript.animator.Play("Civilian_bound");
+		// heldCivilianStateScript.rigidBody.velocity = CivilianState.velocity;
+		// heldCivilianStateScript.rigidBody.Sleep();
+		heldCivilianStateScript.gameObject.AddComponent<MoveDownwards>();
+		heldCivilianStateScript.transform.parent = null;
 		heldCivilianStateScript = null;
 
 		webCartridges.updateCurrent(webCartridges.current - 1);
@@ -507,7 +540,7 @@ public class PlayerState : MonoBehaviour
 		webCartridges.max = originalWebCartridgesMax + 3 * blackHalfHearts.current / 2;
 		forceStatsRefresh();
 		
-		gameState.symbioteBoost = 1 + Mathf.CeilToInt(blackHalfHearts.current / 2.0f); // keep int
+		gameState.symbioteBoost = 1 + /*Mathf.CeilToInt(*/blackHalfHearts.current / 4.0f/*)*/; // keep int
 
 		if ( ! blackHalfHearts.isEmpty()) {
 			animationNamePrefix = "Black";
@@ -527,8 +560,10 @@ public class PlayerState : MonoBehaviour
 	}
 
 	void forceStatsRefresh() {
+		// missedCivilians.onUpdatedAction();
 		missedCivilians.updateCurrent(missedCivilians.current);
 		webCartridges.updateCurrent(webCartridges.current);
+		// webCartridges.onUpdatedAction();
 	}
 
 	// private void redrawBlackHearts()

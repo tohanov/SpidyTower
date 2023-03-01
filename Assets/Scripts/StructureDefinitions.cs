@@ -18,7 +18,7 @@ public enum ItemType
 
 public class Stat
 {
-	Action onUpdatedAction;
+	internal Action onUpdatedAction;
 	Action onFullAction;
 	Action onEmptyAction;
 	public int current { get; private set; }
@@ -40,10 +40,10 @@ public class Stat
 	{
 		int clampedUpdatedValue = Clamped(updatedValue);
 
-		if (current == clampedUpdatedValue)
-		{
-			return;
-		}
+		// if (current == clampedUpdatedValue)
+		// {
+		// 	return;
+		// }
 
 		current = clampedUpdatedValue;
 
