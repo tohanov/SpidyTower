@@ -32,15 +32,25 @@ public class CivilianState : MonoBehaviour
 	void OnTriggerEnter2D(Collider2D collision) {
 		Debug.Log("Civilian collision: " + collision.tag);
 
-		if (collision.CompareTag("Building Block") && state == State.Bound) {
+		if (state == State.Bound && (collision.CompareTag("Building Block/Closed") || collision.CompareTag("Building Block/Opened"))) {
 			rigidbody.velocity = Vector2.zero;
 			transform.parent = collision.transform;
 		}
-		else if (collision.CompareTag("Web Projectile")) {
-			rigidbody.velocity = collision.gameObject.GetComponent<WebProjectileState>().velocity;
-			animator.Play("Civilian_bound");
-			state = State.Bound;
-			Destroy(collision.gameObject);
+		else if (state == State.Falling) {
+			if (collision.CompareTag("Web Projectile")) {
+				rigidbody.velocity = collision.gameObject.GetComponent<WebProjectileState>().velocity;
+				animator.Play("Civilian_bound");
+				state = State.Bound;
+				Destroy(collision.gameObject);
+			}
+			else if (collision.CompareTag("Spidy")) {
+				animator.Play("Civilian_hanging");
+				rigidbody.velocity = Vector2.zero;
+				transform.parent = collision.transform;
+				transform.rotation = Quaternion.identity;
+				transform.parent = collision.transform;
+				transform.localPosition = Vector3.zero;
+			}
 		}
 	}
 
