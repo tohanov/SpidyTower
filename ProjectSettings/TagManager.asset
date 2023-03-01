@@ -26,7 +26,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Hidden On Game Pause
   - 
   - 
   - 
@@ -73,4 +73,7 @@ TagManager:
     locked: 0
   - name: HUD
     uniqueID: 1579669295
+    locked: 0
+  - name: Web Projectiles
+    uniqueID: 2648055639
     locked: 0

@@ -212,6 +212,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  webProjectilePrefab: {fileID: 368709259868104247, guid: f0fd058095576b74d8827ca7b53850fc, type: 3}
   jumpDuration: 0.2
   yJumpMax: 1
   blinkingInterval: 0.15

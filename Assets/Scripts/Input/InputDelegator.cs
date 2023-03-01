@@ -72,6 +72,9 @@ public class InputDelegator : MonoBehaviour
 
 	void HandleGamePause(InputAction.CallbackContext context)
     {
+		if (spidyActions.enabled) spidyActions.Disable();
+		else spidyActions.Enable();
+		
         gameState.TogglePauseGame(context);
     }
 

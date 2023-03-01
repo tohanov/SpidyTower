@@ -8,6 +8,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerState : MonoBehaviour
 {
+	static Vector3 projectileSpawnPoint = new Vector3(0.7f, 0.1f);
 	internal Stat redHalfHearts;
 	internal Stat blackHalfHearts;
 
@@ -28,6 +29,7 @@ public class PlayerState : MonoBehaviour
 	[SerializeField] AnimationCurve yJumpCurve;
 	[SerializeField] AnimationCurve jumpTimeCurve;
 	[SerializeField] AnimationCurve verticalJumpTimeCurve;
+	[SerializeField] GameObject webProjectilePrefab;
 
 	[SerializeField] float jumpDuration = 1f;
 	[SerializeField] float yJumpMax;
@@ -78,7 +80,7 @@ public class PlayerState : MonoBehaviour
 			null
 		);
 		webCartridges = new Stat(
-			3,
+			5, //3,
 			0,
 			5,
 			() => {redrawWebsCounter(); enableUnloadingOfCivilianIfHasWebs();},
@@ -196,6 +198,8 @@ public class PlayerState : MonoBehaviour
 
 		gameState.shootingMovementStopper = 0;
 
+		Instantiate(webProjectilePrefab, transform);
+
 		animator.Play("Spidy_shoot");
 	}
 
@@ -251,7 +255,7 @@ public class PlayerState : MonoBehaviour
 		float elapsedTime = 0;
 
 		while (elapsedTime < jumpDuration) {
-			elapsedTime += Time.deltaTime;
+			elapsedTime += gameState.shootingMovementStopper * Time.deltaTime;
 			float normalizedElapsedTime = elapsedTime / jumpDuration;
 
 			if (elapsedTime / jumpDuration >= 0.7f) animator.Play("Spidy_jump_down");

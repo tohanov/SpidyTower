@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Spidy_jump_down
+  m_Name: Projectile_default
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -20,12 +20,16 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: -1020103672, guid: 806357f4458dfd341b98b9d671b8a30e, type: 3}
+      value: {fileID: 11818324, guid: 81410bae2015d1f4e9ad5be751d0aa64, type: 3}
+    - time: 0.16666667
+      value: {fileID: 456790170, guid: 81410bae2015d1f4e9ad5be751d0aa64, type: 3}
+    - time: 0.33333334
+      value: {fileID: -1819212297, guid: 81410bae2015d1f4e9ad5be751d0aa64, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
     script: {fileID: 0}
-  m_SampleRate: 1
+  m_SampleRate: 6
   m_WrapMode: 0
   m_Bounds:
     m_Center: {x: 0, y: 0, z: 0}
@@ -40,13 +44,15 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: -1020103672, guid: 806357f4458dfd341b98b9d671b8a30e, type: 3}
+    - {fileID: 11818324, guid: 81410bae2015d1f4e9ad5be751d0aa64, type: 3}
+    - {fileID: 456790170, guid: 81410bae2015d1f4e9ad5be751d0aa64, type: 3}
+    - {fileID: -1819212297, guid: 81410bae2015d1f4e9ad5be751d0aa64, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 1
+    m_StopTime: 0.5
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0

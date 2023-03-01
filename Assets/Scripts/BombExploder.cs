@@ -10,12 +10,16 @@ public class BombExploder : MonoBehaviour
 	Animator animator;
 	bool shouldFall = true;
 	TrailRenderer bombTrail;
+	
+	GameState gameState;
 
 	void Start()
 	{
 		bombTrail = GetComponent<TrailRenderer>();
 		animator = gameObject.GetComponent<Animator>();
 		generateBuildings = GameObject.FindGameObjectWithTag("GameController").GetComponent<GenerateBuildings>();
+
+		gameState = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameState>();
 	}
 
 	// Update is called once per frame
@@ -51,6 +55,7 @@ public class BombExploder : MonoBehaviour
 		bombTrail.Clear();
 
 		GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+		gameState.shootingMovementStopper = 0;
 
 		shouldFall = false;
 		animator.Play("Bomb_explode");
@@ -61,6 +66,9 @@ public class BombExploder : MonoBehaviour
 	}
 
 	void OnFinishedExploding() {
+
+		gameState.shootingMovementStopper = 1;
+
 		ReturnToPool();
 		transform.position = Vector3.up * generateBuildings.boundsHigh.y;
 		animator.Play("Bomb_idle");
