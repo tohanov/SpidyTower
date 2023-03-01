@@ -8,9 +8,9 @@ public class InputDelegator : MonoBehaviour
 {
 	InputDetector inputDetectorObject;
 
-	InputDetector.InGameActionMapActions inGameActions;
-	InputDetector.InstructionsScreenActionMapActions instructionsScreenActions;
-	InputDetector.SpidyActionMapActions spidyActions;
+	internal InputDetector.InGameActionMapActions inGameActions;
+	internal InputDetector.InstructionsScreenActionMapActions instructionsScreenActions;
+	internal InputDetector.SpidyActionMapActions spidyActions;
 
 	PlayerState playerStateScript;
 	GameState gameState;

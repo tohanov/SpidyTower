@@ -42,6 +42,7 @@ public class PlayerState : MonoBehaviour
 	// internal int invincibilityCoefficient = 1;
 	internal bool isInvincible = false;
 	Collider2D collider;
+	InputDelegator inputDelegator;
 
 	void Awake()
 	{	
@@ -84,8 +85,8 @@ public class PlayerState : MonoBehaviour
 			5, //3,
 			0,
 			5,
-			() => {redrawWebsCounter(); enableUnloadingOfCivilianIfHasWebs();},
-			disableUnloadingOfCivilian,
+			() => {redrawWebsCounter(); /* enableUnloadingOfCivilianIfHasWebs(); */},
+			null/* disableUnloadingOfCivilian */,
 			null
 		);
 		missedCivilians = new Stat(
@@ -109,7 +110,10 @@ public class PlayerState : MonoBehaviour
 	}
 
 	void Start() {
-		generateBuildingsScript = GameObject.FindGameObjectWithTag("GameController").GetComponent<GenerateBuildings>();
+		var gameController = GameObject.FindGameObjectWithTag("GameController");
+		generateBuildingsScript = gameController.GetComponent<GenerateBuildings>();
+		inputDelegator = gameController.GetComponent<InputDelegator>();
+
 		healthbarPainterScript = GameObject.FindGameObjectWithTag("HUD/Stats/Healthbar").GetComponent<HealthbarPainter>();
 
 		spidyCurrentPosition = new int[] {1, 0};
@@ -370,7 +374,12 @@ public class PlayerState : MonoBehaviour
 
 	internal void dropCivilian()
 	{
-		throw new NotImplementedException();
+		if (midJump || webCartridges.isEmpty()) return;
+
+		heldCivilianStateScript.setState(CivilianState.State.Bound);
+		heldCivilianStateScript = null;
+
+		webCartridges.updateCurrent(webCartridges.current - 1);
 	}
 
 	private void failAndEndGame()
@@ -395,6 +404,7 @@ public class PlayerState : MonoBehaviour
 		Debug.Log("deathAndGameOver() after the if");
 		gameState.GetComponent<InputDelegator>().disableSpidyInput();
 		gameState.gameOverStopper = 0;
+		// inputDelegator.disableSpidyInput();
 
 		spidyTrail.emitting = false;
 		spidyTrail.enabled = false;
@@ -427,7 +437,13 @@ public class PlayerState : MonoBehaviour
 		Time.timeScale = 0;
 		// gameState.gameSpeed.updateCurrent(0);
 		// Time.timeScale = 0;
+		gameState.gameOver();
 	}
+
+	internal CivilianState heldCivilianStateScript = null;
+	// void catchCivilian() {
+	// 	holdingCivilian = true;
+	// }
 
 
 	private void updateGameSpeed()
@@ -449,20 +465,20 @@ public class PlayerState : MonoBehaviour
 	// 	throw new NotImplementedException();
 	// }
 
-	private void enableUnloadingOfCivilianIfHasWebs()
-	{
-		// throw new NotImplementedException();
-	}
+	// private void enableUnloadingOfCivilianIfHasWebs()
+	// {
+	// 	// throw new NotImplementedException();
+	// }
 
 	private void redrawWebsCounter()
 	{
 		gameState.updateAvailableWebCartridges(webCartridges.current, webCartridges.max);
 	}
 
-	private void disableUnloadingOfCivilian()
-	{
-		throw new NotImplementedException();
-	}
+	// private void disableUnloadingOfCivilian()
+	// {
+	// 	throw new NotImplementedException();
+	// }
 
 	[SerializeField] float blinkingInterval = 0.15f;
 	[SerializeField] float damageInvincibiltyDuration = 2.5f; 

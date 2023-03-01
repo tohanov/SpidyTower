@@ -7,13 +7,13 @@ public class CivilianState : MonoBehaviour
 
 	Animator animator;
 
-	enum State {
+	internal enum State {
 		Falling,
 		Bound,
 		Hanging,
 	}
 
-	State state = State.Falling;
+	internal State state = State.Falling;
 	Rigidbody2D rigidbody;
     // Start is called before the first frame update
     void Start()
@@ -24,15 +24,27 @@ public class CivilianState : MonoBehaviour
     }
 
 
-	void setState(State s) {
-		
+	internal void setState(State s) {
+		state = s;
+
+		switch (state) {
+			case State.Falling:
+			animator.Play("Civilian_falling");
+			break;
+			case State.Hanging:
+			animator.Play("Civilian_hanging");
+			break;
+			case State.Bound:
+			animator.Play("Civilian_bound");
+			break;
+		}
 	}
 
 
 	void OnTriggerEnter2D(Collider2D collision) {
 		Debug.Log("Civilian collision: " + collision.tag);
 
-		if (state == State.Bound && (collision.CompareTag("Building Block/Closed") || collision.CompareTag("Building Block/Opened"))) {
+		if (state == State.Bound && (collision.CompareTag("Building Block/Closed") || collision.CompareTag("Building Block/Open"))) {
 			rigidbody.velocity = Vector2.zero;
 			transform.parent = collision.transform;
 		}
@@ -44,6 +56,11 @@ public class CivilianState : MonoBehaviour
 				Destroy(collision.gameObject);
 			}
 			else if (collision.CompareTag("Spidy")) {
+				PlayerState playerState = collision.GetComponent<PlayerState>();
+				if (playerState.heldCivilianStateScript != null) return;
+
+				playerState.heldCivilianStateScript = this;
+
 				animator.Play("Civilian_hanging");
 				rigidbody.velocity = Vector2.zero;
 				transform.parent = collision.transform;
