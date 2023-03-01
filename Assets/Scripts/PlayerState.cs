@@ -8,6 +8,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerState : MonoBehaviour
 {
+	[SerializeField] Gradient redSpidyGradient;
+	[SerializeField] Gradient blackSpidyGradient;
 	static Vector3 projectileSpawnPoint = new Vector3(0.7f, 0.1f);
 	internal Stat redHalfHearts;
 	internal Stat blackHalfHearts;
@@ -37,12 +39,18 @@ public class PlayerState : MonoBehaviour
 	internal int[] spidyCurrentPosition;
 	bool midJump = false;
 	TrailRenderer spidyTrail;
+	string animationNamePrefix = "";
 
 	SpriteRenderer spriteRenderer;
 	// internal int invincibilityCoefficient = 1;
 	internal bool isInvincible = false;
 	Collider2D collider;
 	InputDelegator inputDelegator;
+
+	CanvasRenderer healthbarRenderer;
+	CanvasRenderer civiliansBarRenderer;
+	private int originalWebCartridgesMax = 5;
+	private int originalMissedCiviliansMax = 5;
 
 	void Awake()
 	{	
@@ -71,7 +79,7 @@ public class PlayerState : MonoBehaviour
 			6,
 			redrawHearts,
 			null,
-			deathAndGameOver
+			() => {if (blackHalfHearts.current == 0) {StartCoroutine(damageCauseBlinking(healthbarRenderer)); deathAndGameOver();}}
 		);
 		blackHalfHearts = new Stat(
 			0,
@@ -79,12 +87,12 @@ public class PlayerState : MonoBehaviour
 			int.MaxValue,
 			() => {redrawHearts(); updatePlayerStats();},
 			null, // updateGameSpeed,
-			deathAndGameOver
+			() => {if (redHalfHearts.current == 0) {StartCoroutine(damageCauseBlinking(healthbarRenderer)); deathAndGameOver();}}
 		);
 		webCartridges = new Stat(
-			5, //3,
+			originalWebCartridgesMax, //3,
 			0,
-			5,
+			originalWebCartridgesMax,
 			() => {redrawWebsCounter(); /* enableUnloadingOfCivilianIfHasWebs(); */},
 			null/* disableUnloadingOfCivilian */,
 			null
@@ -92,10 +100,10 @@ public class PlayerState : MonoBehaviour
 		missedCivilians = new Stat(
 			0,
 			0,
-			5,
+			originalMissedCiviliansMax,
 			redrawMissedCiviliansCounter,
-			null,
-			failAndEndGame
+			() => { StartCoroutine(damageCauseBlinking(civiliansBarRenderer)); deathAndGameOver();},
+			null
 		);
 		// GetComponent<GameState>();
 
@@ -115,6 +123,10 @@ public class PlayerState : MonoBehaviour
 		inputDelegator = gameController.GetComponent<InputDelegator>();
 
 		healthbarPainterScript = GameObject.FindGameObjectWithTag("HUD/Stats/Healthbar").GetComponent<HealthbarPainter>();
+
+		healthbarRenderer = healthbarPainterScript.gameObject.GetComponent<CanvasRenderer>();
+		civiliansBarRenderer = GameObject.FindGameObjectWithTag("Civilians Square").GetComponent<CanvasRenderer>();
+
 
 		spidyCurrentPosition = new int[] {1, 0};
 		populatePositions();
@@ -166,6 +178,11 @@ public class PlayerState : MonoBehaviour
 
 	public void takeDamage(DamageSource damageSource)
 	{
+		if (gameState.gameOverStopper == 0) return;
+
+		// StopCoroutine("damageCauseBlinking");
+		StartCoroutine("damageCauseBlinking", healthbarRenderer);
+
 		int damageLeftovers = Mathf.Clamp(healthDamage[damageSource] - blackHalfHearts.current, 0, int.MaxValue);
 
 		blackHalfHearts.updateCurrent(blackHalfHearts.current - healthDamage[damageSource]);
@@ -201,7 +218,7 @@ public class PlayerState : MonoBehaviour
 		if (midJump) return;
 
 		rotatePlayerInDirection(x);
-		animator.Play("Spidy_shoot");
+		animator.Play(animationNamePrefix + "Spidy_shoot");
 
 		if (webCartridges.isEmpty()) return;
 
@@ -214,7 +231,7 @@ public class PlayerState : MonoBehaviour
 	public void EndFire(int x) {
 		// Debug.Log("Fired " + (context.ReadValue<float>() < 0 ? "left" : "right"));
 
-		animator.Play("Spidy_climb");
+		animator.Play(animationNamePrefix + "Spidy_climb");
 
 		gameState.shootingMovementStopper = 1;
 	}
@@ -258,15 +275,15 @@ public class PlayerState : MonoBehaviour
 	private IEnumerator ShortJumpCoroutine(Vector3 start, Vector3 end) 
 	{
 		midJump = true;
-		animator.Play("Spidy_jump_up");
+		animator.Play(animationNamePrefix + "Spidy_jump_up");
 		
 		float elapsedTime = 0;
 
 		while (elapsedTime < jumpDuration) {
-			elapsedTime += gameState.shootingMovementStopper * gameState.gameOverStopper * Time.deltaTime;
+			elapsedTime += gameState.getOverallSpeed() * Time.deltaTime;
 			float normalizedElapsedTime = elapsedTime / jumpDuration;
 
-			if (elapsedTime / jumpDuration >= 0.7f) animator.Play("Spidy_jump_down");
+			if (elapsedTime / jumpDuration >= 0.7f) animator.Play(animationNamePrefix + "Spidy_jump_down");
 
 			float modifiedTime = jumpTimeCurve.Evaluate(normalizedElapsedTime);
 
@@ -278,7 +295,7 @@ public class PlayerState : MonoBehaviour
 			yield return null;
 		}
 
-		animator.Play("Spidy_climb");
+		animator.Play(animationNamePrefix + "Spidy_climb");
 		midJump = false;
 	}
 
@@ -307,12 +324,12 @@ public class PlayerState : MonoBehaviour
 	private IEnumerator MoveVerticallyCoroutine(Vector3 start, Vector3 end) 
 	{
 		midJump = true;
-		if (end.y < start.y) animator.Play("Spidy_jump_down");
+		if (end.y < start.y) animator.Play(animationNamePrefix + "Spidy_jump_down");
 		
 		float elapsedTime = 0;
 
 		while (elapsedTime < jumpDuration) {
-			elapsedTime += gameState.shootingMovementStopper * gameState.gameOverStopper * Time.deltaTime;
+			elapsedTime += gameState.getOverallSpeed() * Time.deltaTime;
 			float normalizedElapsedTime = elapsedTime / jumpDuration;
 			// if (normalizedElapsedTime / jumpDuration >= 0.7f) animator.Play("Spidy_jump_down");
 
@@ -328,7 +345,7 @@ public class PlayerState : MonoBehaviour
 			yield return null;
 		}
 
-		animator.Play("Spidy_climb");
+		animator.Play(animationNamePrefix + "Spidy_climb");
 		midJump = false;
 	}
 
@@ -344,11 +361,16 @@ public class PlayerState : MonoBehaviour
 			invincibilityBlink();
 			takeDamage(DamageSource.Bomb);
 		}
+		else if (heldCivilianStateScript != null && collision.CompareTag("Building Block/Open")) {
+			bool succeeded = collision.GetComponent<BuildingBlockState>().tryPutCivilian(heldCivilianStateScript);
+			if (succeeded) {
+				heldCivilianStateScript = null;
+				restoreCivilianHoldingSpeed();
+			}
+		}
 		else if (collision.CompareTag("Collectables/Web Cartridge")) {
 			collectItem(ItemType.WebCartridge);
 			Destroy(collision.gameObject);
-
-			// TODO collect
 		}
 		else if (collision.CompareTag("Collectables/Symbiote")) {
 			collectItem(ItemType.Symbiote);
@@ -372,21 +394,6 @@ public class PlayerState : MonoBehaviour
 		}
 	}
 
-	internal void dropCivilian()
-	{
-		if (midJump || webCartridges.isEmpty()) return;
-
-		heldCivilianStateScript.setState(CivilianState.State.Bound);
-		heldCivilianStateScript = null;
-
-		webCartridges.updateCurrent(webCartridges.current - 1);
-	}
-
-	private void failAndEndGame()
-	{
-		throw new NotImplementedException();
-	}
-
 	private void redrawMissedCiviliansCounter()
 	{
 		gameState.updateMissedCivilians(missedCivilians.current, missedCivilians.max);
@@ -398,9 +405,9 @@ public class PlayerState : MonoBehaviour
 	}
 
 	private void deathAndGameOver()
-	{
-		if (blackHalfHearts.current != 0 || redHalfHearts.current != 0) return;
-		
+	{	
+		// if (gameState.gameOverStopper == 0) return;
+
 		Debug.Log("deathAndGameOver() after the if");
 		gameState.GetComponent<InputDelegator>().disableSpidyInput();
 		gameState.gameOverStopper = 0;
@@ -411,12 +418,13 @@ public class PlayerState : MonoBehaviour
 		spidyTrail.Clear();
 
 		gameState.gameSpeed.updateCurrent(1);
-		StopAllCoroutines();
+		// StopAllCoroutines();
 		
 		Vector3 target = new Vector3(transform.position.x, gameState.boundsLow.y - generateBuildingsScript.blockSize.y);
 		// Vector3 source = transform.position;
 
 		StartCoroutine(deathFallCoroutine(transform.position, target));
+		Debug.DrawLine(target, transform.position, Color.red, 2);
 
 		// Destroy(gameObject);
 	}
@@ -425,7 +433,7 @@ public class PlayerState : MonoBehaviour
 	{
 		collider.enabled = false;
 
-		animator.Play("Spidy_jump_down");
+		animator.Play(animationNamePrefix + "Spidy_jump_down");
 		float elapsedTime = 0;
 
 		while (elapsedTime < 3) {
@@ -440,10 +448,46 @@ public class PlayerState : MonoBehaviour
 		gameState.gameOver();
 	}
 
+	IEnumerator damageCauseBlinking(CanvasRenderer renderer) {
+		float timeElapsed = 0;
+
+		while (gameState.gameOverStopper == 0 || timeElapsed < damageInvincibiltyDuration) {
+
+			renderer.SetAlpha(blinkingOpacity);
+			//.enabled = false;
+			yield return new WaitForSeconds(blinkingInterval);
+			
+			renderer.SetAlpha(1);
+			// GetComponent<Collider2D>().isTrigger = true;
+			// spriteRenderer.enabled = true;
+			yield return new WaitForSeconds(blinkingInterval);
+			if (gameState.gameOverStopper != 0) timeElapsed += 2*blinkingInterval;
+		}
+	}
+
+
 	internal CivilianState heldCivilianStateScript = null;
-	// void catchCivilian() {
-	// 	holdingCivilian = true;
-	// }
+	internal void catchCivilian(CivilianState state) {
+		heldCivilianStateScript = state;
+
+		gameState.civilianHoldingCoefficient = 0.5f;
+	}
+
+	internal void dropCivilian()
+	{
+		if (midJump || webCartridges.isEmpty()) return;
+
+		heldCivilianStateScript.setState(CivilianState.State.Bound);
+		heldCivilianStateScript = null;
+
+		webCartridges.updateCurrent(webCartridges.current - 1);
+
+		restoreCivilianHoldingSpeed();
+	}
+
+	internal void restoreCivilianHoldingSpeed() {
+		gameState.civilianHoldingCoefficient = 1;
+	}
 
 
 	private void updateGameSpeed()
@@ -458,6 +502,33 @@ public class PlayerState : MonoBehaviour
 		// throw new NotImplementedException();
 
 		Debug.Log("updatePlayerStats: NOT IMPLEMENTED");
+
+		missedCivilians.max = originalMissedCiviliansMax + blackHalfHearts.current / 2;
+		webCartridges.max = originalWebCartridgesMax + 3 * blackHalfHearts.current / 2;
+		forceStatsRefresh();
+		
+		gameState.symbioteBoost = 1 + Mathf.CeilToInt(blackHalfHearts.current / 2.0f); // keep int
+
+		if ( ! blackHalfHearts.isEmpty()) {
+			animationNamePrefix = "Black";
+			spidyTrail.colorGradient = blackSpidyGradient;
+			// set current animation to black
+			// set future animations to black
+			// increase stats // TODO
+		}
+		else {
+			animationNamePrefix = "";
+			// spidyTrail.colorGradient.colorKeys[0].color = Color.black; // Color.red;
+			spidyTrail.colorGradient = redSpidyGradient;
+			// set current animation to red
+			// set future animations to red
+			// decrease stats // TODO
+		}
+	}
+
+	void forceStatsRefresh() {
+		missedCivilians.updateCurrent(missedCivilians.current);
+		webCartridges.updateCurrent(webCartridges.current);
 	}
 
 	// private void redrawBlackHearts()
@@ -484,6 +555,7 @@ public class PlayerState : MonoBehaviour
 	[SerializeField] float damageInvincibiltyDuration = 2.5f; 
 	[SerializeField] static float blinkingOpacity = 0.25f; 
 	static Color transparentWhite = new Color(1,1,1,blinkingOpacity);
+
 	[ContextMenu("Test Blinking")]
 	void invincibilityBlink() {
 		StartCoroutine(damageAnimation());
@@ -521,6 +593,15 @@ public class PlayerState : MonoBehaviour
 			spidyCurrentPosition[0], 
 			spidyCurrentPosition[1]
 		];
+	}
+
+	internal void incrementMissedCivilians()
+	{
+		if (gameState.gameOverStopper == 0) return;
+
+		// StopCoroutine("damageCauseBlinking");
+		StartCoroutine("damageCauseBlinking", civiliansBarRenderer);
+		missedCivilians.updateCurrent(missedCivilians.current + 1);
 	}
 
 	// bool isInvincible() {

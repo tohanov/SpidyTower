@@ -22,6 +22,9 @@ TagManager:
   - Web Projectile
   - Building Block/Closed
   - Building Block/Open
+  - Building Block
+  - Civilians Square
+  - Hearts Square
   layers:
   - Default
   - TransparentFX

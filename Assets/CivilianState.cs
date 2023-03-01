@@ -57,9 +57,10 @@ public class CivilianState : MonoBehaviour
 			}
 			else if (collision.CompareTag("Spidy")) {
 				PlayerState playerState = collision.GetComponent<PlayerState>();
+
 				if (playerState.heldCivilianStateScript != null) return;
 
-				playerState.heldCivilianStateScript = this;
+				playerState.catchCivilian(this);
 
 				animator.Play("Civilian_hanging");
 				rigidbody.velocity = Vector2.zero;

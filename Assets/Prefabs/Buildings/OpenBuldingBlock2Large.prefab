@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5887830600963493131}
   - component: {fileID: 2482501371116021733}
   - component: {fileID: 7761788420959318716}
+  - component: {fileID: 5738225709329429233}
   m_Layer: 0
   m_Name: OpenBuldingBlock2Large
   m_TagString: Building Block/Open
@@ -74,12 +75,12 @@ SpriteRenderer:
   m_SortingLayerID: 1985986307
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: e162e86d02030e44fba7182c4a2ff7ae, type: 3}
+  m_Sprite: {fileID: -1293250252, guid: e162e86d02030e44fba7182c4a2ff7ae, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 2.4666667, y: 2}
+  m_Size: {x: 19.2, y: 10.8}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -103,11 +104,24 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 2.4666667, y: 2}
-    newSize: {x: 2.4666667, y: 2}
+    newSize: {x: 19.2, y: 10.8}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 1
   serializedVersion: 2
-  m_Size: {x: 2.4666667, y: 2}
+  m_Size: {x: 2.4, y: 2}
   m_EdgeRadius: 0
+--- !u!114 &5738225709329429233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 118555140482698145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 693c01288ac048e4887fe94013802be1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  withCivilian: {fileID: 468293476, guid: e162e86d02030e44fba7182c4a2ff7ae, type: 3}

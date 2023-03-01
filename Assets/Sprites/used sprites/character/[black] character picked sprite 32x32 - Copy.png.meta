@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 52cdc141ffc029747b4e639ae8859c94
+guid: d67302bbefe21964baf8cd68249dfd12
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -47,7 +47,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 90
+  spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -141,13 +141,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: with
+      name: black jump up
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 222
-        height: 180
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -155,20 +155,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 42ed9a9f6b9f99849b6eb5b24fec36bd
-      internalID: 571309587
+      spriteID: f48103541c1126a4698bb82fb2219e93
+      internalID: 115761015
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: without
+      name: black climb 1
       rect:
         serializedVersion: 2
-        x: 222
-        y: 0
-        width: 222
-        height: 180
+        x: 32
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -176,8 +176,71 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e9068c7e6bae44e45b0b06be35872a30
-      internalID: -1353729454
+      spriteID: f914e3f1c103be74d9ca4c2d4cd7990f
+      internalID: 1258796034
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: black jump down
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f41b2242d0cedef4eba815c2745e6383
+      internalID: -1431557457
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: black shoot
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7ef3d3c501a6cd44ba64b6728f1911f8
+      internalID: 330254540
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: black climb 2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ad6a827513f6cb24384413da4821b45f
+      internalID: -1024918928
       vertices: []
       indices: 
       edges: []
@@ -193,8 +256,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      without: -1353729454
-      with: 571309587
+      black climb 1: 1258796034
+      black jump up: 115761015
+      '[black] character picked sprite 32x32 - Copy_4': -1084131124
+      '[black] character picked sprite 32x32 - Copy_5': -248497693
+      black shoot: 330254540
+      black jump down: -1431557457
+      black climb 2: -1024918928
+      '[black] character picked sprite 32x32 - Copy_7': 522958258
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

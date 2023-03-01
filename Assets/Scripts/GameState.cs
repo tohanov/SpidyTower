@@ -30,6 +30,8 @@ public class GameState : MonoBehaviour
 	[SerializeField] internal float movementSpeed;
 	internal int shootingMovementStopper = 1;
 	internal int gameOverStopper = 1;
+	internal float civilianHoldingCoefficient = 1;
+	internal int /*float*/ symbioteBoost = 1; // 2; // boosting is done by halfs, so need to start with 2 to start normally
 
 	// internal Vector2 boundsHigh;
 	// internal Vector2 boundsLow;
@@ -166,6 +168,11 @@ public class GameState : MonoBehaviour
 	internal void gameOver()
 	{
 		throw new NotImplementedException();
+	}
+
+	internal float getOverallSpeed()
+	{
+		return (symbioteBoost/* /2 */) * civilianHoldingCoefficient * gameOverStopper * shootingMovementStopper;
 	}
 
 	// public float colThickness = 4f;
