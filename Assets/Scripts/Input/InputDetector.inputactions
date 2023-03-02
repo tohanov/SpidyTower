@@ -234,7 +234,7 @@
             "id": "94c3a300-025b-4c0b-9bfc-a0c30f582664",
             "actions": [
                 {
-                    "name": "Skip",
+                    "name": "Play",
                     "type": "Button",
                     "id": "eb9e8dd4-4f9b-486d-aedc-6003331869a7",
                     "expectedControlType": "Button",
@@ -243,7 +243,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Pause",
+                    "name": "Quit",
                     "type": "Button",
                     "id": "d1c8b1e7-7c32-4c61-b0b5-a7e79889d141",
                     "expectedControlType": "Button",
@@ -256,22 +256,22 @@
                 {
                     "name": "",
                     "id": "f1dea670-9d42-4348-8f3f-0abeaebfcb47",
-                    "path": "",
+                    "path": "<Keyboard>/p",
                     "interactions": "",
                     "processors": "",
                     "groups": "GeneralScheme",
-                    "action": "Skip",
+                    "action": "Play",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
                     "id": "e8484f43-15dc-4831-8281-3bb48a0edbe8",
-                    "path": "",
+                    "path": "<Keyboard>/x",
                     "interactions": "",
                     "processors": "",
                     "groups": "GeneralScheme",
-                    "action": "Pause",
+                    "action": "Quit",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

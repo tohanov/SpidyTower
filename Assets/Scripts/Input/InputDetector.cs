@@ -256,7 +256,7 @@ public partial class @InputDetector : IInputActionCollection2, IDisposable
             ""id"": ""94c3a300-025b-4c0b-9bfc-a0c30f582664"",
             ""actions"": [
                 {
-                    ""name"": ""Skip"",
+                    ""name"": ""Play"",
                     ""type"": ""Button"",
                     ""id"": ""eb9e8dd4-4f9b-486d-aedc-6003331869a7"",
                     ""expectedControlType"": ""Button"",
@@ -265,7 +265,7 @@ public partial class @InputDetector : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Pause"",
+                    ""name"": ""Quit"",
                     ""type"": ""Button"",
                     ""id"": ""d1c8b1e7-7c32-4c61-b0b5-a7e79889d141"",
                     ""expectedControlType"": ""Button"",
@@ -278,22 +278,22 @@ public partial class @InputDetector : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""f1dea670-9d42-4348-8f3f-0abeaebfcb47"",
-                    ""path"": """",
+                    ""path"": ""<Keyboard>/p"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""GeneralScheme"",
-                    ""action"": ""Skip"",
+                    ""action"": ""Play"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
                     ""id"": ""e8484f43-15dc-4831-8281-3bb48a0edbe8"",
-                    ""path"": """",
+                    ""path"": ""<Keyboard>/x"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""GeneralScheme"",
-                    ""action"": ""Pause"",
+                    ""action"": ""Quit"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -372,8 +372,8 @@ public partial class @InputDetector : IInputActionCollection2, IDisposable
         m_InGameActionMap_GamePause = m_InGameActionMap.FindAction("GamePause", throwIfNotFound: true);
         // InstructionsScreenActionMap
         m_InstructionsScreenActionMap = asset.FindActionMap("InstructionsScreenActionMap", throwIfNotFound: true);
-        m_InstructionsScreenActionMap_Skip = m_InstructionsScreenActionMap.FindAction("Skip", throwIfNotFound: true);
-        m_InstructionsScreenActionMap_Pause = m_InstructionsScreenActionMap.FindAction("Pause", throwIfNotFound: true);
+        m_InstructionsScreenActionMap_Play = m_InstructionsScreenActionMap.FindAction("Play", throwIfNotFound: true);
+        m_InstructionsScreenActionMap_Quit = m_InstructionsScreenActionMap.FindAction("Quit", throwIfNotFound: true);
         // DeathScreenActionMap
         m_DeathScreenActionMap = asset.FindActionMap("DeathScreenActionMap", throwIfNotFound: true);
         m_DeathScreenActionMap_PlayAgain = m_DeathScreenActionMap.FindAction("Play Again", throwIfNotFound: true);
@@ -519,14 +519,14 @@ public partial class @InputDetector : IInputActionCollection2, IDisposable
     // InstructionsScreenActionMap
     private readonly InputActionMap m_InstructionsScreenActionMap;
     private IInstructionsScreenActionMapActions m_InstructionsScreenActionMapActionsCallbackInterface;
-    private readonly InputAction m_InstructionsScreenActionMap_Skip;
-    private readonly InputAction m_InstructionsScreenActionMap_Pause;
+    private readonly InputAction m_InstructionsScreenActionMap_Play;
+    private readonly InputAction m_InstructionsScreenActionMap_Quit;
     public struct InstructionsScreenActionMapActions
     {
         private @InputDetector m_Wrapper;
         public InstructionsScreenActionMapActions(@InputDetector wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Skip => m_Wrapper.m_InstructionsScreenActionMap_Skip;
-        public InputAction @Pause => m_Wrapper.m_InstructionsScreenActionMap_Pause;
+        public InputAction @Play => m_Wrapper.m_InstructionsScreenActionMap_Play;
+        public InputAction @Quit => m_Wrapper.m_InstructionsScreenActionMap_Quit;
         public InputActionMap Get() { return m_Wrapper.m_InstructionsScreenActionMap; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -536,22 +536,22 @@ public partial class @InputDetector : IInputActionCollection2, IDisposable
         {
             if (m_Wrapper.m_InstructionsScreenActionMapActionsCallbackInterface != null)
             {
-                @Skip.started -= m_Wrapper.m_InstructionsScreenActionMapActionsCallbackInterface.OnSkip;
-                @Skip.performed -= m_Wrapper.m_InstructionsScreenActionMapActionsCallbackInterface.OnSkip;
-                @Skip.canceled -= m_Wrapper.m_InstructionsScreenActionMapActionsCallbackInterface.OnSkip;
-                @Pause.started -= m_Wrapper.m_InstructionsScreenActionMapActionsCallbackInterface.OnPause;
-                @Pause.performed -= m_Wrapper.m_InstructionsScreenActionMapActionsCallbackInterface.OnPause;
-                @Pause.canceled -= m_Wrapper.m_InstructionsScreenActionMapActionsCallbackInterface.OnPause;
+                @Play.started -= m_Wrapper.m_InstructionsScreenActionMapActionsCallbackInterface.OnPlay;
+                @Play.performed -= m_Wrapper.m_InstructionsScreenActionMapActionsCallbackInterface.OnPlay;
+                @Play.canceled -= m_Wrapper.m_InstructionsScreenActionMapActionsCallbackInterface.OnPlay;
+                @Quit.started -= m_Wrapper.m_InstructionsScreenActionMapActionsCallbackInterface.OnQuit;
+                @Quit.performed -= m_Wrapper.m_InstructionsScreenActionMapActionsCallbackInterface.OnQuit;
+                @Quit.canceled -= m_Wrapper.m_InstructionsScreenActionMapActionsCallbackInterface.OnQuit;
             }
             m_Wrapper.m_InstructionsScreenActionMapActionsCallbackInterface = instance;
             if (instance != null)
             {
-                @Skip.started += instance.OnSkip;
-                @Skip.performed += instance.OnSkip;
-                @Skip.canceled += instance.OnSkip;
-                @Pause.started += instance.OnPause;
-                @Pause.performed += instance.OnPause;
-                @Pause.canceled += instance.OnPause;
+                @Play.started += instance.OnPlay;
+                @Play.performed += instance.OnPlay;
+                @Play.canceled += instance.OnPlay;
+                @Quit.started += instance.OnQuit;
+                @Quit.performed += instance.OnQuit;
+                @Quit.canceled += instance.OnQuit;
             }
         }
     }
@@ -618,8 +618,8 @@ public partial class @InputDetector : IInputActionCollection2, IDisposable
     }
     public interface IInstructionsScreenActionMapActions
     {
-        void OnSkip(InputAction.CallbackContext context);
-        void OnPause(InputAction.CallbackContext context);
+        void OnPlay(InputAction.CallbackContext context);
+        void OnQuit(InputAction.CallbackContext context);
     }
     public interface IDeathScreenActionMapActions
     {

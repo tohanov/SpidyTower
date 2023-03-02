@@ -18,6 +18,7 @@ public class InputDelegator : MonoBehaviour
 	GameState gameState;
 
 	void Awake() {
+
 		inputDetectorObject = new InputDetector();
 
 		inGameActions = inputDetectorObject.InGameActionMap;
@@ -27,13 +28,6 @@ public class InputDelegator : MonoBehaviour
 
 		gameState = GetComponent<GameState>();
 		playerStateScript = GameObject.FindGameObjectWithTag("Spidy").GetComponent<PlayerState>();
-	}
-
-	void OnEnable() {
-		inGameActions.Enable();
-		instructionsScreenActions.Disable(); // FIXME make enabled when displaying the instructions scene
-		spidyActions.Enable();
-		deathScreenActions.Disable();
 
 		inGameActions.GamePause.performed += HandleGamePause;
 
@@ -41,12 +35,52 @@ public class InputDelegator : MonoBehaviour
 		spidyActions.Movement.performed += HandlePlayerMovement;
 		spidyActions.DropCivilian.performed += HandleDropCivilian;
 
-
-		instructionsScreenActions.Skip.performed += HandleSkip;
-		instructionsScreenActions.Pause.performed += HandleInstructionsPause;
+		// instructionsScreenActions.Skip.performed += HandleSkip;
+		// instructionsScreenActions.Pause.performed += HandleInstructionsPause;
 
 		deathScreenActions.PlayAgain.performed += HandlePlayAgain;
 		deathScreenActions.Exit.performed += HandleExit;
+	}
+
+	// void Start() {
+	// 	inputDetectorObject = new InputDetector();
+
+	// 	inGameActions = inputDetectorObject.InGameActionMap;
+	// 	instructionsScreenActions = inputDetectorObject.InstructionsScreenActionMap;
+	// 	spidyActions = inputDetectorObject.SpidyActionMap;
+	// 	deathScreenActions = inputDetectorObject.DeathScreenActionMap;
+
+	// 	gameState = GetComponent<GameState>();
+	// 	playerStateScript = GameObject.FindGameObjectWithTag("Spidy").GetComponent<PlayerState>();
+
+	// 	inGameActions.GamePause.performed += HandleGamePause;
+
+	// 	spidyActions.Firing.performed += HandlePlayerFire;
+	// 	spidyActions.Movement.performed += HandlePlayerMovement;
+	// 	spidyActions.DropCivilian.performed += HandleDropCivilian;
+
+	// 	// instructionsScreenActions.Skip.performed += HandleSkip;
+	// 	// instructionsScreenActions.Pause.performed += HandleInstructionsPause;
+
+	// 	deathScreenActions.PlayAgain.performed += HandlePlayAgain;
+	// 	deathScreenActions.Exit.performed += HandleExit;
+	// }
+
+	void OnEnable() {
+		inputDetectorObject.Enable();
+		inputDetectorObject.SpidyActionMap.Enable();
+		inputDetectorObject.InGameActionMap.Enable();
+		inputDetectorObject.InstructionsScreenActionMap.Disable();
+		inputDetectorObject.DeathScreenActionMap.Disable();
+		// inGameActions.Enable();
+		// spidyActions.Enable();
+
+		// instructionsScreenActions.Disable(); // FIXME make enabled when displaying the instructions scene
+		// deathScreenActions.Disable();
+
+		// inputDetectorObject.Disable();
+		// inputDetectorObject.InGameActionMap.Enable();
+		// inputDetectorObject.SpidyActionMap.Enable();
 	}
 
 	private void HandlePlayAgain(InputAction.CallbackContext obj)
@@ -58,19 +92,17 @@ public class InputDelegator : MonoBehaviour
 
 	private void HandleExit(InputAction.CallbackContext obj)
 	{
-		#if UNITY_EDITOR
-		UnityEditor.EditorApplication.isPlaying = false;
-		#else
-		Application.Quit();
-		#endif
+		// #if UNITY_EDITOR
+		// UnityEditor.EditorApplication.isPlaying = false;
+		// #else
+		// Application.Quit();
+		// #endif
+		SceneManager.LoadScene("MainMenuScene");
 	}
 
 
 	void OnDisable() {
-		inGameActions.Disable();
-		// instructionsScreenActions.Disable();
-		spidyActions.Disable();
-		// deathScreenActions.Disable();
+		inputDetectorObject.Disable();
 	} 
 
     void HandlePlayerFire(InputAction.CallbackContext context)

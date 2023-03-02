@@ -462,7 +462,7 @@ public class PlayerState : MonoBehaviour
 		// Vector3 source = transform.position;
 
 		StartCoroutine(deathFallCoroutine(transform.position, target));
-		Debug.DrawLine(target, transform.position, Color.red, 2);
+		// Debug.DrawLine(target, transform.position, Color.red, 2);
 
 		// Destroy(gameObject);
 	}
@@ -474,7 +474,7 @@ public class PlayerState : MonoBehaviour
 		setAnimation("Spidy_jump_down");
 		float elapsedTime = 0;
 
-		while (elapsedTime < 3) {
+		while (elapsedTime < 2.5f) {
 			elapsedTime += 0.5f * Time.deltaTime;
 			transform.position = Vector3.Lerp(source, target, elapsedTime);
 			yield return null;

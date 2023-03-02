@@ -81,7 +81,7 @@ public class GameState : MonoBehaviour
 
 		stepsHUDStat.text = stepsTravelled.ToString();
 
-		if (stepsTravelled % 20 == 0) {
+		if (stepsTravelled % 50 == 0) {
 			stepsShakeScript.performShake();
 			
 			gameSpeed.updateCurrent(gameSpeed.current + 1);
@@ -207,7 +207,7 @@ public class GameState : MonoBehaviour
 
 		float result = (symbioteBoost/* /2 */) * civilianHoldingCoefficient * gameOverStopper * shootingMovementStopper;
 
-		Debug.Log(Random.Range(0f, 1) + " overallspeed: " + result);
+		// Debug.Log(Random.Range(0f, 1) + " overallspeed: " + result);
 
 		return result;
 	}
