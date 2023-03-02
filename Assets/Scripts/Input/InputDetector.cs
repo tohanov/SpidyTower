@@ -298,6 +298,54 @@ public partial class @InputDetector : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""DeathScreenActionMap"",
+            ""id"": ""1c0c831f-5eb0-4133-9730-03481492d800"",
+            ""actions"": [
+                {
+                    ""name"": ""Play Again"",
+                    ""type"": ""Button"",
+                    ""id"": ""5947428c-ccf4-4159-8f09-50c3e0cd15fb"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Exit"",
+                    ""type"": ""Button"",
+                    ""id"": ""f3809c2d-1ef7-45ca-97a6-01bce3d136fa"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""908d09c3-3ea9-465c-8072-201ab2148d3e"",
+                    ""path"": ""<Keyboard>/p"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Play Again"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5e22c44a-592c-48a7-8acd-7e75a0bc3e24"",
+                    ""path"": ""<Keyboard>/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Exit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -326,6 +374,10 @@ public partial class @InputDetector : IInputActionCollection2, IDisposable
         m_InstructionsScreenActionMap = asset.FindActionMap("InstructionsScreenActionMap", throwIfNotFound: true);
         m_InstructionsScreenActionMap_Skip = m_InstructionsScreenActionMap.FindAction("Skip", throwIfNotFound: true);
         m_InstructionsScreenActionMap_Pause = m_InstructionsScreenActionMap.FindAction("Pause", throwIfNotFound: true);
+        // DeathScreenActionMap
+        m_DeathScreenActionMap = asset.FindActionMap("DeathScreenActionMap", throwIfNotFound: true);
+        m_DeathScreenActionMap_PlayAgain = m_DeathScreenActionMap.FindAction("Play Again", throwIfNotFound: true);
+        m_DeathScreenActionMap_Exit = m_DeathScreenActionMap.FindAction("Exit", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -504,6 +556,47 @@ public partial class @InputDetector : IInputActionCollection2, IDisposable
         }
     }
     public InstructionsScreenActionMapActions @InstructionsScreenActionMap => new InstructionsScreenActionMapActions(this);
+
+    // DeathScreenActionMap
+    private readonly InputActionMap m_DeathScreenActionMap;
+    private IDeathScreenActionMapActions m_DeathScreenActionMapActionsCallbackInterface;
+    private readonly InputAction m_DeathScreenActionMap_PlayAgain;
+    private readonly InputAction m_DeathScreenActionMap_Exit;
+    public struct DeathScreenActionMapActions
+    {
+        private @InputDetector m_Wrapper;
+        public DeathScreenActionMapActions(@InputDetector wrapper) { m_Wrapper = wrapper; }
+        public InputAction @PlayAgain => m_Wrapper.m_DeathScreenActionMap_PlayAgain;
+        public InputAction @Exit => m_Wrapper.m_DeathScreenActionMap_Exit;
+        public InputActionMap Get() { return m_Wrapper.m_DeathScreenActionMap; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(DeathScreenActionMapActions set) { return set.Get(); }
+        public void SetCallbacks(IDeathScreenActionMapActions instance)
+        {
+            if (m_Wrapper.m_DeathScreenActionMapActionsCallbackInterface != null)
+            {
+                @PlayAgain.started -= m_Wrapper.m_DeathScreenActionMapActionsCallbackInterface.OnPlayAgain;
+                @PlayAgain.performed -= m_Wrapper.m_DeathScreenActionMapActionsCallbackInterface.OnPlayAgain;
+                @PlayAgain.canceled -= m_Wrapper.m_DeathScreenActionMapActionsCallbackInterface.OnPlayAgain;
+                @Exit.started -= m_Wrapper.m_DeathScreenActionMapActionsCallbackInterface.OnExit;
+                @Exit.performed -= m_Wrapper.m_DeathScreenActionMapActionsCallbackInterface.OnExit;
+                @Exit.canceled -= m_Wrapper.m_DeathScreenActionMapActionsCallbackInterface.OnExit;
+            }
+            m_Wrapper.m_DeathScreenActionMapActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @PlayAgain.started += instance.OnPlayAgain;
+                @PlayAgain.performed += instance.OnPlayAgain;
+                @PlayAgain.canceled += instance.OnPlayAgain;
+                @Exit.started += instance.OnExit;
+                @Exit.performed += instance.OnExit;
+                @Exit.canceled += instance.OnExit;
+            }
+        }
+    }
+    public DeathScreenActionMapActions @DeathScreenActionMap => new DeathScreenActionMapActions(this);
     private int m_GeneralSchemeSchemeIndex = -1;
     public InputControlScheme GeneralSchemeScheme
     {
@@ -527,5 +620,10 @@ public partial class @InputDetector : IInputActionCollection2, IDisposable
     {
         void OnSkip(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
+    }
+    public interface IDeathScreenActionMapActions
+    {
+        void OnPlayAgain(InputAction.CallbackContext context);
+        void OnExit(InputAction.CallbackContext context);
     }
 }

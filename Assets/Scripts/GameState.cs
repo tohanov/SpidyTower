@@ -24,7 +24,7 @@ public class GameState : MonoBehaviour
 	TextMeshProUGUI missedHUDStat;
 	GameObject pauseOverlay;
 	bool gamePaused;
-
+	private GameObject gameOverOverlay;
 	internal Vector2 boundsHigh;
 	internal Vector2 boundsLow;
 
@@ -33,12 +33,17 @@ public class GameState : MonoBehaviour
 	internal int gameOverStopper = 1;
 	internal float civilianHoldingCoefficient = 1;
 	internal /* int */ float symbioteBoost = 1; // 2; // boosting is done by halfs, so need to start with 2 to start normally
+	[SerializeField] AnimationCurve gameSpeedCurve;
+	private StepsShake stepsShakeScript;
+	private float previousTimeScale;
 
 	// internal Vector2 boundsHigh;
 	// internal Vector2 boundsLow;
 	void Awake() {
 
 		// TODO : disable debugging if not in editor (release build)
+		Debug.unityLogger.logEnabled = false;
+		
 
 		gameSpeed = new Stat(1, 1, 4, updateTimeScale, null, null);
 
@@ -48,24 +53,39 @@ public class GameState : MonoBehaviour
 		pauseOverlay = GameObject.FindGameObjectWithTag("HUD/Pause Overlay");
 		pauseOverlay.SetActive(false);
 		gamePaused = false;
+		
+		gameOverOverlay = GameObject.FindGameObjectWithTag("Death Screen");
+		gameOverOverlay.SetActive(false);
+		// gamePaused = false;
 
 		// stepsHUDStat = GameObject.FindGameObjectWithTag("HUD/Stats/Steps");
 		stepsHUDStat = GameObject.FindGameObjectWithTag("HUD/Stats/Steps").GetComponent<TextMeshProUGUI>();
 		websHUDStat = GameObject.FindGameObjectWithTag("HUD/Stats/Web Cartridges").GetComponent<TextMeshProUGUI>();
 		missedHUDStat = GameObject.FindGameObjectWithTag("HUD/Stats/Missed Civilians").GetComponent<TextMeshProUGUI>();
 
+		stepsShakeScript = stepsHUDStat.GetComponent<StepsShake>();
+		stepsShakeScript.textMeshProuGui = stepsHUDStat;
+
 		setupScene();
 	}
 
 	private void updateTimeScale()
 	{
-		Time.timeScale = gameSpeed.current;
+		// Time.timeScale = 1 + gameSpeedCurve.Evaluate(gameSpeed.current) / 2.0f; // at max (1 + 4/3)
+		Time.timeScale = 3;
+		// TODO: use curve
 	}
 
 	internal void incrementStepsTravelled() {
 		++stepsTravelled;
 
 		stepsHUDStat.text = stepsTravelled.ToString();
+
+		if (stepsTravelled % 20 == 0) {
+			stepsShakeScript.performShake();
+			
+			gameSpeed.updateCurrent(gameSpeed.current + 1);
+		}
 	}
 
 	internal void updateAvailableWebCartridges(int current, int max) {
@@ -155,8 +175,13 @@ public class GameState : MonoBehaviour
 		pauseOverlay.SetActive(gamePaused = !gamePaused);
 
 		// gamePaused = 1 - gamePaused; // FIXME : remove reference to this from everywhere
-		if (gamePaused) Time.timeScale = 0;
-		else Time.timeScale = 1;
+		if (gamePaused) {
+			previousTimeScale = Time.timeScale;
+			Time.timeScale = 0;
+		}
+		else {
+			Time.timeScale = previousTimeScale;
+		}
 
 		// TODO : hide obstacles, civilians and collectables
 		Camera.main.cullingMask = Time.timeScale != 0 ? regularCullingMask : gamePauseCullingMask;
@@ -168,7 +193,13 @@ public class GameState : MonoBehaviour
 
 	internal void gameOver()
 	{
-		throw new NotImplementedException();
+		gameOverOverlay.SetActive(true);
+		InputDelegator inputDelegator = GetComponent<InputDelegator>();
+
+		inputDelegator.inGameActions.Disable();
+		inputDelegator.spidyActions.Disable();
+		inputDelegator.instructionsScreenActions.Disable();
+		inputDelegator.deathScreenActions.Enable();
 	}
 
 	internal float getOverallSpeed()

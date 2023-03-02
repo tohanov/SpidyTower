@@ -25,6 +25,7 @@ TagManager:
   - Building Block
   - Civilians Square
   - Hearts Square
+  - Death Screen
   layers:
   - Default
   - TransparentFX

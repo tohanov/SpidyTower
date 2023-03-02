@@ -50,7 +50,7 @@ public class PlayerState : MonoBehaviour
 	TrailRenderer spidyTrail;
 	string animationNamePrefix = "";
 
-	string playedLast = "Spidy_shoot";
+	string playedLast = "Spidy_climb";
 
 	SpriteRenderer spriteRenderer;
 	// internal int invincibilityCoefficient = 1;

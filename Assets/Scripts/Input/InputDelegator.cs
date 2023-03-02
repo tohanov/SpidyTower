@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class InputDelegator : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class InputDelegator : MonoBehaviour
 	internal InputDetector.InGameActionMapActions inGameActions;
 	internal InputDetector.InstructionsScreenActionMapActions instructionsScreenActions;
 	internal InputDetector.SpidyActionMapActions spidyActions;
+	internal InputDetector.DeathScreenActionMapActions deathScreenActions;
 
 	PlayerState playerStateScript;
 	GameState gameState;
@@ -21,6 +23,7 @@ public class InputDelegator : MonoBehaviour
 		inGameActions = inputDetectorObject.InGameActionMap;
 		instructionsScreenActions = inputDetectorObject.InstructionsScreenActionMap;
 		spidyActions = inputDetectorObject.SpidyActionMap;
+		deathScreenActions = inputDetectorObject.DeathScreenActionMap;
 
 		gameState = GetComponent<GameState>();
 		playerStateScript = GameObject.FindGameObjectWithTag("Spidy").GetComponent<PlayerState>();
@@ -28,8 +31,9 @@ public class InputDelegator : MonoBehaviour
 
 	void OnEnable() {
 		inGameActions.Enable();
-		// instructionsScreenActions.Enable(); // FIXME make enabled when displaying the instructions scene
+		instructionsScreenActions.Disable(); // FIXME make enabled when displaying the instructions scene
 		spidyActions.Enable();
+		deathScreenActions.Disable();
 
 		inGameActions.GamePause.performed += HandleGamePause;
 
@@ -40,12 +44,33 @@ public class InputDelegator : MonoBehaviour
 
 		instructionsScreenActions.Skip.performed += HandleSkip;
 		instructionsScreenActions.Pause.performed += HandleInstructionsPause;
+
+		deathScreenActions.PlayAgain.performed += HandlePlayAgain;
+		deathScreenActions.Exit.performed += HandleExit;
 	}
+
+	private void HandlePlayAgain(InputAction.CallbackContext obj)
+	{
+		// SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+		Time.timeScale = 1;
+	}
+
+	private void HandleExit(InputAction.CallbackContext obj)
+	{
+		#if UNITY_EDITOR
+		UnityEditor.EditorApplication.isPlaying = false;
+		#else
+		Application.Quit();
+		#endif
+	}
+
 
 	void OnDisable() {
 		inGameActions.Disable();
 		// instructionsScreenActions.Disable();
 		spidyActions.Disable();
+		// deathScreenActions.Disable();
 	} 
 
     void HandlePlayerFire(InputAction.CallbackContext context)
