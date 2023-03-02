@@ -45,7 +45,7 @@ public class GameState : MonoBehaviour
 		Debug.unityLogger.logEnabled = false;
 		
 
-		gameSpeed = new Stat(1, 1, 4, updateTimeScale, null, null);
+		gameSpeed = new Stat(0, 0, 4, updateTimeScale, null, null);
 
 		boundsHigh = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
 		boundsLow = Camera.main.ScreenToWorldPoint(new Vector2(0, 0));
@@ -71,8 +71,8 @@ public class GameState : MonoBehaviour
 
 	private void updateTimeScale()
 	{
-		// Time.timeScale = 1 + gameSpeedCurve.Evaluate(gameSpeed.current) / 2.0f; // at max (1 + 4/3)
-		Time.timeScale = 3;
+		Time.timeScale = 1 + gameSpeedCurve.Evaluate(gameSpeed.current) / 2.0f; // at max (1 + 4/3)
+		// Time.timeScale = 3;
 		// TODO: use curve
 	}
 
