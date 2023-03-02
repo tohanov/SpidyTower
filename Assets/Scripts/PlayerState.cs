@@ -455,7 +455,7 @@ public class PlayerState : MonoBehaviour
 		spidyTrail.enabled = false;
 		spidyTrail.Clear();
 
-		gameState.gameSpeed.updateCurrent(0);
+		gameState.gameSpeed.updateCurrent(1);
 		// StopAllCoroutines();
 		
 		Vector3 target = new Vector3(transform.position.x, gameState.boundsLow.y - generateBuildingsScript.blockSize.y);
